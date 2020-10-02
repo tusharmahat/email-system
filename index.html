@@ -12,20 +12,22 @@
     <!-- link of bootstrap 4.4.1 from the CDN server -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- link of the style.css for userdefined styling -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <!-- meta tag that sets layout ;the width of the page to device width and scale to 1.0 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
+    <script src="./script/jquery-3.4.1.min.js"></script>
+    <script src="./script/index.js"></script>
     <div class="container-fluid">
         <p>Your Email System</p>
-        <div class="row-2">Here is the new Layout</div>
-        <div class="row">
+        <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">New message</a>
+        <div class="row content">
             <div class="col-2">
-                <div class="row content-1">Inbox</div>
-                <div class="row content-1">Drafts</div>
-                <div class="row content-1">Sent Items</div>
+                <div class="row content-1" onclick="showInbox()">Inbox</div>
+                <div class="row content-1" onclick="showDraft()">Drafts</div>
+                <div class="row content-1" onclick="showSent()">Sent Items</div>
                 <div class="row">1</div>
                 <div class="row">1</div>
                 <div class="row">1</div>
@@ -109,7 +111,31 @@
                 <div class="row">1</div>
                 <div class="row">1</div>
             </div>
-            <div class="col-6"> Section 3
+
+            <!-- @Tushar -->
+            <div class="col-6">
+                <div id="select-mail-ins">
+                    <p>Select an item to read</p>
+                </div>
+                <div id='compose'>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">To</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="To" aria-label="Cc" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Cc</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Cc" aria-label="Cc" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Add a Subject" aria-label="Sb" aria-describedby="basic-addon1">
+                    </div>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+
+                </div>
             </div>
 
         </div>
