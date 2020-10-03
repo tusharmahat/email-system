@@ -13,16 +13,6 @@ function showCompose() {
  * and displays the instructions
  * @Tushar
  */
-function showInbox() {
-    $("#compose").css("display", "none");
-    $("#select-mail-ins").css("display", "block");
-}
-
-/**
- * This function hides compose on the third column on click
- * and displays the instructions
- * @Tushar
- */
 function showDraft() {
     $("#compose").css("display", "none");
     $("#select-mail-ins").css("display", "block");
@@ -127,11 +117,15 @@ function sendToStudent() {
     }
 }
 
+
 /**
- * Function to populate the inbox emails on the page dynamically
+ * This function hides compose on the third column on click
+ * and displays the instructions
  * @Tushar
  */
 function showInbox() {
+    $("#compose").css("display", "none");
+    $("#select-mail-ins").css("display", "block");
     var adminInbox = { 'emails': [] };
     //If the window storage is undefined show alert message
     if (typeof(window.Storage) === "undefined") {
