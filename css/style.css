@@ -90,7 +90,7 @@ body {
 #compose {
     display: none;
     overflow: scroll;
-    height: 100vh;
+    height: 90vh;
     background-color: #ffffff;
     border: 1px solid #EDEBE9;
     border-radius: 5px;
@@ -122,12 +122,13 @@ body {
 /* @Tushar */
 
 #basic-addon1 {
+    width: 4rem;
     border-color: #F8FAFB;
     margin-top: 11px;
     margin-right: 10px;
     margin-bottom: 11px;
     border-radius: 0;
-    padding: 0 15px;
+    padding: 4px 15px;
 }
 
 
@@ -141,7 +142,8 @@ body {
 
 /* @Tushar */
 
-.btn-compose {
+.btn-compose,
+.btn-send {
     margin: 0;
     border: 1px solid #5C96AE;
     border-radius: 0.1rem;
@@ -152,6 +154,10 @@ body {
 /* @Tushar */
 
 .btn-compose:hover {
+    background-color: #487B91;
+}
+
+.btn-send:hover {
     background-color: #487B91;
 }
 
