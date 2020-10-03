@@ -69,47 +69,10 @@
                 <div class="row">1</div>
             </div>
             <div class="col-4">
-                <div class="row">Mail Lorem ipsum dolor sit amet consectetur adipisicing elit. <br> Ipsam, voluptatem blanditiis praesentium doloribus vitae<br> deserunt adipisci sapiente quasi minima et qui officiis in,<br> porro quo maiores quos recusandae omnis itaque!
+                <div class="email-1">
+                    <div class="row from">Tushar</div>
+                    <div class="row sb">Subject</div>
                 </div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
-                <div class="row">1</div>
             </div>
 
             <!-- @Tushar -->
@@ -120,22 +83,29 @@
                 <div id='compose'>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">From</span>
+                        </div>
+                        <input type="text" class="form-control" id="send-from" placeholder="From" aria-label="From" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">To</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="To" aria-label="Cc" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" id="send-to" placeholder="To" aria-label="To" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Cc</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Cc" aria-label="Cc" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" id="send-cc" placeholder="Cc" aria-label="Cc" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Add a Subject" aria-label="Sb" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" id="send-sb" placeholder="Add a Subject" aria-label="Sb" aria-describedby="basic-addon1">
                     </div>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
-
+                    <textarea class="form-control" id="send-msg" rows="11"></textarea>
+                    <a class="btn btn-primary btn-send" onclick="sendToStudent()" role="button">Send</a>
                 </div>
+
             </div>
 
         </div>
