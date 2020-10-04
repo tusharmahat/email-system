@@ -53,11 +53,13 @@ function sendToStudent() {
     //else send mail
     else {
         //Confirmation to send email
-        var sendConfirm = confirm("1) Is everything spelled correctly?\n" +
-            "2) Did you use full sentences?\n3) Is the email addressed to" +
-            " the correct person?\n4) Did you sign your name at the end of the email?");
-        //If sendConfirm is true then delete the mail
-        if (sendConfirm) {
+
+        if ($('#send-check-1').is(":checked") &&
+            $('#send-check-2').is(":checked") &&
+            $('#send-check-3').is(":checked") &&
+            $('#send-check-4').is(":checked") &&
+            $('#send-check-5').is(":checked")) {
+
             //Check if the window storage is undefined, alert if so
             if (typeof(window.Storage) === "undefined") {
                 alert("Local storage not supported by this browser.");
@@ -112,7 +114,7 @@ function sendToStudent() {
             } catch (localStrorageError) {
                 console.log("Error Thrown: " + localStorageError.name);
             }
-            alert("Message sent successfully!")
+            $('#myModal').modal("hide");
         }
     }
 }
@@ -126,7 +128,7 @@ function sendToStudent() {
 function showInbox() {
     $("#compose").css("display", "none");
     $("#select-mail-ins").css("display", "block");
-    var adminInbox = { 'emails': [] };
+    var email = { 'emails': [] };
     //If the window storage is undefined show alert message
     if (typeof(window.Storage) === "undefined") {
         alert("Local storage not supported by this browser.");
@@ -134,7 +136,7 @@ function showInbox() {
     //else if the local storage is not null populate the emails on the respective page
     else if (localStorage.getItem("student-inbox-items") !== null) {
         //Get the admin inbox emails JSON object from the local Storage
-        adminInbox = JSON.parse(localStorage.getItem("student-inbox-items"));
+        email = JSON.parse(localStorage.getItem("student-inbox-items"));
     }
     //Initialize index for emails to 0
     var i = 0;
@@ -143,12 +145,51 @@ function showInbox() {
     var dynamicHTML = '';
 
     //concatinate the HTML tags through the while loop for all the emails
-    while (i < adminInbox.emails.length) {
-        dynamicHTML = dynamicHTML + '<div class="email-' + i + '"><div class="row from">' + adminInbox.emails[i].from +
-            '</div><div class="row sb">' + adminInbox.emails[i].sb + '</div></div>';
+    while (i < email.emails.length) {
+        dynamicHTML = dynamicHTML + '<ul class="list-mail"><li class="list-header email-' + i + '">' + email.emails[i].from +
+            '</li><li class="list-sb">' + email.emails[i].sb + '</li></ul>';
         i++;
     }
     $(".col-4").html('');
     //Append the sent emails in the empty String
     $(".col-4").append(dynamicHTML);
+}
+
+/**
+ * This function hides compose on the third column on click
+ * and displays the instructions
+ * @Tushar
+ */
+function showSent() {
+    $("#compose").css("display", "none");
+    $("#select-mail-ins").css("display", "block");
+    var email = { 'emails': [] };
+    //If the window storage is undefined show alert message
+    if (typeof(window.Storage) === "undefined") {
+        alert("Local storage not supported by this browser.");
+    }
+    //else if the local storage is not null populate the emails on the respective page
+    else if (localStorage.getItem("admin-sent-items") !== null) {
+        //Get the admin inbox emails JSON object from the local Storage
+        email = JSON.parse(localStorage.getItem("admin-sent-items"));
+    }
+    //Initialize index for emails to 0
+    var i = 0;
+
+    // Create empty String 
+    var dynamicHTML = '';
+
+    //concatinate the HTML tags through the while loop for all the emails
+    while (i < email.emails.length) {
+        dynamicHTML = dynamicHTML + '<ul class="list-mail"><li class="list-header email-' + i + '">' + email.emails[i].to +
+            '</li><li class="list-sb">' + email.emails[i].sb + '</li></ul>';
+        i++;
+    }
+    $(".col-4").html('');
+    //Append the sent emails in the empty String
+    $(".col-4").append(dynamicHTML);
+}
+
+function sendConfirm() {
+    $('#myModal').modal();
 }

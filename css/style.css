@@ -1,6 +1,6 @@
-html,
 body {
     overflow: hidden;
+    height: 88vh;
 }
 
 
@@ -35,7 +35,7 @@ body {
 
 .col-2 {
     background-color: #F3F2F1;
-    height: 100vh;
+    height: 88vh;
     overflow: hidden;
 }
 
@@ -45,17 +45,22 @@ body {
 
 .col-4 {
     background-color: #FFFFFF;
-    height: 100vh;
+    height: 88vh;
     overflow: scroll;
 }
 
 .col-6 {
     background-color: #FAF9F8;
-    height: 100vh;
-    overflow: scroll;
+    height: 88vh;
+    overflow: hidden;
+}
+
+.title {
+    margin: 0;
 }
 
 .container-fluid {
+    overflow: hidden;
     padding: 15px;
 }
 
@@ -72,6 +77,42 @@ body {
 .content-1:hover {
     background: #EDEBE9;
     cursor: default;
+}
+
+
+/* Mail lists */
+
+.list-mail {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.list-mail:hover {
+    /* Sets the bg color to lightgray*/
+    background: lightgray;
+    /* Sets the border to lightgray*/
+    border: 1px solid gray;
+    /* Border radius to 5px */
+    border-radius: 5px;
+    /* Sets the top-left border radius to 0.25rem */
+    border-top-left-radius: 0.25rem;
+    /* Sets the bottom-left border radius to 0.25rem */
+    border-bottom-left-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.list-header {
+    font-size: 1.1rem;
+    font-weight: 650;
+    display: block;
+}
+
+.list-sb {
+    padding-left: 0.5rem;
+    font-weight: 450;
+    font-size: 0.9rem;
+    display: block;
 }
 
 
@@ -94,7 +135,7 @@ body {
     background-color: #ffffff;
     border: 1px solid #EDEBE9;
     border-radius: 5px;
-    margin: 7px 7px;
+    margin: 3px 7px;
 }
 
 
@@ -144,7 +185,7 @@ body {
 
 .btn-compose,
 .btn-send {
-    margin: 0;
+    margin: 3px 0 0 0;
     border: 1px solid #5C96AE;
     border-radius: 0.1rem;
     background-color: #5C96AE;
@@ -167,4 +208,26 @@ body {
 
 #select-mail-ins {
     padding: 15rem 12rem;
+}
+
+.modal-content {
+    top: -1.8rem;
+    left: -30%;
+    /* outline: none;
+    overflow: hidden;*/
+    width: 80%;
+}
+
+.modal-header {
+    padding: 0.2rem 1rem;
+}
+
+.modal-body,
+.modal-body>p {
+    padding: 0.2rem 1rem;
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 0.2rem 1rem;
 }
