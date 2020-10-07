@@ -1,233 +1,226 @@
 body {
-    overflow: hidden;
-    height: 88vh;
+  overflow: hidden;
+  height: 88vh;
 }
-
 
 /* width */
 
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
-
 
 /* Track */
 
- ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px transparent;
-    border-radius: 10px;
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 10px;
 }
-
 
 /* Handle */
 
- ::-webkit-scrollbar-thumb {
-    background: #C8C6C4;
-    border-radius: 10px;
+::-webkit-scrollbar-thumb {
+  background: #c8c6c4;
+  border-radius: 10px;
 }
-
 
 /* Handle on hover */
 
- ::-webkit-scrollbar-thumb:hover {
-    background: #98A3A6;
+::-webkit-scrollbar-thumb:hover {
+  background: #98a3a6;
 }
 
 .col-2 {
-    background-color: #F3F2F1;
-    height: 88vh;
-    overflow: hidden;
+  background-color: #f3f2f1;
+  height: 88vh;
+  overflow: hidden;
 }
 
 .col-2:hover {
-    overflow: scroll;
+  overflow: scroll;
 }
 
 .col-4 {
-    background-color: #FFFFFF;
-    height: 88vh;
-    overflow: scroll;
+  padding: 0 8px;
+  background-color: #ffffff;
+  height: 88vh;
+  overflow: scroll;
 }
 
 .col-6 {
-    background-color: #FAF9F8;
-    height: 88vh;
-    overflow: hidden;
+  padding: 0;
+  background-color: #faf9f8;
+  height: 88vh;
+  overflow: hidden;
 }
 
 .title {
-    margin: 0;
+  margin: 0;
 }
 
 .container-fluid {
-    overflow: hidden;
-    padding: 15px;
+  overflow: hidden;
+  padding: 15px;
 }
 
 .content {
-    margin: 0;
-    width: inherit;
+  margin: 0;
+  width: inherit;
 }
 
 .content-1 {
-    padding-top: 7px;
-    padding-bottom: 7px;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .content-1:hover {
-    background: #EDEBE9;
-    cursor: default;
+  background: #edebe9;
+  cursor: default;
 }
-
 
 /* Mail lists */
 
 .list-mail {
-    padding: 0;
-    margin: 0;
-    margin-bottom: 0.5rem;
+  padding: 0 5px;
+  margin: 0;
+  margin-bottom: 0.5rem;
 }
 
 .list-mail:hover {
-    /* Sets the bg color to lightgray*/
-    background: lightgray;
-    /* Sets the border to lightgray*/
-    border: 1px solid gray;
-    /* Border radius to 5px */
-    border-radius: 5px;
-    /* Sets the top-left border radius to 0.25rem */
-    border-top-left-radius: 0.25rem;
-    /* Sets the bottom-left border radius to 0.25rem */
-    border-bottom-left-radius: 0.25rem;
-    cursor: pointer;
+  /* Sets the bg color to lightgray*/
+  background: lightgray;
+  /* Sets the border to lightgray*/
+  border: 1px solid gray;
+  /* Border radius to 5px */
+  border-radius: 5px;
+  /* Sets the top-left border radius to 0.25rem */
+  border-top-left-radius: 0.25rem;
+  /* Sets the bottom-left border radius to 0.25rem */
+  border-bottom-left-radius: 0.25rem;
+  cursor: pointer;
 }
 
 .list-header {
-    font-size: 1.1rem;
-    font-weight: 650;
-    display: block;
+  font-size: 1.1rem;
+  font-weight: 650;
+  display: block;
 }
 
 .list-sb {
-    padding-left: 0.5rem;
-    font-weight: 450;
-    font-size: 0.9rem;
-    display: block;
+  padding-left: 0.5rem;
+  font-weight: 450;
+  font-size: 0.9rem;
+  display: block;
 }
-
 
 /* Compose */
-
-
-/* @Tushar */
-
-.col-6 {
-    padding: 0;
-}
-
 
 /* @Tushar */
 
 #compose {
-    display: none;
-    overflow: scroll;
-    height: 90vh;
-    background-color: #ffffff;
-    border: 1px solid #EDEBE9;
-    border-radius: 5px;
-    margin: 3px 7px;
+  display: none;
+  overflow: scroll;
+  height: 90vh;
+  background-color: #ffffff;
+  border: 1px solid #edebe9;
+  border-radius: 5px;
+  margin: 3px 7px;
 }
-
 
 /* @Tushar */
 
 .input-group {
-    border-bottom: 1px solid #EDEBE9;
+  border-bottom: 1px solid #edebe9;
 }
-
 
 /* @Tushar */
 
 .mb-3 {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
-
 
 /* @Tushar */
 
 .input-group-prepend {
-    margin-left: 10px;
+  margin-left: 10px;
 }
-
 
 /* @Tushar */
 
 #basic-addon1 {
-    width: 4rem;
-    border-color: #F8FAFB;
-    margin-top: 11px;
-    margin-right: 10px;
-    margin-bottom: 11px;
-    border-radius: 0;
-    padding: 4px 15px;
+  width: 4rem;
+  border-color: #f8fafb;
+  margin-top: 11px;
+  margin-right: 10px;
+  margin-bottom: 11px;
+  border-radius: 0;
+  padding: 4px 15px;
 }
-
 
 /* @Tushar */
 
 .form-control {
-    height: inherit;
-    border: 1px solid #ffffff;
+  height: inherit;
+  border: 1px solid #ffffff;
 }
-
 
 /* @Tushar */
 
 .btn-compose,
 .btn-send {
-    margin: 3px 0 0 0;
-    border: 1px solid #5C96AE;
-    border-radius: 0.1rem;
-    background-color: #5C96AE;
+  margin: 3px 0 0 0;
+  border: 1px solid #5c96ae;
+  border-radius: 0.1rem;
+  background-color: #5c96ae;
 }
-
 
 /* @Tushar */
 
 .btn-compose:hover {
-    background-color: #487B91;
+  background-color: #487b91;
 }
 
 .btn-send:hover {
-    background-color: #487B91;
+  background-color: #487b91;
 }
-
 
 /* 
 @Tushar */
 
 #select-mail-ins {
-    padding: 15rem 12rem;
+  padding: 15rem 12rem;
 }
 
 .modal-content {
-    top: -1.8rem;
-    left: -30%;
-    /* outline: none;
-    overflow: hidden;*/
-    width: 80%;
+  top: -1.8rem;
+  left: -45%;
+  width: 96%;
 }
 
 .modal-header {
-    padding: 0.2rem 1rem;
+  padding: 0.2rem 1rem;
 }
 
-.modal-body,
-.modal-body>p {
-    padding: 0.2rem 1rem;
-    margin: 0;
+.modal-body {
+  padding: 0.2rem 1rem;
+}
+.modal-body > p {
+  padding: 0;
+  margin: 0;
 }
 
 .modal-footer {
-    padding: 0.2rem 1rem;
+  padding: 0.2rem 1rem;
+}
+
+/*Selector for help--yellow*/
+
+.help--yellow {
+  /* Sets the background to light yellow */
+  background-color: #fafad2;
+}
+
+/* Selector for modal background */
+.modal-backdrop.show {
+  /* Sets opacity to 0.09 */
+  opacity: 0.09;
 }
