@@ -53,10 +53,6 @@ body {
   overflow: hidden;
 }
 
-.title {
-  margin: 0;
-}
-
 .container-fluid {
   overflow: hidden;
   padding: 15px;
@@ -99,8 +95,7 @@ body {
   cursor: pointer;
 }
 
-.list-header {
-  font-size: 1.1rem;
+.list-email {
   font-weight: 650;
   display: block;
 }
@@ -116,7 +111,8 @@ body {
 
 /* @Tushar */
 
-#compose {
+#compose,
+#email--view {
   display: none;
   overflow: scroll;
   height: 90vh;
@@ -150,10 +146,21 @@ body {
   width: 4rem;
   border-color: #f8fafb;
   margin-top: 11px;
-  margin-right: 10px;
+  margin-right: 8px;
+  margin-right: 8px;
   margin-bottom: 11px;
   border-radius: 0;
-  padding: 4px 15px;
+  padding: 4px 5px;
+}
+
+/* @Tushar */
+#basic-addon1:hover {
+  cursor: help;
+}
+
+/* @Tushar */
+.readonly--hover:hover {
+  cursor: default;
 }
 
 /* @Tushar */
@@ -183,44 +190,84 @@ body {
   background-color: #487b91;
 }
 
-/* 
+/*Id selector for click on email instruction 
 @Tushar */
-
 #select-mail-ins {
   padding: 15rem 12rem;
 }
 
+/* class selector for modal-content
+@Tushar */
 .modal-content {
   top: -1.8rem;
   left: -45%;
   width: 96%;
 }
 
-.modal-header {
+/* class selector for modal-body and modal-header
+@Tushar */
+.modal-header,
+.modal-body {
+  /* Set the padding top,bottom to 0.2rem and left,right to 1rem*/
   padding: 0.2rem 1rem;
 }
 
-.modal-body {
-  padding: 0.2rem 1rem;
-}
+/* class selector for p tag inside modal-body
+@Tushar */
 .modal-body > p {
+  /* Set the padding and margin to 0 */
   padding: 0;
   margin: 0;
 }
 
+/* Class selector for modal-footer
+@Tushar */
 .modal-footer {
+  /* Sets the padding top, bottom to 0.2rem and right,left to 1 rem */
   padding: 0.2rem 1rem;
 }
 
-/*Selector for help--yellow*/
-
+/*Selector for help--yellow
+@Tushar*/
 .help--yellow {
   /* Sets the background to light yellow */
   background-color: #fafad2;
 }
 
-/* Selector for modal background */
+/* Selector for modal background 
+@Tushar*/
 .modal-backdrop.show {
   /* Sets opacity to 0.09 */
   opacity: 0.09;
+}
+
+/*Selector for navbar class 
+@Tushar */
+.navbar {
+  background-color: #6e0408;
+}
+
+/*Class selector for navbar-light, navbar-brand 
+@Tushar */
+.navbar-light .navbar-brand {
+  color: #ffffff;
+}
+
+/*Selector for form-control: disabled and readonly
+@Tushar */
+.form-control:disabled,
+.form-control[readonly] {
+  /*  The background while reading email is set to white */
+  background-color: #ffffff;
+}
+
+/* Pseudo selector for element
+@Tushar  */
+input:focus,
+textarea:focus {
+  /* When the input and text box are 
+clicked it show white i.e. does not any border */
+  outline: none !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 10px #ffffff !important;
 }
