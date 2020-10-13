@@ -296,6 +296,63 @@ function getAdminSentItemsCallback(req, res) {
   }
 }
 
+/* post function to save admin sent items to mongodb, after that callback function dropThenInsertAdminInbox inserts admin sent items to mongodb */
+server.post("/sendToAdminUnread", dropThenInsertAdminUnread);
+
+/**
+ * The callback function that is executed when server.post completes its tasks.
+ * @param {object} req is the request object
+ * @param {*} res
+ */
+function dropThenInsertAdminUnread(req, res) {
+  /* Deletes adminSentItems  from mongodb */
+  globalDB.collection("adminUnread").drop(function (dropError, dropSuccess) {
+    if (dropSuccess) {
+      /* Deletes and inserts admin sent items to mongodb, No need to parse as req.body is alrady a JSON object */
+      globalDB.collection("adminUnread").insertOne(req.body, insertCallback);
+    } else if (dropError)
+      // Throws the error object containing detailed info
+      throw dropError;
+  });
+  /**
+   * This callback function is executed after insertOne() has completed all its tasks.
+   * @param {*} err errors thrown
+   */
+  function insertCallback(err) {
+    // status(200) sets the HTTP status for the response.
+    // send("Insert Successful") sends the HTTP response.
+    if (err == null) return res.status(200).send("Insert Successful");
+    // Throws the error object containing detailed info
+    else throw err;
+  }
+}
+
+/* post to get admin sent items from mongodb, after that callback function getAdminSentItemsCallback is called which sends admin sent items as response */
+server.post("/getAdminUnread", getAdminUnreadCallBack);
+
+/**
+ * The callback function that is executed when server.post completes its tasks.
+ * @param {object} req is the request object
+ * @param {*} res
+ */
+function getAdminUnreadCallBack(req, res) {
+  globalDB.collection("adminUnread").findOne({}, findCallback);
+  /**
+   * Function to send the found emails as http response
+   * @param {*} err error occured
+   * @param {object} foundRecord found emails
+   */
+  function findCallback(err, foundRecord) {
+    if (err == null) {
+      // status(200) sets the HTTP status for the response.
+      // sends admin inbox emails as the HTTP response.
+      return res.status(200).send(foundRecord.index);
+    }
+    // Throws the error object containing detailed info
+    else throw err;
+  }
+}
+
 // Create a connection to your mongoDB database
 mongodb.connect(
   credentialsString,

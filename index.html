@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body>
+<body onload="loadInbox()">
   <!-- JS, and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -74,11 +74,14 @@
     </a>
     <div class="row content">
       <div class="col-2">
-        <div class="row content-1" onclick="showInbox()">Inbox</div>
-        <div class="row content-1" onclick="showDraft()">Drafts</div>
+        <div class="row content-1" onclick="loadInbox()">
+          Inbox
+          <span class="badge"></span>
+        </div>
+        <div class="row content-1" onclick="">Drafts</div>
         <div class="row content-1" onclick="showSent()">Sent Items</div>
         <div class="row content-1" onclick="showFavorites()">Favorites</div>
-        <div class="row content-1" onclick="showFavorites()">
+        <div class="row content-1" onclick="showUnread()">
           Unread Emails
         </div>
       </div>
@@ -114,7 +117,7 @@
             <input type="text" class="form-control" id="send-sb" placeholder="Add a Subject" aria-label="Sb"
               aria-describedby="basic-addon1" required />
           </div>
-          <textarea class="form-control" id="send-msg" rows="12" required></textarea>
+          <textarea class="form-control" id="send-msg" rows="10" required></textarea>
 
           <!-- Button trigger modal -->
           <button type="submit" class="btn btn-primary btn-send" onclick="sendConfirm()">
