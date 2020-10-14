@@ -62,7 +62,7 @@ function sendToStudent() {
     sb: $("#send-sb").val(),
     msg: $("#send-msg").val(),
     read: 0,
-    urgency: 0,
+    fav: 0,
   };
 
   //Confirmation to send email
@@ -177,6 +177,7 @@ function showInbox() {
     // Create empty String
     var dynamicHTML = "";
     var unreadCount = 0;
+    var icon;
     //concatinate the HTML tags through the while loop for all the emails
     while (i < email.emails.length) {
       //Gets the read(1) or unread(0) value of the email at index i
@@ -185,14 +186,23 @@ function showInbox() {
         unreadEmail.index.unshift({ id: i });
         unreadCount++;
       }
+      if (email.emails[i].fav == 0) {
+        icon = '<img id="icon" src="./images/fav-add-icon.png';
+      }
+
       dynamicHTML =
         dynamicHTML +
-        '<div class="list-mail"  id="email-' +
+        icon +
+        '" onclick="addToFav(' +
+        email +
+        "," +
+        i +
+        ')" /><div class="list-mail"  id="email-' +
         i +
         '" onclick="viewEmail(' +
         "'inbox'," +
         i +
-        ')" data-role="controlgroup" data-type="horizontal"><input id="checkbox--round" type="checkbox" />' +
+        ')" data-role="controlgroup" data-type="horizontal">' +
         '<a data-role="button" class="list-email' +
         readOrNot +
         '">' +
@@ -426,23 +436,10 @@ function loadInbox() {
 }
 
 function saveToUnread(unread) {
-  var unreadEmails;
-  $.post(SERVER_URL + "/getAdminUnread", unreadEmails, getCallbackUnread).fail(
+  //Post request to save clientInbox to the server
+  $.post(SERVER_URL + "/sendToAdminUnread", unread, insertCallback).fail(
     errorCallback
   );
-  //Callback funtions runs after server throws no error
-  /**
-   * @param {string | any[]} data
-   */
-  function getCallbackUnread(data) {
-    unreadEmails = unread;
-    //Post request to save clientInbox to the server
-    $.post(
-      SERVER_URL + "/sendToAdminUnread",
-      unreadEmails,
-      insertCallback
-    ).fail(errorCallback);
-  }
 }
 
 function showUnread() {
@@ -506,6 +503,9 @@ function showUnread() {
           }
           i++;
         }
+        if (indexOfUnread.index.length > 0) {
+          $(".exclam").append();
+        }
         //select the class to disply the emails
         $(".col-4").html("");
         //Append the sent emails in the empty String
@@ -513,4 +513,11 @@ function showUnread() {
       }
     }
   }
+}
+
+function addToFav(email, i) {
+  email.emails[i].fav = 1;
+  $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+    errorCallback
+  );
 }

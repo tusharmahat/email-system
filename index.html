@@ -12,7 +12,7 @@
   <!-- link of bootstrap 4.4.1 from the CDN server -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   <!-- link of the style.css for userdefined styling -->
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <!-- meta tag that sets layout ;the width of the page to device width and scale to 1.0 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
@@ -75,14 +75,19 @@
     <div class="row content">
       <div class="col-2">
         <div class="row content-1" onclick="loadInbox()">
+          <img id="icon" src="./images/inbox-icon.png" alt="">
           Inbox
           <span class="badge"></span>
         </div>
-        <div class="row content-1" onclick="">Drafts</div>
-        <div class="row content-1" onclick="showSent()">Sent Items</div>
-        <div class="row content-1" onclick="showFavorites()">Favorites</div>
+        <div class="row content-1" onclick="">
+          <img id="icon" src="./images/draft-icon.png" alt="">Drafts</div>
+        <div class="row content-1" onclick="showSent()">
+          <img id="icon" src="./images/sent-icon.png" alt="">Sent Items</div>
+        <div class="row content-1" onclick="showFavorites()">
+          <img id="icon" src="./images/fav-icon.png" alt="">Favorites</div>
         <div class="row content-1" onclick="showUnread()">
-          Unread Emails
+          <img id="icon" src="./images/unread-icon.png" alt="">
+          Unread Emails <span class="exclam"></span> <span class="badge badge-2"></span>
         </div>
       </div>
       <div class="col-4"></div>
@@ -151,6 +156,14 @@
               aria-describedby="basic-addon1" readonly />
           </div>
           <textarea class="form-control readonly--hover" id="view-msg" rows="12" readonly></textarea>
+          <!-- Button trigger modal -->
+          <button type="submit" class="btn btn-primary btn-send" onclick="showCompose()">
+            Reply
+          </button>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-send" onclick="cancel()">
+            Discard
+          </button>
         </div>
       </div>
     </div>
