@@ -42,8 +42,6 @@ function showSent() {
   $("#select-mail-ins").css("display", "block");
 }
 
-function showFavorites() {}
-
 /**
  * function to send email to admin
  * It saves two copy of the email into local storage one in 'student-sent-items',
@@ -150,6 +148,8 @@ function showInbox() {
   $("#select-mail-ins").css("display", "block");
   // Hide if the email is already viewing from the sent
   $("#email--view").css("display", "none");
+
+  hideSideMenu();
   //Initialize clientInbox variable
   var email = { emails: [] };
 
@@ -177,7 +177,7 @@ function showInbox() {
     // Create empty String
     var dynamicHTML = "";
     var unreadCount = 0;
-    var icon;
+    var icon = "";
     //concatinate the HTML tags through the while loop for all the emails
     while (i < email.emails.length) {
       //Gets the read(1) or unread(0) value of the email at index i
@@ -187,15 +187,16 @@ function showInbox() {
         unreadCount++;
       }
       if (email.emails[i].fav == 0) {
-        icon = '<img id="icon" src="./images/fav-add-icon.png';
+        icon =
+          '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+      } else {
+        icon =
+          '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
       }
-
       dynamicHTML =
         dynamicHTML +
         icon +
         '" onclick="addToFav(' +
-        email +
-        "," +
         i +
         ')" /><div class="list-mail"  id="email-' +
         i +
@@ -218,10 +219,14 @@ function showInbox() {
     if (unreadCount != 0) {
       $(".badge").append(unreadCount);
     }
+    if (unreadCount > 0) {
+      $(".exclam").html("");
+      $(".exclam").append("!");
+    }
     //select the class to disply the emails
-    $(".col-4").html("");
+    $(".col-4, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4").append(dynamicHTML);
+    $(".col-4, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
       localStorage.setItem("page", JSON.stringify("inbox"));
@@ -243,6 +248,7 @@ function showSent() {
   $("#select-mail-ins").css("display", "block");
   // Hide if the email is already viewing from the sent
   $("#email--view").css("display", "none");
+  hideSideMenu();
   //Initialize clientInbox variable
   var email = { emails: [] };
 
@@ -281,7 +287,7 @@ function showSent() {
         '" onclick="viewEmail(' +
         "'sent'," +
         i +
-        ')" data-role="controlgroup" data-type="horizontal"><input id="checkbox--round" type="checkbox" />' +
+        ')" data-role="controlgroup" data-type="horizontal">' +
         '<a data-role="button" class="list-email">' +
         email.emails[i].from +
         '</a><a data-role="button" class="list-sb">' +
@@ -291,9 +297,9 @@ function showSent() {
     }
 
     //select the class to disply the emails
-    $(".col-4").html("");
+    $(".col-4, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4").append(dynamicHTML);
+    $(".col-4, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
       localStorage.setItem("page", JSON.stringify("inbox"));
@@ -450,6 +456,8 @@ function showUnread() {
   // Hide if the email is already viewing from the sent
   $("#email--view").css("display", "none");
 
+  hideSideMenu();
+
   //Initialize clientInbox variable
   var email = { emails: [] };
   //Post request to get adminSentitems from the server
@@ -490,7 +498,7 @@ function showUnread() {
                 '" onclick="viewEmail(' +
                 "'inbox'," +
                 i +
-                ')" data-role="controlgroup" data-type="horizontal"><input id="checkbox--round" type="checkbox" />' +
+                ')" data-role="controlgroup" data-type="horizontal">' +
                 '<a data-role="button" class="list-email' +
                 readOrNot +
                 '">' +
@@ -503,21 +511,135 @@ function showUnread() {
           }
           i++;
         }
-        if (indexOfUnread.index.length > 0) {
-          $(".exclam").append();
-        }
         //select the class to disply the emails
-        $(".col-4").html("");
+        $(".col-4,.col-m").html("");
         //Append the sent emails in the empty String
-        $(".col-4").append(dynamicHTML);
+        $(".col-4,.col-m").append(dynamicHTML);
       }
     }
   }
 }
 
-function addToFav(email, i) {
-  email.emails[i].fav = 1;
-  $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+function addToFav(i) {
+  var email;
+  //Post request to get clientInbox from the server
+  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
     errorCallback
   );
+
+  //Callback funtions runs after server throws no error
+  /**
+   * @param {string | any[]} data
+   */
+  function getCallbackInbox(data) {
+    if (data.length > 0) {
+      /*Saves the data response from the server to email
+     as JSON object */
+      email = { emails: data };
+    }
+    if (email.emails[i].fav == 0) {
+      email.emails[i].fav = 1;
+      alert("Added to Favorites");
+    } else {
+      email.emails[i].fav = 0;
+      alert("Removed from Favorites");
+    }
+    //Post request to save clientInbox to the server
+    $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+      errorCallback
+    );
+
+    showInbox();
+  }
+}
+
+function navSwipe() {
+  if ($("#check").is(":checked")) {
+    $(".col").css("display", "block");
+    $("ul").css("left", "0");
+    $("ul").css("transition", "all 0.5s");
+  } else {
+    $(".col").css("display", "none");
+    $("ul").css("left", "-100%");
+    $("ul").css("transition", "all 0.5s");
+  }
+}
+
+function hideSideMenu() {
+  //Hide the side menu
+  var screenSize = window.matchMedia("(max-width: 768px)");
+  console.log(screenSize);
+  if (screenSize) {
+    $(".col").css("display", "none");
+    $("ul").css("left", "-100%");
+  }
+}
+
+function showFavorites() {
+  var email;
+
+  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
+    errorCallback
+  );
+
+  /**
+   * Callback function runs after the server throws no error
+   * @param {object} data is the email JSON object
+   */
+  function getCallbackInbox(data) {
+    if (data.length > 0) {
+      /*Saves the data response from the server to adminInbox
+                                                       as JSON object */
+      email = { emails: data };
+    }
+
+    //Initialize the index of emails
+    var i = 0;
+    //Variable to save the read or unread value of email
+    var readOrNot;
+    var unreadEmail = { index: [] };
+    // Create empty String
+    var dynamicHTML = "";
+    var unreadCount = 0;
+    var icon = "";
+    //concatinate the HTML tags through the while loop for all the emails
+    while (i < email.emails.length) {
+      //Gets the read(1) or unread(0) value of the email at index i
+      readOrNot = email.emails[i].read == 1 ? "" : " unread";
+      if (readOrNot == " unread") {
+        unreadEmail.index.unshift({ id: i });
+        unreadCount++;
+      }
+      if (email.emails[i].fav == 0) {
+        icon =
+          '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+      } else {
+        icon =
+          '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+        dynamicHTML =
+          dynamicHTML +
+          icon +
+          '" onclick="addToFav(' +
+          i +
+          ')" /><div class="list-mail"  id="email-' +
+          i +
+          '" onclick="viewEmail(' +
+          "'inbox'," +
+          i +
+          ')" data-role="controlgroup" data-type="horizontal">' +
+          '<a data-role="button" class="list-email' +
+          readOrNot +
+          '">' +
+          email.emails[i].from +
+          '</a><a data-role="button" class="list-sb">' +
+          email.emails[i].sb +
+          "</a></div>";
+      }
+      i++;
+    }
+    //select the class to disply the emails
+    $(".col-4, .col-m").html("");
+    //Append the sent emails in the empty String
+    $(".col-4, .col-m").append(dynamicHTML);
+  }
 }
