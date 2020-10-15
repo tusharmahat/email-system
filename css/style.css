@@ -1,7 +1,23 @@
+/* @Akrit */
+:root {
+  --main-nav-color: #1f3c0b;
+  --main-btn-color: #487b23;
+  --main-btn-hover-color: #76c83c;
+  --main-bg-color: #aede8c;
+  --main-link-hover-color: #d4eec2;
+}
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
 body {
+  font-family: sans-serif;
   overflow: hidden;
-  height: 88vh;
-  background-color: #f3f2f1;
+  background-color: var(--main-bg-color);
+  height: 100%;
 }
 
 /* width */
@@ -32,17 +48,71 @@ textarea {
   background: #98a3a6;
 }
 
-.col-2 {
-  background-color: #f3f2f1;
+.col {
+  padding: 0;
+  background-color: var(--main-bg-color);
   height: 82vh;
   overflow: hidden;
 }
 
-.col-2:hover {
+.col:hover {
   display: block;
   overflow: scroll;
 }
 
+/* Navigation bar */
+/*Selector for nav class 
+@Tushar */
+
+/*Class selector for logo 
+@Tushar */
+
+.logo-name {
+  text-align: center;
+  line-height: 3rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--main-nav-color);
+  font-size: 2.5rem;
+}
+
+#nav ul {
+  background-color: var(--main-bg-color);
+  float: left;
+}
+#nav ul li {
+  line-height: 5rem;
+  margin: 0;
+}
+#nav ul li a {
+  color: black;
+  font-size: 16px;
+  padding: 5px 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+/* HOVER NOT WORKING */
+a.active,
+a:hover {
+  background-color: var(--main-link-hover-color);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.checkbtn {
+  padding-right: 2%;
+  font-size: 1.8rem;
+  float: left;
+  cursor: pointer;
+  display: block;
+}
+
+#check {
+  display: none;
+}
+
+/* Second column */
 .col-4 {
   padding: 0 8px;
   background-color: #ffffff;
@@ -50,11 +120,20 @@ textarea {
   overflow: scroll;
 }
 
+/* Third column */
 .col-6 {
   padding: 0;
   background-color: #faf9f8;
   height: 82vh;
   overflow: hidden;
+}
+
+.col-m {
+  padding: 0 8px;
+  background-color: #ffffff;
+  height: 82vh;
+  overflow: scroll;
+  display: none;
 }
 
 .container-fluid {
@@ -75,17 +154,19 @@ textarea {
 }
 
 .content-1:hover {
-  background: #edebe9;
+  background: var(--main-link-hover-color);
   cursor: default;
 }
 
 .badge {
-  margin-left: 50%;
-  font-size: 1rem;
-  color: #5c96ae;
+  padding-left: 5%;
+  font-size: 1.2rem;
+  color: var(--main-btn-color);
 }
-.badge-2 {
-  margin-left: 15%;
+
+.exclam {
+  font-size: 1.5rem;
+  color: red;
 }
 /* Mail lists */
 
@@ -97,16 +178,25 @@ textarea {
 }
 
 #icon {
-  margin-top: 0.3rem;
+  max-width: 18px;
+  height: auto;
+  margin-bottom: 0.2rem;
   margin-right: 0.3rem;
+}
+
+#empty {
+  padding-right: 18px;
+}
+
+.icon--float--left {
   float: left;
 }
 
 .list-mail:hover {
   /* Sets the bg color to lightgray*/
-  background: lightgray;
+  background: var(--main-link-hover-color);
   /* Sets the border to lightgray*/
-  border: 1px solid gray;
+  border: 1px solid var(--main-link-hover-color);
   /* Border radius to 5px */
   border-radius: 5px;
   /* Sets the top-left border radius to 0.25rem */
@@ -139,7 +229,7 @@ textarea {
   overflow: scroll;
   height: 90vh;
   background-color: #ffffff;
-  border: 1px solid #edebe9;
+  border: 1px solidvar(--main-link-hover-color);
   border-radius: 5px;
   margin: 3px 7px;
 }
@@ -147,7 +237,7 @@ textarea {
 /* @Tushar */
 
 .input-group {
-  border-bottom: 1px solid #edebe9;
+  border-bottom: 1px solidvar(--main-link-hover-color);
 }
 
 /* @Tushar */
@@ -197,19 +287,16 @@ textarea {
 .btn-compose,
 .btn-send {
   margin: 3px 0 0 0;
-  border: 1px solid #5c96ae;
+  border: 1px solid var(--main-btn-color);
   border-radius: 0.1rem;
-  background-color: #5c96ae;
+  background-color: var(--main-btn-color);
 }
 
 /* @Tushar */
 
-.btn-compose:hover {
-  background-color: #487b91;
-}
-
+.btn-compose:hover,
 .btn-send:hover {
-  background-color: #487b91;
+  background-color: var(--main-btn-hover-color);
 }
 
 /*Id selector for click on email instruction 
@@ -263,18 +350,6 @@ textarea {
   opacity: 0.09;
 }
 
-/*Selector for navbar class 
-@Tushar */
-.navbar {
-  background-color: #6e0408;
-}
-
-/*Class selector for navbar-light, navbar-brand 
-@Tushar */
-.navbar-light .navbar-brand {
-  color: #ffffff;
-}
-
 /*Selector for form-control: disabled and readonly
 @Tushar */
 .form-control:disabled,
@@ -292,4 +367,66 @@ clicked it show white i.e. does not any border */
   outline: none !important;
   border-color: #ffffff !important;
   box-shadow: 0 0 10px #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .col {
+    display: none;
+  }
+  .col-large {
+    display: none;
+  }
+  .col-m {
+    width: 100%;
+    display: block;
+  }
+  label {
+    padding-right: 2%;
+  }
+  .checkbtn {
+    font-size: 1.7rem;
+    display: block;
+  }
+  .logo-name {
+    padding-top: 0.5rem;
+    font-size: 2rem;
+  }
+
+  ul {
+    width: 50%;
+    padding-left: 5px;
+    position: fixed;
+    height: 82vh;
+    left: -100%;
+    transition: all 0.5s;
+    height: 82vh;
+  }
+  nav ul li {
+    display: block;
+  }
+  nav ul li a {
+    font-size: 20px;
+  }
+  #select-mail-ins {
+    display: none;
+  }
+}
+@media (max-width: 372px) {
+  .col-large {
+    display: none;
+  }
+  label {
+    padding-right: 2%;
+  }
+  .checkbtn {
+    font-size: 1.5rem;
+    display: block;
+  }
+  .logo-name {
+    padding-top: 0.5rem;
+    font-size: 1.6rem;
+  }
+  #select-mail-ins {
+    display: none;
+  }
 }
