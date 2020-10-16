@@ -1,0 +1,186 @@
+<!-- @author Tushar Mahat (A00429666)
+    @author Akrit Malla (A00433147)
+   P3: Your Email System
+    Page to compose email -->
+
+<!-- Document type html -->
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Title of the html -->
+    <title>Your Email System</title>
+    <!-- link of bootstrap 4.4.1 from the CDN server -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <!-- link of the style.css for userdefined styling -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- meta tag that sets layout ;the width of the page to device width and scale to 1.0 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <!-- script with source of jquery 3.4.1 -->
+    <script src="./scripts/jquery-3.4.1.min.js"></script>
+    <!-- script with source of bootstrap 4.5.2 -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- script with source of user-defined javascript -->
+    <script src="./scripts/link.js"></script>
+
+    <!-- Division data-role "page" -->
+    <div data-role="page">
+      <!-- Division with "input-group-text" , "page-header" as class and
+        header as data role -->
+      <!-- Compose header -->
+      <div class="input-group-text page-header" data-role="header">COMPOSE</div>
+      <!-- Help Message -->
+      <div class="input-group-text page-header help--yellow" data-role="header">
+        Did you know that you can click on To, Cc, Subject or Body and help will
+        appear?
+      </div>
+      <!-- Division with data role " content " -->
+      <div data-role="content">
+        <!-- Division with "input-group-text " class-->
+        <div class="input-group-text">
+          <!-- Label with "myLabel " class; runs openHelp('to') onclick -->
+          <label class="myLabel" for="to" onclick="openHelp('helpTo.html')"
+            >To</label
+          >
+          <!-- input tag with type "email ",list"emails" and with "form-control " class -->
+          <input type="email" list="emails" id="send-to" class="form-control" />
+          <!--datalist with id "emails"create the selective preloades emails-->
+          <datalist id="emails">
+            <option>Terence.Goldsmith(Terence.Goldsmith@smu.ca)</option>
+            <option>Terry(Terry@humanisticsystems.ca)</option>
+            <option>Charli(Charli@autismns.ca)</option>
+            <option>Chrystal(Chrystal@autismns.ca)</option>
+          </datalist>
+        </div>
+
+        <!-- Division with "input-group-text " class-->
+        <div class="input-group-text">
+          <!-- Label with "myLabel " class; runs openHelp('cc') onclick -->
+          <label class="myLabel" for="cc" onclick="openHelp('helpCc.html')"
+            >Cc</label
+          >
+          <!-- input tag with type "email ",list "email" and with "form-control " class -->
+          <input type="email" list="emails" id="send-cc" class="form-control" />
+          <!--datalist id "emails"create the selective preloaded emails-->
+          <datalist id="emails">
+            <option>Terence.Goldsmith(Terence.Goldsmith@smu.ca)</option>
+            <option>Terry(Terry@humanisticsystems.ca)</option>
+            <option>Charli(Charli@autismns.ca)</option>
+            <option>Chrystal(Chrystal@autismns.ca)</option>
+          </datalist>
+        </div>
+
+        <!-- Division with "input-group-text " class-->
+        <div class="input-group-text">
+          <!-- Label with "myLabel " class; runs openHelp('sb') onclick -->
+          <label class="myLabel" for="sb" onclick="openHelp('helpSb.html')"
+            >Subject</label
+          >
+          <!-- input tag with type "email " and with "form-control " class -->
+          <input id="send-sb" type="email" class="form-control" />
+        </div>
+
+        <!-- Division with "input-group-text " class-->
+        <div class="input-group-text">
+          <!-- Label with "myLabel " class; runs openHelp('body') onclick -->
+          <label class="myLabel" for="body" onclick="openHelp('helpBody.html')"
+            ><p>Greeting</p>
+            <br />
+            <p>Message</p>
+            <br />
+            <br />
+            <p>Closing</p></label
+          >
+          <!-- textarea tag with type "text ",id "text-area " and with "msg-box " class
+                having 10 rows -->
+          <textarea
+            class="form-control msg-box"
+            id="send-msg"
+            rows="10"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Division with class "input-group-text " and data-role "footer " -->
+      <div class="input-group-text" data-role="footer"></div>
+
+      <!-- Division with data-role "controlgroup ", data-type "horizontal " 
+            Contains Buttons -->
+      <div data-role="controlgroup" data-type="horizontal">
+        <!-- a link to send the email to admin on click; runs sendToAdmin() on click -->
+        <a data-role="button" class="btn mybtncolor" onclick="sendConfirm()"
+          >Send</a
+        >
+        <!-- a link to cancel the email on click; runs cancel() on click -->
+        <a data-role="button" class="btn mybtncolor" onclick="cancel()"
+          >Cancel</a
+        >
+        <!-- a link to help the email on click; runs help() on click -->
+        <a data-role="button" class="btn mybtncolor" onclick="help('compose')"
+          >Help</a
+        >
+      </div>
+    </div>
+
+    <!-- Bootstrap modal class for alert box containing check boxes -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Is everything right?
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>To:</p>
+            <p><input id="send-check-1" type="checkbox" /> Email address</p>
+            <p>Body:</p>
+            <p><input id="send-check-2" type="checkbox" /> Greetings</p>
+            <p><input id="send-check-3" type="checkbox" /> Message</p>
+            <p><input id="send-check-4" type="checkbox" /> Conclusion</p>
+            <p>
+              <input id="send-check-5" type="checkbox" /> Write a letter closing
+            </p>
+            <div class="input-group-text page-header help--yellow">
+              Make sure to mark every checkbox before sending the email.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="sendToAdmin()"
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
