@@ -1,22 +1,36 @@
 /* @Akrit */
 :root {
-  --main-nav-color: #1f3c0b;
-  --main-btn-color: #487b23;
-  --main-btn-hover-color: #76c83c;
-  --main-bg-color: #aede8c;
-  --main-link-hover-color: #d4eec2;
+  --main-nav-color: linear-gradient(to right, #2c3e50, #4ca1af);
+  --main-btn-color: linear-gradient(
+    to right,
+    #314755 0%,
+    #26a0da 51%,
+    #314755 100%
+  );
+  --main-btn-hover-color: linear-gradient(
+    to right,
+    #314755 0%,
+    #26a0da 51%,
+    #314755 100%
+  );
+  --main-font-color: #ffffff;
+  --main-bg-color: linear-gradient(to right, #2c3e50, #4ca1af);
+  --main-link-hover-color: grey;
+  --main-view-bg-color: #ffffff;
+  --main-vh-height: 85vh;
 }
+
 * {
   padding: 0;
   margin: 0;
   text-decoration: none;
   list-style: none;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 body {
-  font-family: sans-serif;
   overflow: hidden;
-  background-color: var(--main-bg-color);
+  background-image: var(--main-bg-color);
   height: 100%;
 }
 
@@ -47,17 +61,15 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: #98a3a6;
 }
-
+.content {
+  margin-top: 5px;
+}
 .col {
+  border-radius: 5px;
   padding: 0;
   background-color: var(--main-bg-color);
-  height: 82vh;
+  height: var(--main-vh-height);
   overflow: hidden;
-}
-
-.col:hover {
-  display: block;
-  overflow: scroll;
 }
 
 /* Navigation bar */
@@ -70,38 +82,39 @@ textarea {
 .logo-name {
   text-align: center;
   line-height: 3rem;
-  font-weight: bold;
   color: white;
-  background-color: var(--main-nav-color);
+  background-image: var(--main-nav-color);
   font-size: 2.5rem;
 }
 
 #nav ul {
-  background-color: var(--main-bg-color);
+  width: 100%;
+  height: var(--main-vh-height);
+  background-image: var(--main-bg-color);
   float: left;
 }
 #nav ul li {
-  line-height: 5rem;
-  margin: 0;
+  margin: 1rem 0 4rem 0;
 }
 #nav ul li a {
-  color: black;
+  color: var(--main-font-color);
   font-size: 16px;
-  padding: 5px 0;
+  padding: 5px 5px;
   border-radius: 3px;
   text-transform: uppercase;
 }
 
-/* HOVER NOT WORKING */
-a.active,
-a:hover {
+li a:active,
+li a:hover {
   background-color: var(--main-link-hover-color);
   transition: 0.5s;
+  transform: translateY(4px);
   cursor: pointer;
 }
 
 .checkbtn {
-  padding-right: 2%;
+  color: var(--main-font-color);
+  padding: 0 1%;
   font-size: 1.8rem;
   float: left;
   cursor: pointer;
@@ -114,48 +127,36 @@ a:hover {
 
 /* Second column */
 .col-4 {
+  z-index: 1;
+  box-shadow: 0 0 8px black;
+  border-radius: 5px;
   padding: 0 8px;
-  background-color: #ffffff;
-  height: 82vh;
+  background-color: var(--main-view-bg-color);
+  height: var(--main-vh-height);
   overflow: scroll;
 }
 
 /* Third column */
 .col-6 {
+  box-shadow: 0 0 8px black;
+  border-radius: 5px;
   padding: 0;
   background-color: #faf9f8;
-  height: 82vh;
+  height: var(--main-vh-height);
   overflow: hidden;
 }
 
 .col-m {
   padding: 0 8px;
-  background-color: #ffffff;
-  height: 82vh;
+  background-color: var(--main-view-bg-color);
+  height: var(--main-vh-height);
   overflow: scroll;
   display: none;
 }
 
 .container-fluid {
   overflow: hidden;
-  padding: 0 15px 15px 15px;
-}
-
-.content {
-  margin: 0;
-  width: inherit;
-}
-
-.content-1 {
-  padding-top: 7px;
-  padding-bottom: 7px;
-  font-weight: normal;
-  font-size: 1.2rem;
-}
-
-.content-1:hover {
-  background: var(--main-link-hover-color);
-  cursor: default;
+  padding: 0;
 }
 
 .badge {
@@ -178,7 +179,10 @@ a:hover {
 }
 
 #icon {
-  max-width: 18px;
+  padding: 1px;
+  border-radius: 5px;
+  background-color: var(--main-font-color);
+  max-width: 20px;
   height: auto;
   margin-bottom: 0.2rem;
   margin-right: 0.3rem;
@@ -228,8 +232,8 @@ a:hover {
   display: none;
   overflow: scroll;
   height: 90vh;
-  background-color: #ffffff;
-  border: 1px solidvar(--main-link-hover-color);
+  background-color: var(--main-view-bg-color);
+  /* border: 1px solid var(--main-link-hover-color); */
   border-radius: 5px;
   margin: 3px 7px;
 }
@@ -237,7 +241,7 @@ a:hover {
 /* @Tushar */
 
 .input-group {
-  border-bottom: 1px solidvar(--main-link-hover-color);
+  border-bottom: 1px solid var(--main-link-hover-color);
 }
 
 /* @Tushar */
@@ -279,7 +283,7 @@ a:hover {
 
 .form-control {
   height: inherit;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--main-view-bg-color);
 }
 
 /* @Tushar */
@@ -287,16 +291,33 @@ a:hover {
 .btn-compose,
 .btn-send {
   margin: 3px 0 0 0;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: #fff !important;
+  box-shadow: 0 0 8px black;
+  border-radius: 10px;
+  border-radius: 0.3rem;
+  background-image: var(--main-btn-color);
   border: 1px solid var(--main-btn-color);
-  border-radius: 0.1rem;
-  background-color: var(--main-btn-color);
 }
-
+.btn-compose {
+  box-shadow: 0 0 5px #eee;
+}
 /* @Tushar */
 
 .btn-compose:hover,
 .btn-send:hover {
-  background-color: var(--main-btn-hover-color);
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.btn-compose:active,
+.btn-send:active {
+  transition: 0.1s;
+  transform: translateY(3px);
 }
 
 /*Id selector for click on email instruction 
@@ -355,7 +376,7 @@ a:hover {
 .form-control:disabled,
 .form-control[readonly] {
   /*  The background while reading email is set to white */
-  background-color: #ffffff;
+  background-color: var(--main-view-bg-color);
 }
 
 /* Pseudo selector for element
@@ -365,14 +386,11 @@ textarea:focus {
   /* When the input and text box are 
 clicked it show white i.e. does not any border */
   outline: none !important;
-  border-color: #ffffff !important;
-  box-shadow: 0 0 10px #ffffff !important;
+  border-color: var(--main-view-bg-color) !important;
+  box-shadow: 0 0 10px var(--main-view-bg-color) !important;
 }
 
 @media (max-width: 768px) {
-  .col {
-    display: none;
-  }
   .col-large {
     display: none;
   }
@@ -393,13 +411,13 @@ clicked it show white i.e. does not any border */
   }
 
   ul {
-    width: 50%;
+    width: 50% !important;
     padding-left: 5px;
     position: fixed;
-    height: 82vh;
+    height: var(--main-vh-height);
     left: -100%;
     transition: all 0.5s;
-    height: 82vh;
+    height: var(--main-vh-height);
   }
   nav ul li {
     display: block;
