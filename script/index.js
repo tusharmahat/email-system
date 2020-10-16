@@ -173,7 +173,7 @@ function showInbox() {
     var i = 0;
     //Variable to save the read or unread value of email
     var readOrNot;
-    var unreadEmail = { index: [] };
+
     // Create empty String
     var dynamicHTML = "";
     var unreadCount = 0;
@@ -183,7 +183,6 @@ function showInbox() {
       //Gets the read(1) or unread(0) value of the email at index i
       readOrNot = email.emails[i].read == 1 ? "" : " unread";
       if (readOrNot == " unread") {
-        unreadEmail.index.unshift({ id: i });
         unreadCount++;
       }
       if (email.emails[i].fav == 0) {
@@ -213,7 +212,6 @@ function showInbox() {
         "</a></div>";
       i++;
     }
-    saveToUnread(unreadEmail);
     //Display the number of unread emails
     $(".badge").html("");
     if (unreadCount != 0) {
@@ -441,13 +439,6 @@ function loadInbox() {
   setInterval(showInbox, 120000);
 }
 
-function saveToUnread(unread) {
-  //Post request to save clientInbox to the server
-  $.post(SERVER_URL + "/sendToAdminUnread", unread, insertCallback).fail(
-    errorCallback
-  );
-}
-
 function showUnread() {
   // Hide the compose
   $("#compose").css("display", "none");
@@ -472,50 +463,46 @@ function showUnread() {
     if (data.length > 0) {
       /*Saves the data response from the server to email as a JSON object */
       email = { emails: data };
-      var indexOfUnread = null;
-      $.post(
-        SERVER_URL + "/getAdminUnread",
-        indexOfUnread,
-        getCallbackUnread
-      ).fail(errorCallback);
-      function getCallbackUnread(data) {
-        indexOfUnread = { index: data };
-        // Initialize the index of emails
-        var i = 0;
-        var readOrNot;
-        var dynamicHTML = "";
-        //concatinate the HTML tags through the while loop for all the emails
-        while (i < email.emails.length) {
-          var j = 0;
-          while (j < indexOfUnread.index.length) {
-            if (indexOfUnread.index[j].id == i) {
-              //Gets the read(1) or unread(0) value of the email at index i
-              readOrNot = email.emails[i].read == 1 ? "" : " unread";
-              dynamicHTML =
-                dynamicHTML +
-                '<div class="list-mail"  id="email-' +
-                i +
-                '" onclick="viewEmail(' +
-                "'inbox'," +
-                i +
-                ')" data-role="controlgroup" data-type="horizontal">' +
-                '<a data-role="button" class="list-email' +
-                readOrNot +
-                '">' +
-                email.emails[i].from +
-                '</a><a data-role="button" class="list-sb">' +
-                email.emails[i].sb +
-                "</a></div>";
-            }
-            j++;
+      // Initialize the index of emails
+      var i = 0;
+      var readOrNot;
+      var dynamicHTML = "";
+      //concatinate the HTML tags through the while loop for all the emails
+      while (i < email.emails.length) {
+        if (email.emails[i].read == 0) {
+          //Gets the read(1) or unread(0) value of the email at index i
+          if (email.emails[i].fav == 0) {
+            icon =
+              '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+          } else {
+            icon =
+              '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
           }
-          i++;
+          dynamicHTML =
+            dynamicHTML +
+            icon +
+            '" onclick="addToFav(' +
+            i +
+            ')" /><div class="list-mail"  id="email-' +
+            i +
+            '" onclick="viewEmail(' +
+            "'inbox'," +
+            i +
+            ')" data-role="controlgroup" data-type="horizontal">' +
+            '<a data-role="button" class="list-email' +
+            readOrNot +
+            '">' +
+            email.emails[i].from +
+            '</a><a data-role="button" class="list-sb">' +
+            email.emails[i].sb +
+            "</a></div>";
         }
-        //select the class to disply the emails
-        $(".col-4,.col-m").html("");
-        //Append the sent emails in the empty String
-        $(".col-4,.col-m").append(dynamicHTML);
+        i++;
       }
+      //select the class to disply the emails
+      $(".col-4,.col-m").html("");
+      //Append the sent emails in the empty String
+      $(".col-4,.col-m").append(dynamicHTML);
     }
   }
 }
@@ -536,18 +523,18 @@ function addToFav(i) {
       /*Saves the data response from the server to email
      as JSON object */
       email = { emails: data };
+      if (email.emails[i].fav == 0) {
+        email.emails[i].fav = 1;
+        alert("Added to Favorites");
+      } else {
+        email.emails[i].fav = 0;
+        alert("Removed from Favorites");
+      }
+      //Post request to save clientInbox to the server
+      $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+        errorCallback
+      );
     }
-    if (email.emails[i].fav == 0) {
-      email.emails[i].fav = 1;
-      alert("Added to Favorites");
-    } else {
-      email.emails[i].fav = 0;
-      alert("Removed from Favorites");
-    }
-    //Post request to save clientInbox to the server
-    $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
-      errorCallback
-    );
 
     showInbox();
   }
@@ -555,11 +542,11 @@ function addToFav(i) {
 
 function navSwipe() {
   if ($("#check").is(":checked")) {
-    $(".col").css("display", "block");
+    $(".col-2").css("display", "block");
     $("ul").css("left", "0");
     $("ul").css("transition", "all 0.5s");
   } else {
-    $(".col").css("display", "none");
+    $(".col-2").css("display", "none");
     $("ul").css("left", "-100%");
     $("ul").css("transition", "all 0.5s");
   }
@@ -570,7 +557,7 @@ function hideSideMenu() {
   var screenSize = window.matchMedia("(max-width: 768px)");
   console.log(screenSize);
   if (screenSize) {
-    $(".col").css("display", "none");
+    $(".col-2").css("display", "none");
     $("ul").css("left", "-100%");
   }
 }
@@ -591,51 +578,51 @@ function showFavorites() {
       /*Saves the data response from the server to adminInbox
                                                        as JSON object */
       email = { emails: data };
-    }
 
-    //Initialize the index of emails
-    var i = 0;
-    //Variable to save the read or unread value of email
-    var readOrNot;
-    var unreadEmail = { index: [] };
-    // Create empty String
-    var dynamicHTML = "";
-    var unreadCount = 0;
-    var icon = "";
-    //concatinate the HTML tags through the while loop for all the emails
-    while (i < email.emails.length) {
-      //Gets the read(1) or unread(0) value of the email at index i
-      readOrNot = email.emails[i].read == 1 ? "" : " unread";
-      if (readOrNot == " unread") {
-        unreadEmail.index.unshift({ id: i });
-        unreadCount++;
+      //Initialize the index of emails
+      var i = 0;
+      //Variable to save the read or unread value of email
+      var readOrNot;
+      var unreadEmail = { index: [] };
+      // Create empty String
+      var dynamicHTML = "";
+      var unreadCount = 0;
+      var icon = "";
+      //concatinate the HTML tags through the while loop for all the emails
+      while (i < email.emails.length) {
+        //Gets the read(1) or unread(0) value of the email at index i
+        readOrNot = email.emails[i].read == 1 ? "" : " unread";
+        if (readOrNot == " unread") {
+          unreadEmail.index.unshift({ id: i });
+          unreadCount++;
+        }
+        if (email.emails[i].fav == 0) {
+          icon =
+            '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+        } else {
+          icon =
+            '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+          dynamicHTML =
+            dynamicHTML +
+            icon +
+            '" onclick="addToFav(' +
+            i +
+            ')" /><div class="list-mail"  id="email-' +
+            i +
+            '" onclick="viewEmail(' +
+            "'inbox'," +
+            i +
+            ')" data-role="controlgroup" data-type="horizontal">' +
+            '<a data-role="button" class="list-email' +
+            readOrNot +
+            '">' +
+            email.emails[i].from +
+            '</a><a data-role="button" class="list-sb">' +
+            email.emails[i].sb +
+            "</a></div>";
+        }
+        i++;
       }
-      if (email.emails[i].fav == 0) {
-        icon =
-          '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
-      } else {
-        icon =
-          '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
-        dynamicHTML =
-          dynamicHTML +
-          icon +
-          '" onclick="addToFav(' +
-          i +
-          ')" /><div class="list-mail"  id="email-' +
-          i +
-          '" onclick="viewEmail(' +
-          "'inbox'," +
-          i +
-          ')" data-role="controlgroup" data-type="horizontal">' +
-          '<a data-role="button" class="list-email' +
-          readOrNot +
-          '">' +
-          email.emails[i].from +
-          '</a><a data-role="button" class="list-sb">' +
-          email.emails[i].sb +
-          "</a></div>";
-      }
-      i++;
     }
     //select the class to disply the emails
     $(".col-4, .col-m").html("");
