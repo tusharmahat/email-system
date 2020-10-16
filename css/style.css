@@ -1,24 +1,24 @@
 /*All Custom properties 
 @Akrit */
 :root {
-  --main-nav-color: linear-gradient(to right, #26a0da, white, #26a0da);
+  --main-nav-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
   --main-btn-color: linear-gradient(
     to right,
-    #314755 0%,
-    #26a0da 51%,
-    #314755 100%
+    #a8d266 0%,
+    #00a1b1 51%,
+    #a8d266 100%
   );
   --main-btn-hover-color: linear-gradient(
     to right,
-    #314755 0%,
-    #26a0da 51%,
-    #314755 100%
+    #a8d266 0%,
+    #00a1b1 51%,
+    #a8d266 100%
   );
   --main-font-color: #ffffff;
-  --main-bg-color: linear-gradient(to right, #2c3e50, #4ca1af);
-  --main-link-hover-color: #26a0da;
+  --main-bg-color: #4eccda;
+  --main-link-hover-color: #a8d266;
   --main-view-bg-color: #ffffff;
-  --main-vh-height: 85vh;
+  --main-vh-height: 92.5vh;
 }
 
 /* Selector for all */
@@ -42,7 +42,7 @@ body {
   /* Sets overflow to hidden */
   overflow: hidden;
   /* Sets background color as per Custom properties declared above */
-  background-image: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   /* Sets the height to 100% */
   height: 100%;
 }
@@ -79,6 +79,7 @@ textarea {
 .content {
   /* Sets top margin to 5px */
   margin-top: 5px;
+  margin-left: 5px;
 }
 
 /* Class selector for col */
@@ -102,7 +103,7 @@ textarea {
 /*Class selector for logo(name of app) 
 @Tushar */
 .logo-name {
-  /* color: black; */
+  padding: 0 0.5rem;
   /* Align text to center */
   text-align: left;
   /* Sets line height to 3rem */
@@ -115,8 +116,11 @@ textarea {
   font-size: 2.5rem;
 }
 
+/*Class selector for logo*/
 #logo {
+  /* Sets position to absolute */
   position: absolute;
+  /* Sets right to 50% */
   right: 50%;
   top: -0.5%;
   border-radius: 5px;
@@ -131,7 +135,7 @@ textarea {
   /* Sets height as per declared in the Custom properties  */
   height: var(--main-vh-height);
   /* Sets back ground image as per declared in the Custom properties  */
-  background-image: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   /* Sets float to left */
   float: left;
 }
@@ -140,7 +144,7 @@ textarea {
 #nav ul li {
   /* Sets margin top margin to 1rem, right margin to 0,
    bottom to 4rem, left margin to 0 */
-  margin: 1rem 0 4rem 0;
+  margin: 1rem 0 1rem 0;
 }
 
 /* element selector for the active li inside id nav */
@@ -188,7 +192,7 @@ li a:hover {
   /* Sets cursor to pointer */
   cursor: pointer;
   /* Sets display to block */
-  display: block;
+  display: none;
 }
 
 /* Id selector for hidden checkbox */
@@ -326,7 +330,7 @@ a #icon {
 /* @Tushar */
 
 .input-group-prepend {
-  margin-left: 10px;
+  margin-left: 3px;
 }
 
 /* @Tushar */
@@ -336,10 +340,10 @@ a #icon {
   border-color: #f8fafb;
   margin-top: 11px;
   margin-right: 8px;
-  margin-right: 8px;
   margin-bottom: 11px;
   border-radius: 0;
   padding: 4px 5px;
+  border-radius: 5px;
 }
 
 /* @Tushar */
@@ -363,7 +367,7 @@ a #icon {
 
 .btn-compose,
 .btn-send {
-  margin: 3px 0 0 0;
+  margin: 3px 3px 0 3px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.5s;
@@ -373,10 +377,26 @@ a #icon {
   border-radius: 10px;
   border-radius: 0.3rem;
   background-image: var(--main-btn-color);
-  border: 1px solid var(--main-btn-color);
+  border: 1px solid var(--main-link-hover-color);
 }
 .btn-compose {
   box-shadow: 0 0 5px #eee;
+  margin-bottom: 2rem;
+}
+
+.btn-help {
+  text-align: center;
+  margin-left: 4px;
+  margin-right: 3rem !important;
+  width: 5% !important;
+  border: 1px solid var(--main-btn-color);
+}
+
+.btn-greetings,
+.btn-closing .btn-body {
+  height: 30px;
+  float: left;
+  display: block;
 }
 /* @Tushar */
 
@@ -385,10 +405,11 @@ a #icon {
   background-position: right center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
+  border: 1px solid var(--main-link-hover-color);
 }
-
 .btn-compose:active,
 .btn-send:active {
+  border: 1px solid var(--main-link-hover-color);
   transition: 0.1s;
   transform: translateY(3px);
 }
@@ -463,6 +484,18 @@ clicked it show white i.e. does not any border */
   box-shadow: 0 0 10px var(--main-view-bg-color) !important;
 }
 
+.myLabel {
+  margin-top: 1px;
+  padding: 2px;
+  border-right: 1px solid var(--main-link-hover-color);
+}
+
+.myLabel p {
+  background-color: #e9ecef;
+  padding: 2px;
+  border-radius: 5px;
+}
+
 @media (max-width: 768px) {
   .col-large {
     display: none;
@@ -480,7 +513,7 @@ clicked it show white i.e. does not any border */
   }
   .logo-name {
     padding-top: 0.5rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   ul {
@@ -515,7 +548,7 @@ clicked it show white i.e. does not any border */
   }
   .logo-name {
     padding-top: 0.5rem;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
   }
   #select-mail-ins {
     display: none;
