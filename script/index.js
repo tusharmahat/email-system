@@ -87,6 +87,7 @@ function sendToStudent() {
        as JSON object */
         email = { emails: data };
       }
+
       // Adds new email to the begining of the email
       email.emails.unshift(newEmail);
 
@@ -219,8 +220,8 @@ function showInbox() {
     if (unreadCount != 0) {
       $(".badge").append(unreadCount);
     }
+    $(".exclam").html("");
     if (unreadCount > 0) {
-      $(".exclam").html("");
       $(".exclam").append("!");
     }
     //select the class to disply the emails
@@ -422,7 +423,6 @@ function viewEmail(link, i) {
  * @param {*} err is the erro returned
  */
 function errorCallback(err) {
-  console.log("Get Successful");
   console.log(err.responseText);
 }
 function error(err) {
@@ -538,6 +538,7 @@ function addToFav(i) {
         email.emails[i].fav = 0;
         alert("Removed from Favorites");
       }
+
       //Post request to save clientInbox to the server
       $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
         error

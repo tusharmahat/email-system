@@ -648,3 +648,15 @@ function showFavorites() {
     $(".col-4, .col-m").append(dynamicHTML);
   }
 }
+
+function subjectHelp() {
+  $("#help-subject").modal();
+}
+
+function toHelp() {
+  $("#help-to").modal();
+}
+
+function ccHelp() {
+  $("#help-cc").modal();
+}
