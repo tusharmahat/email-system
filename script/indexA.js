@@ -13,6 +13,7 @@ function showCompose() {
   $("#send-msg").val("");
 
   //Displays the compose column
+  $("#email--view").css("display", "none");
   $("#compose").css("display", "block");
 }
 
@@ -22,19 +23,6 @@ function showCompose() {
  * @Tushar
  */
 function showDraft() {
-  //Hides the compose column
-  $("#compose").css("display", "none");
-
-  //Shows the instruction to click mail to read it
-  $("#select-mail-ins").css("display", "block");
-}
-
-/**
- * This function hides compose on the third column on click
- * and displays the instructions
- * @Tushar
- */
-function showSent() {
   //Hides the compose column
   $("#compose").css("display", "none");
 
@@ -87,6 +75,7 @@ function sendToStudent() {
        as JSON object */
         email = { emails: data };
       }
+
       // Adds new email to the begining of the email
       email.emails.unshift(newEmail);
 
@@ -126,14 +115,9 @@ function sendToStudent() {
           insertCallback
         ).fail(errorCallback);
       }
+      $("#send-alert").modal("hide");
+      showSent();
     }
-
-    $("#myModal").modal("hide");
-
-    $("#compose").css("display", "none");
-
-    $("#select-mail-ins").css("display", "block");
-    showSent();
   }
 }
 
@@ -186,12 +170,12 @@ function showInbox() {
         if (readOrNot == " unread") {
           unreadCount++;
         }
-        if (email.emails[i].fav == 0) {
+        if (email.emails[i].fav == 1) {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<img class="icon icon-fav icon--float--left" id="icon" src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+            '<img class="icon icon--float--left" id="icon" src="./images/fav-add-icon.png';
         }
         dynamicHTML =
           dynamicHTML +
@@ -216,17 +200,16 @@ function showInbox() {
     }
     //Display the number of unread emails
     $(".badge").html("");
-    if (unreadCount != 0) {
-      $(".badge").append(unreadCount);
-    }
+    $(".exclam").html("");
     if (unreadCount > 0) {
-      $(".exclam").html("");
+      $(".badge").append(unreadCount);
       $(".exclam").append("!");
     }
+
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
       localStorage.setItem("page", JSON.stringify("inbox"));
@@ -278,12 +261,9 @@ function showSent() {
 
     //concatinate the HTML tags through the while loop for all the emails
     while (i < email.emails.length) {
-      //Gets the read(1) or unread(0) value of the email at index i
-      readOrNot = email.emails[i].read == 1 ? "" : " unread";
-
       dynamicHTML =
         dynamicHTML +
-        '<div class="list-mail"  id="email-' +
+        '<p class="list-mail"  id="email-' +
         i +
         '" onclick="viewEmail(' +
         "'sent'," +
@@ -293,14 +273,14 @@ function showSent() {
         email.emails[i].from +
         '</a><a data-role="button" class="list-sb">' +
         email.emails[i].sb +
-        "</a></div>";
+        "</a></p>";
       i++;
     }
 
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
       localStorage.setItem("page", JSON.stringify("inbox"));
@@ -348,7 +328,7 @@ function cancel() {
  */
 function sendConfirm() {
   //Triggers alertbox
-  $("#myModal").modal();
+  $("#send-alert").modal();
 }
 
 /**
@@ -422,7 +402,6 @@ function viewEmail(link, i) {
  * @param {*} err is the erro returned
  */
 function errorCallback(err) {
-  console.log("Get Successful");
   console.log(err.responseText);
 }
 function error(err) {
@@ -477,15 +456,16 @@ function showUnread() {
       var dynamicHTML = "";
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
-        if (email.emails[i].read == 0) {
-          //Gets the read(1) or unread(0) value of the email at index i
-          if (email.emails[i].fav == 0) {
-            icon =
-              '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
-          } else {
-            icon =
-              '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
-          }
+        if (email.emails[i].fav == 1) {
+          icon =
+            '<img class="icon icon-fav icon--float--left" id="icon" src="./images/fav-add-icon.png';
+        } else {
+          icon =
+            '<img class="icon icon--float--left" id="icon" src="./images/fav-add-icon.png';
+        }
+        //Gets the read(1) or unread(0) value of the email at index i
+        readOrNot = email.emails[i].read == 1 ? "" : " unread";
+        if (readOrNot == " unread") {
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -507,11 +487,11 @@ function showUnread() {
         }
         i++;
       }
-      //select the class to disply the emails
-      $(".col-4,.col-m").html("");
-      //Append the sent emails in the empty String
-      $(".col-4,.col-m").append(dynamicHTML);
     }
+    //select the class to disply the emails
+    $("#middle,.col-m").html("");
+    //Append the sent emails in the empty String
+    $("#middle,.col-m").append(dynamicHTML);
   }
 }
 
@@ -533,27 +513,30 @@ function addToFav(i) {
       email = { emails: data };
       if (email.emails[i].fav == 0) {
         email.emails[i].fav = 1;
-        alert("Added to Favorites");
+        console.log("Added to Favorites");
       } else {
         email.emails[i].fav = 0;
-        alert("Removed from Favorites");
+        console.log("Removed from Favorites");
       }
+
       //Post request to save clientInbox to the server
-      $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+      $.post(SERVER_URL + "/sendToAdminInbox", email, insertFavCallback).fail(
         error
       );
+      function insertFavCallback() {
+        showInbox();
+      }
     }
-    showInbox();
   }
 }
 
 function navSwipe() {
   if ($("#check").is(":checked")) {
-    $(".col-2").css("display", "block");
-    $("ul").css("left", "0");
+    $(".menu-m").css("display", "block");
+    $("ul").css("left", "40px");
     $("ul").css("transition", "all 0.5s");
   } else {
-    $(".col-2").css("display", "none");
+    $(".menu-m").css("display", "none");
     $("ul").css("left", "-100%");
     $("ul").css("transition", "all 0.5s");
   }
@@ -564,7 +547,6 @@ function hideSideMenu() {
   var screenSize = window.matchMedia("(max-width: 768px)");
   console.log(screenSize);
   if (screenSize) {
-    $(".col-2").css("display", "none");
     $("ul").css("left", "-100%");
   }
 }
@@ -601,7 +583,7 @@ function showFavorites() {
       var i = 0;
       //Variable to save the read or unread value of email
       var readOrNot;
-      var unreadEmail = { index: [] };
+
       // Create empty String
       var dynamicHTML = "";
       var unreadCount = 0;
@@ -611,15 +593,14 @@ function showFavorites() {
         //Gets the read(1) or unread(0) value of the email at index i
         readOrNot = email.emails[i].read == 1 ? "" : " unread";
         if (readOrNot == " unread") {
-          unreadEmail.index.unshift({ id: i });
           unreadCount++;
         }
         if (email.emails[i].fav == 0) {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<img class="icon icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+            '<img class="icon icon-fav icon--float--left" src="./images/fav-add-icon.png';
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -643,20 +624,8 @@ function showFavorites() {
       }
     }
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
   }
-}
-
-function subjectHelp() {
-  $("#help-subject").modal();
-}
-
-function toHelp() {
-  $("#help-to").modal();
-}
-
-function ccHelp() {
-  $("#help-cc").modal();
 }

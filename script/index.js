@@ -13,6 +13,7 @@ function showCompose() {
   $("#send-msg").val("");
 
   //Displays the compose column
+  $("#email--view").css("display", "none");
   $("#compose").css("display", "block");
 }
 
@@ -30,25 +31,12 @@ function showDraft() {
 }
 
 /**
- * This function hides compose on the third column on click
- * and displays the instructions
- * @Tushar
- */
-function showSent() {
-  //Hides the compose column
-  $("#compose").css("display", "none");
-
-  //Shows the instruction to click mail to read it
-  $("#select-mail-ins").css("display", "block");
-}
-
-/**
  * function to send email to admin
  * It saves two copy of the email into local storage one in 'student-sent-items',
  * and one in 'admin-inbox-items'
  * @Tushar
  */
-function sendToStudent() {
+function sendToAdmin() {
   // Create empty JSON object with name value pair for the emails detail saves in email variable
   var email = { emails: [] };
   /*Gets the value of to, cc, sb, message from the inputs and textarea 
@@ -73,7 +61,7 @@ function sendToStudent() {
     $("#send-check-5").is(":checked")
   ) {
     //Post request to get clientInbox from the server
-    $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
+    $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
       errorCallback
     );
 
@@ -87,18 +75,17 @@ function sendToStudent() {
        as JSON object */
         email = { emails: data };
       }
-
       // Adds new email to the begining of the email
       email.emails.unshift(newEmail);
 
       //Post request to save clientInbox to the server
-      $.post(SERVER_URL + "/sendToClientInbox", email, insertCallback).fail(
+      $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
         errorCallback
       );
 
       // Post request to get getAdminSentItems from the server
       $.post(
-        SERVER_URL + "/getAdminSentItems",
+        SERVER_URL + "/getClientSentItems",
         email,
         getCallbackSentItems
       ).fail(errorCallback);
@@ -121,20 +108,15 @@ function sendToStudent() {
         //Post request to save clientSentItems to the server
 
         $.post(
-          SERVER_URL + "/sendToAdminSentItems",
+          SERVER_URL + "/sendToClientSentItems",
           email,
 
           insertCallback
         ).fail(errorCallback);
       }
+      $("#send-alert").modal("hide");
+      showSent();
     }
-
-    $("#myModal").modal("hide");
-
-    $("#compose").css("display", "none");
-
-    $("#select-mail-ins").css("display", "block");
-    showSent();
   }
 }
 
@@ -144,20 +126,12 @@ function sendToStudent() {
  * @Tushar
  */
 function showInbox() {
-  // $(".inbox-active").css("background-color", "var(--main-link-hover-color)");
-  // Hide the compose
-  $("#compose").css("display", "none");
-  // Display the instruction to click on email to view
-  $("#select-mail-ins").css("display", "block");
-  // Hide if the email is already viewing from the sent
-  $("#email--view").css("display", "none");
-
-  hideSideMenu();
+  console.log("inbox");
   //Initialize clientInbox variable
   var email = { emails: [] };
 
-  //Post request to get getAdminInbox from the server
-  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
+  //Post request to get getClientInbox from the server
+  $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
     errorCallback
   );
 
@@ -166,6 +140,15 @@ function showInbox() {
    * @param {object} data is the email JSON object
    */
   function getCallbackInbox(data) {
+    // $(".inbox-active").css("background-color", "var(--main-link-hover-color)");
+    // Hide the compose
+    $("#compose").css("display", "none");
+    // Display the instruction to click on email to view
+    $("#select-mail-ins").css("display", "block");
+    // Hide if the email is already viewing from the sent
+    $("#email--view").css("display", "none");
+
+    hideSideMenu();
     if (data.length > 0) {
       /*Saves the data response from the server to adminInbox
                                                        as JSON object */
@@ -187,12 +170,12 @@ function showInbox() {
         if (readOrNot == " unread") {
           unreadCount++;
         }
-        if (email.emails[i].fav == 0) {
+        if (email.emails[i].fav == 1) {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<img class="icon icon-fav icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+            '<img class="icon icon--float--left" src="./images/fav-add-icon.png';
         }
         dynamicHTML =
           dynamicHTML +
@@ -217,17 +200,17 @@ function showInbox() {
     }
     //Display the number of unread emails
     $(".badge").html("");
-    if (unreadCount != 0) {
-      $(".badge").append(unreadCount);
-    }
     $(".exclam").html("");
+
     if (unreadCount > 0) {
+      $(".badge").append(unreadCount);
       $(".exclam").append("!");
     }
+
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
       localStorage.setItem("page", JSON.stringify("inbox"));
@@ -243,19 +226,11 @@ function showInbox() {
  * @Tushar
  */
 function showSent() {
-  // $(".sent-active").css("background-color", "var(--main-link-hover-color)");
-  // Hide the compose
-  $("#compose").css("display", "none");
-  // Display the instruction to click on email to view
-  $("#select-mail-ins").css("display", "block");
-  // Hide if the email is already viewing from the sent
-  $("#email--view").css("display", "none");
-  hideSideMenu();
   //Initialize clientInbox variable
   var email = { emails: [] };
 
-  //Post request to get getAdminInbox from the server
-  $.post(SERVER_URL + "/getAdminSentItems", email, getCallbackInbox).fail(
+  //Post request to get getClientInbox from the server
+  $.post(SERVER_URL + "/getClientSentItems", email, getCallbackInbox).fail(
     errorCallback
   );
 
@@ -264,6 +239,14 @@ function showSent() {
    * @param {object} data is the email JSON object
    */
   function getCallbackInbox(data) {
+    // $(".sent-active").css("background-color", "var(--main-link-hover-color)");
+    // Hide the compose
+    $("#compose").css("display", "none");
+    // Display the instruction to click on email to view
+    $("#select-mail-ins").css("display", "block");
+    // Hide if the email is already viewing from the sent
+    $("#email--view").css("display", "none");
+    hideSideMenu();
     if (data.length > 0) {
       /*Saves the data response from the server to adminInbox
                                                         as JSON object */
@@ -279,12 +262,9 @@ function showSent() {
 
     //concatinate the HTML tags through the while loop for all the emails
     while (i < email.emails.length) {
-      //Gets the read(1) or unread(0) value of the email at index i
-      readOrNot = email.emails[i].read == 1 ? "" : " unread";
-
       dynamicHTML =
         dynamicHTML +
-        '<div class="list-mail"  id="email-' +
+        '<p class="list-mail"  id="email-' +
         i +
         '" onclick="viewEmail(' +
         "'sent'," +
@@ -294,17 +274,17 @@ function showSent() {
         email.emails[i].from +
         '</a><a data-role="button" class="list-sb">' +
         email.emails[i].sb +
-        "</a></div>";
+        "</a></p>";
       i++;
     }
 
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
     try {
       // Save the value of select to local storage as select
-      localStorage.setItem("page", JSON.stringify("inbox"));
+      localStorage.setItem("page", JSON.stringify("sent"));
     } catch (localStorageError) {
       console.log("Error Thrown: " + localStorageError.name);
     }
@@ -349,7 +329,7 @@ function cancel() {
  */
 function sendConfirm() {
   //Triggers alertbox
-  $("#myModal").modal();
+  $("#send-alert").modal();
 }
 
 /**
@@ -367,9 +347,9 @@ function viewEmail(link, i) {
 
   //if the link is inbox then grab emails from the student-inbox-items else from admin-sent-items
   if (link == "inbox") {
-    route = "AdminInbox";
+    route = "ClientInbox";
   } else {
-    route = "AdminSentItems";
+    route = "ClientSentItems";
   }
 
   //Variable to store the emails
@@ -423,6 +403,7 @@ function viewEmail(link, i) {
  * @param {*} err is the erro returned
  */
 function errorCallback(err) {
+  console.log("Get Successful");
   console.log(err.responseText);
 }
 function error(err) {
@@ -459,7 +440,7 @@ function showUnread() {
   //Initialize clientInbox variable
   var email = { emails: [] };
   //Post request to get adminSentitems from the server
-  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
+  $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
     errorCallback
   );
   /**
@@ -477,15 +458,16 @@ function showUnread() {
       var dynamicHTML = "";
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
-        if (email.emails[i].read == 0) {
-          //Gets the read(1) or unread(0) value of the email at index i
-          if (email.emails[i].fav == 0) {
-            icon =
-              '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
-          } else {
-            icon =
-              '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
-          }
+        if (email.emails[i].fav == 1) {
+          icon =
+            '<img class="icon icon-fav icon--float--left"  src="./images/fav-add-icon.png';
+        } else {
+          icon =
+            '<img class="icon icon--float--left" src="./images/fav-add-icon.png';
+        }
+        //Gets the read(1) or unread(0) value of the email at index i
+        readOrNot = email.emails[i].read == 1 ? "" : " unread";
+        if (readOrNot == " unread") {
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -507,18 +489,18 @@ function showUnread() {
         }
         i++;
       }
-      //select the class to disply the emails
-      $(".col-4,.col-m").html("");
-      //Append the sent emails in the empty String
-      $(".col-4,.col-m").append(dynamicHTML);
     }
+    //select the class to disply the emails
+    $("#middle,.col-m").html("");
+    //Append the sent emails in the empty String
+    $("#middle,.col-m").append(dynamicHTML);
   }
 }
 
 function addToFav(i) {
   var email;
   //Post request to get clientInbox from the server
-  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
+  $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
     errorCallback
   );
 
@@ -540,21 +522,23 @@ function addToFav(i) {
       }
 
       //Post request to save clientInbox to the server
-      $.post(SERVER_URL + "/sendToAdminInbox", email, insertCallback).fail(
+      $.post(SERVER_URL + "/sendToClientInbox", email, insertFavCallback).fail(
         error
       );
+      function insertFavCallback() {
+        showInbox();
+      }
     }
-    showInbox();
   }
 }
 
 function navSwipe() {
   if ($("#check").is(":checked")) {
-    $(".col-2").css("display", "block");
-    $("ul").css("left", "0");
+    $(".menu-m").css("display", "block");
+    $("ul").css("left", "40px");
     $("ul").css("transition", "all 0.5s");
   } else {
-    $(".col-2").css("display", "none");
+    $(".menu-m").css("display", "none");
     $("ul").css("left", "-100%");
     $("ul").css("transition", "all 0.5s");
   }
@@ -565,7 +549,6 @@ function hideSideMenu() {
   var screenSize = window.matchMedia("(max-width: 768px)");
   console.log(screenSize);
   if (screenSize) {
-    $(".col-2").css("display", "none");
     $("ul").css("left", "-100%");
   }
 }
@@ -584,7 +567,7 @@ function showFavorites() {
 
   var email;
 
-  $.post(SERVER_URL + "/getAdminInbox", email, getCallbackInbox).fail(
+  $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
     errorCallback
   );
 
@@ -612,15 +595,14 @@ function showFavorites() {
         //Gets the read(1) or unread(0) value of the email at index i
         readOrNot = email.emails[i].read == 1 ? "" : " unread";
         if (readOrNot == " unread") {
-          unreadEmail.index.unshift({ id: i });
           unreadCount++;
         }
         if (email.emails[i].fav == 0) {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<img class="icon icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon--float--left" id="icon" src="./images/fav-delete-icon.png';
+            '<img class="icon icon-fav icon--float--left" src="./images/fav-add-icon.png';
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -644,8 +626,20 @@ function showFavorites() {
       }
     }
     //select the class to disply the emails
-    $(".col-4, .col-m").html("");
+    $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
-    $(".col-4, .col-m").append(dynamicHTML);
+    $("#middle, .col-m").append(dynamicHTML);
   }
+}
+
+function subjectHelp() {
+  $("#help-subject").modal();
+}
+
+function toHelp() {
+  $("#help-to").modal();
+}
+
+function ccHelp() {
+  $("#help-cc").modal();
 }

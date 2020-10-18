@@ -18,7 +18,8 @@
   --main-bg-color: #4eccda;
   --main-link-hover-color: #a8d266;
   --main-view-bg-color: #ffffff;
-  --main-vh-height: 92.5vh;
+  --main-vh-height: 92%;
+  --main-scroll-bar-color: #005681;
 }
 
 /* Selector for all */
@@ -37,19 +38,20 @@
   font-family: sans-serif;
 }
 
-/* Selector for body */
-body {
-  /* Sets overflow to hidden */
-  overflow: hidden;
-  /* Sets background color as per Custom properties declared above */
-  background-color: var(--main-bg-color);
-  /* Sets the height to 100% */
+body,
+html {
+  margin: 0;
   height: 100%;
+}
+body {
+  background-color: var(--main-bg-color);
+  overflow: hidden;
 }
 
 /* Selector for scroll bar width */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 /*Selector for scroll bar Track */
@@ -60,49 +62,71 @@ body {
 
 /*Selector for scroll bar Handle */
 ::-webkit-scrollbar-thumb {
-  background: #c8c6c4;
+  background: var(--main-scroll-bar-color);
   border-radius: 10px;
 }
 
 /*Selector for scroll bar Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #98a3a6;
+  background: var(--main-link-hover-color);
 }
-
-/* Selector for text area */
-textarea {
-  /* Set it to non resizable */
-  resize: none;
-}
-
-/* Class Selector for content */
-.content {
-  /* Sets top margin to 5px */
-  margin-top: 5px;
-  margin-left: 5px;
-}
-
-/* Class selector for col */
-.col {
+#left {
+  height: 100%;
   /* Sets border radius to 5px */
   border-radius: 5px;
   /* Sets padding to 0 */
   padding: 0;
   /* Sets the background color as per declared in the Custom properties */
   background-color: var(--main-bg-color);
-  /* Sets height as per declared in the Custom properties */
-  height: var(--main-vh-height);
-  /* Sets overflow to hidden */
-  overflow: hidden;
+  width: 16.67%;
+  position: relative;
+  float: left;
+  /* text-align: center; */
+  overflow-y: auto;
 }
 
-/* Navigation bar */
-/*Selector for nav class 
-@Tushar */
+.container-fluid,
+.content {
+  padding: 5px 10px 13px 10px;
+  height: 98%;
+}
+
+#right {
+  width: 50%;
+  position: relative;
+  float: right;
+  /* text-align: center; */
+  height: 100%;
+
+  overflow-y: auto;
+  box-shadow: 0 0 8px black;
+  border-radius: 5px;
+  background-color: #faf9f8;
+}
+
+#middle {
+  height: 100%;
+  width: 33.33%;
+  position: relative;
+  /* text-align: center; */
+  overflow-y: auto;
+  box-shadow: 0 0 8px black;
+  border-radius: 5px;
+  padding: 0 8px;
+  background-color: var(--main-view-bg-color);
+}
+
+.col-m {
+  background-color: var(--main-view-bg-color);
+  height: var(--main-vh-height);
+  overflow-y: auto;
+  display: none;
+}
 
 /*Class selector for logo(name of app) 
 @Tushar */
 .logo-name {
+  width: 100%;
   padding: 0 0.5rem;
   /* Align text to center */
   text-align: left;
@@ -128,8 +152,35 @@ textarea {
   width: 3.5rem;
 }
 
-/* element selector for ul inside id nav */
-#nav ul {
+/* Class selector for top bar icon which hides the menu to left on small devices */
+.checkbtn {
+  /* Sets color as per declared in the Custom properties */
+  color: var(--main-font-color);
+  /* Sets padding of top and bottom to 0 and left and right to 1% */
+  padding: 0 1%;
+  /* Sets font size to 1.8rem */
+  font-size: 1.8rem;
+  /* Sets float to left */
+  float: left;
+  /* Sets cursor to pointer */
+  cursor: pointer;
+  /* Sets display to block */
+  display: none;
+}
+
+/* Id selector for hidden checkbox */
+#check {
+  display: none !important;
+}
+
+/* class selector for mobile menu */
+.menu-m {
+  /* by default it's display set to none */
+  display: none;
+}
+/* element selector for ul inside class menu */
+.menu ul,
+.menu-m ul {
   /* Sets width to 100% */
   width: 100%;
   /* Sets height as per declared in the Custom properties  */
@@ -140,23 +191,26 @@ textarea {
   float: left;
 }
 
-/* element selector for li inside ul, ul inside id nav  */
-#nav ul li {
+/* element selector for li inside ul, ul inside class menu  */
+.menu ul li,
+.menu-m ul li {
   /* Sets margin top margin to 1rem, right margin to 0,
    bottom to 4rem, left margin to 0 */
   margin: 1rem 0 1rem 0;
 }
 
-/* element selector for the active li inside id nav */
-#nav li:active {
+/* element selector for the active li inside class menu */
+.menu li:active,
+.menu-m li:active {
   /* Sets transition of 0.1 sec */
   transition: 0.1s;
   /* Sets text transformation to uppercase */
   transform: translateY(4px);
 }
 
-/* element selector for a inside li, li inside ul, ul id nav  */
-#nav ul li a {
+/* element selector for a inside li, li inside ul, ul class menu  */
+.menu ul li a,
+.menu-m li:active {
   /* Sets color as per declared in the Custom properties */
   color: var(--main-font-color);
   /* Sets font size to 16px */
@@ -178,61 +232,26 @@ li a:hover {
   /* Sets cursor to pointer */
   cursor: pointer;
 }
+.icon {
+  padding: 1px;
+  border-radius: 5px;
+  /* background-color: yellow; */
+  max-width: 20px;
+  height: auto;
+  margin: 0.5rem 0.3rem 0.2rem 0;
+}
 
-/* Class selector for top bar icon which hides the menu to left on small devices */
-.checkbtn {
-  /* Sets color as per declared in the Custom properties */
-  color: var(--main-font-color);
-  /* Sets padding of top and bottom to 0 and left and right to 1% */
-  padding: 0 1%;
-  /* Sets font size to 1.8rem */
-  font-size: 1.8rem;
-  /* Sets float to left */
+.icon-fav {
+  background-color: yellow;
+}
+a .icon {
+  background-color: var(--main-font-color);
+  margin-top: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.icon--float--left {
   float: left;
-  /* Sets cursor to pointer */
-  cursor: pointer;
-  /* Sets display to block */
-  display: none;
-}
-
-/* Id selector for hidden checkbox */
-#check {
-  display: none;
-}
-
-/* Second column */
-.col-4 {
-  /* Sets z-index to 1 */
-  z-index: 1;
-  box-shadow: 0 0 8px black;
-  border-radius: 5px;
-  padding: 0 8px;
-  background-color: var(--main-view-bg-color);
-  height: var(--main-vh-height);
-  overflow: scroll;
-}
-
-/* Third column */
-.col-6 {
-  box-shadow: 0 0 8px black;
-  border-radius: 5px;
-  padding: 0;
-  background-color: #faf9f8;
-  height: var(--main-vh-height);
-  overflow: hidden;
-}
-
-.col-m {
-  padding: 0 8px;
-  background-color: var(--main-view-bg-color);
-  height: var(--main-vh-height);
-  overflow: scroll;
-  display: none;
-}
-
-.container-fluid {
-  overflow: hidden;
-  padding: 0 5px 0 0;
 }
 
 .badge {
@@ -252,27 +271,6 @@ li a:hover {
   margin: 0.5rem 0;
   overflow: hidden;
 }
-
-#icon {
-  padding: 1px;
-  border-radius: 5px;
-  background-color: var(--main-font-color);
-  max-width: 20px;
-  height: auto;
-  margin: 0.5rem 0.3rem 0.2rem 0;
-}
-a #icon {
-  margin-top: 0.2rem;
-  margin-bottom: 0.4rem;
-}
-#empty {
-  padding-right: 18px;
-}
-
-.icon--float--left {
-  float: left;
-}
-
 .list-mail:hover {
   /* Sets the bg color to lightgray*/
   background: var(--main-link-hover-color);
@@ -308,11 +306,11 @@ a #icon {
 #email--view {
   display: none;
   overflow: scroll;
-  height: 90vh;
+  height: 100%;
   background-color: var(--main-view-bg-color);
   /* border: 1px solid var(--main-link-hover-color); */
   border-radius: 5px;
-  margin: 3px 7px;
+  padding: 5px;
 }
 
 /* @Tushar */
@@ -386,7 +384,7 @@ a #icon {
 .btn-help {
   text-align: center;
   margin-left: 4px;
-  margin-right: 3rem !important;
+  margin-right: 2.5rem !important;
   width: 5% !important;
   border: 1px solid var(--main-btn-color);
 }
@@ -423,7 +421,7 @@ a #icon {
 @Tushar */
 .modal-content {
   top: -1.8rem;
-  left: -45%;
+  left: -42%;
   width: 96%;
 }
 
@@ -496,12 +494,26 @@ clicked it show white i.e. does not any border */
 }
 
 @media (max-width: 768px) {
-  .col-large {
+  .container-fluid,
+  .content {
+    height: 100%;
+  }
+  .content {
+    padding: 0;
+  }
+  #left {
+    display: none !important;
+  }
+  #middle {
+    display: none;
+  }
+  #right {
     display: none;
   }
   .col-m {
     width: 100%;
     display: block;
+    border-radius: 5px;
   }
   label {
     padding-right: 2%;
@@ -515,19 +527,31 @@ clicked it show white i.e. does not any border */
     font-size: 1.5rem;
   }
 
+  /*Class selector for logo*/
+  #logo {
+    /* Sets position to absolute */
+    position: absolute;
+    /* Sets right to 50% */
+    right: 5%;
+    top: -0.5%;
+    border-radius: 5px;
+    /* float: right; */
+    width: 3.5rem;
+  }
+
   ul {
-    width: 50% !important;
+    width: 130px !important;
     padding-left: 5px;
     position: fixed;
-    height: var(--main-vh-height);
+    /* height: var(--main-vh-height); */
     left: -100%;
     transition: all 0.5s;
-    height: var(--main-vh-height);
+    /* height: var(--main-vh-height); */
   }
-  nav ul li {
+  .menu ul li {
     display: block;
   }
-  nav ul li a {
+  .menu ul li a {
     font-size: 20px;
   }
   #select-mail-ins {
@@ -535,7 +559,10 @@ clicked it show white i.e. does not any border */
   }
 }
 @media (max-width: 372px) {
-  .col-large {
+  #middle {
+    display: none;
+  }
+  #right {
     display: none;
   }
   label {

@@ -1,172 +1,353 @@
-<!-- @author Tushar Mahat (A00429666)
-    @author Akrit Malla (A00433147)
-    Your Email System
-    Page contains lists of inbox emails -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <!-- Title of the html -->
-  <title>Your Email System</title>
-  <!-- link of bootstrap 4.4.1 from the CDN server -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <!-- link of the style.css for userdefined styling -->
-  <link rel="stylesheet" href="./css/style.css" />
-  <!-- meta tag that sets layout ;the width of the page to device width and scale to 1.0 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <!-- Title of the html -->
+    <title>Your Email System</title>
+    <!-- link of bootstrap 4.4.1 from the CDN server -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- link of the style.css for userdefined styling -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- meta tag that sets layout ;the width of the page to device width and scale to 1.0 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
 <body onload="showInbox()">
-  <!-- JS, and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="./script/index.js"></script>
-
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style="display: none">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Is everything right?
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
+    <!-- JS, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./script/index.js"></script>
+    <div class="modal fade" id="send-alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="display: none">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Is everything right?
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>To:</p>
+                    <p><input id="send-check-1" type="checkbox" /> Email address</p>
+                    <p>Body:</p>
+                    <p><input id="send-check-2" type="checkbox" /> Greetings</p>
+                    <p><input id="send-check-3" type="checkbox" /> Message</p>
+                    <p><input id="send-check-4" type="checkbox" /> Conclusion</p>
+                    <p>
+                        <input id="send-check-5" type="checkbox" /> Write a letter closing
+                    </p>
+                    <div class="input-group-text page-header help--yellow">
+                        Make sure to mark every checkbox before sending the email.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="sendToAdmin()" data-dismiss="modal">
+                        Yes
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>To:</p>
-          <p><input id="send-check-1" type="checkbox" /> Email address</p>
-          <p>Body:</p>
-          <p><input id="send-check-2" type="checkbox" /> Greetings</p>
-          <p><input id="send-check-3" type="checkbox" /> Message</p>
-          <p><input id="send-check-4" type="checkbox" /> Conclusion</p>
-          <p>
-            <input id="send-check-5" type="checkbox" /> Write a letter closing
-          </p>
-          <div class="input-group-text page-header help--yellow">
-            Make sure to mark every checkbox before sending the email.
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            No
-          </button>
-          <button type="button" class="btn btn-primary" onclick="sendToStudent()">
-            Yes
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
 
+    <!-- Help modal Subject -->
+    <div class="modal fade" id="help-subject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="display: none">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Subject Line
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The subject line is what the reader sees in their inbox.
+                        If the subject line is misleading or missing information,
+                        your email may not get read. The more formal your email is,
+                        the more detailed your subject line should be.
+                        But beware of making your subject line too long.<br><br>
+                    </p>
 
-  <div class="logo-name"><span>Admin Email System</span><img id="logo" src="./images/logo.png" alt=""></div>
-  <div class="container-fluid">
-    <label for="check" class="checkbtn">
-      <input type="checkbox" id="check" onclick="navSwipe()">
-      <i class="fas fa-bars"></i>
-    </label>
-    <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
-      New message
-    </a>
-    <div class="row content">
-      <div id="nav" class="col">
-        <ul>
-          <li> <a class="inbox-active" onclick="showInbox()"><img id="icon" src="./images/inbox-icon.png" alt="">Inbox
-              <span class="badge"></span></a></li>
-          <li> <a class="sent-active" onclick="showSent()"> <img id="icon" src="./images/sent-icon.png" alt="">Sent
-              Items
-            </a></li>
-          <li> <a class="draft-active" onclick=""><img id="icon" src="./images/draft-icon.png" alt="">Drafts
-            </a></li>
-          <li> <a class="fav-active" onclick="showFavorites()"><img id="icon" src="./images/fav-icon.png"
-                alt="">Favorites</a></li>
-          <li> <a class="unread-active" onclick="showUnread()"><img id="icon" src="./images/unread-icon.png" alt="">
-              Unread Emails <span class="exclam"></a></li>
-        </ul>
-      </div>
-      <div class="col-4 col-large"></div>
-      <div class="col-m"></div>
-      <!-- @Tushar -->
-      <div class="col-6 col-large">
-        <div id="select-mail-ins">
-          <p>Select an item to read</p>
+                    <p>
+                        <b> A formal example of the email subject line:</b>
+                    </p>
+
+                    <p><i>Required Student Meeting: December 5th, 9:30 a.m</i></p>
+                    <br>
+                    <p>
+                        <b>An informal example email of the subject line:</b>
+                    </p>
+
+                    <p><i>Upcoming Meeting</i></p>
+
+                    <br>
+                    <p>
+                        Notice that the first subject line is more informative and complete. The informal subject line,
+                        sent to
+                        someone you know well, just barely touches on the topic.
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
         </div>
-        <form id="compose">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">From</span>
-            </div>
-            <input type="email" class="form-control" id="send-from" placeholder="From" aria-label="From"
-              aria-describedby="basic-addon1" required />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">To</span>
-            </div>
-            <input type="email" class="form-control" id="send-to" placeholder="To" aria-label="To"
-              aria-describedby="basic-addon1" required />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Cc</span>
-            </div>
-            <input type="email" class="form-control" id="send-cc" placeholder="Cc" aria-label="Cc"
-              aria-describedby="basic-addon1" />
-          </div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" id="send-sb" placeholder="Add a Subject" aria-label="Sb"
-              aria-describedby="basic-addon1" required />
-          </div>
-          <textarea class="form-control" id="send-msg" rows="10" required></textarea>
-
-          <!-- Button trigger modal -->
-          <span type="submit" class="btn btn-primary btn-send" onclick="sendConfirm()">
-            Send
-          </span>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary btn-send" onclick="cancel()">
-            Discard
-          </button>
-        </form>
-        <div id="email--view">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text emailAdd" id="basic-addon1"></span>
-            </div>
-            <input type="text" class="form-control readonly--hover" id="view-emailAdd" aria-label="From"
-              aria-describedby="basic-addon1" readonly />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Cc</span>
-            </div>
-            <input type="text" class="form-control readonly--hover" id="view-cc" aria-label="Cc"
-              aria-describedby="basic-addon1" readonly />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Subject</span>
-            </div>
-            <input type="text" class="form-control readonly--hover" id="view-sb" aria-label="Sb"
-              aria-describedby="basic-addon1" readonly />
-          </div>
-          <textarea class="form-control readonly--hover" id="view-msg" rows="12" readonly></textarea>
-          <!-- Button trigger modal -->
-          <button type="submit" class="btn btn-primary btn-send" onclick="showCompose()">
-            Reply
-          </button>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary btn-send" onclick="cancel()">
-            Discard
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+    <!-- Help modal Subject -->
+
+    <!-- Help modal to -->
+    <div class="modal fade" id="help-to" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="display: none">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Recipient Line
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The Recipient line is where the sender adds the email of the primary recipient.
+                        Whom this email concerns the most is a good place to start.
+                        <br><br>
+                    </p>
+
+                    <p>
+                        <b> An example of an email recipient:</b>
+                    </p>
+
+                    <p>
+                        <i>Emily_Francis@hotmail.com</i>
+                    </p>
+                    <br>
+
+                    <p><b>Email address names can include the following:</b>
+                        <br>
+                        Uppercase and lowercase Latin letters: A-Z and a-z.<br>
+                        Digits: 0-9.<br>
+                        Printable characters: ! # $ % & ' * + - / = ? ^ _ ` { | } ~</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Help modal to -->
+
+    <!-- Help modal cc -->
+    <div class="modal fade" id="help-cc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="display: none">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Carbon Copy
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The <b>Cc</b> field in an email allows the sender to send a “carbon copy” of the email to
+                        someone apart from
+                        the
+                        recipient in the <b>"To:"</b>
+                        field of the email.
+                        The Cc field in email lets you keep recipients in the loop.<br><br>
+                    </p>
+
+                    <p>
+                        <b> An example of a Cc:</b>
+                    </p>
+
+                    <p><i>LucasBalotelli@gmail.com, AndreaGomes@icloud.com</i></p>
+                    <br>
+
+                    <p>
+                        Additional recipients are seperated with a <b>","</b>.
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="logo-name"><span>Your Email System</span><img id="logo" src="./images/logo.png" alt=""></div>
+    <!-- Fluid container -->
+    <div class="container-fluid">
+
+        <label for="check" class="checkbtn">
+            <input type="checkbox" id="check" onclick="navSwipe()">
+            <i class="fas fa-bars"></i>
+        </label>
+        <!-- Row for the threee columns -->
+        <div class="row content">
+            <!-- First column for menu -->
+            <div class="menu-m">
+                <ul>
+                    <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
+                        New message
+                    </a>
+                    <li> <a class="inbox-active" onclick="showInbox()"><img class="icon" src="./images/inbox-icon.png"
+                                alt="">Inbox
+                            <span class="badge"></span></a></li>
+                    <li> <a class="menu sent-active" onclick="showSent()"> <img class="icon"
+                                src="./images/sent-icon.png" alt="">Sent
+                            Items
+                        </a></li>
+                    <li> <a class="draft-active" onclick=""><img class="icon" src="./images/draft-icon.png"
+                                alt="">Drafts
+                        </a></li>
+                    <li> <a class="menu fav-active" onclick="showFavorites()"><img class="icon"
+                                src="./images/fav-icon.png" alt="">Favorites</a></li>
+                    <li> <a class="menu unread-active" onclick="showUnread()"><img class="icon"
+                                src="./images/unread-icon.png" alt="">
+                            Unread Emails <span class="exclam"></a></li>
+                </ul>
+
+            </div>
+            <div class="menu" id="left">
+                <ul>
+                    <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
+                        New message
+                    </a>
+                    <li> <a class="inbox-active" onclick="showInbox()"><img class="icon" src="./images/inbox-icon.png"
+                                alt="">Inbox
+                            <span class="badge"></span></a></li>
+                    <li> <a class="menu sent-active" onclick="showSent()"> <img class="icon"
+                                src="./images/sent-icon.png" alt="">Sent
+                            Items
+                        </a></li>
+                    <li> <a class="draft-active" onclick=""><img class="icon" src="./images/draft-icon.png"
+                                alt="">Drafts
+                        </a></li>
+                    <li> <a class="menu fav-active" onclick="showFavorites()"><img class="icon"
+                                src="./images/fav-icon.png" alt="">Favorites</a></li>
+                    <li> <a class="menu unread-active" onclick="showUnread()"><img class="icon"
+                                src="./images/unread-icon.png" alt="">
+                            Unread Emails <span class="exclam"></a></li>
+                </ul>
+
+            </div>
+            <!-- Second colum for email lists -->
+            <div class="" id="middle">
+
+            </div>
+            <!-- Mobile column for email lists -->
+            <div class="col-m"></div>
+            <!-- @Third column to view and compose emails -->
+            <div class="" id="right">
+                <div id="select-mail-ins">
+                    <p>Select an item to read</p>
+                </div>
+                <form id="compose">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1" onclick="toHelp()">To</span>
+                        </div>
+                        <input type="email" class="form-control" id="send-to" placeholder="To" aria-label="To"
+                            aria-describedby="basic-addon1" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1" onclick="ccHelp()">Cc</span>
+                        </div>
+                        <input type="email" class="form-control" id="send-cc" placeholder="Cc" aria-label="Cc"
+                            aria-describedby="basic-addon1" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text btn-help" id="basic-addon1" onclick="subjectHelp()">?</span>
+                        <input type="text" class="form-control" id="send-sb" placeholder="Add a Subject" aria-label="Sb"
+                            aria-describedby="basic-addon1" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="myLabel" for="body" onclick="openHelp('helpBody.html')">
+                            <p>Greeting</p>
+                            <br>
+                            <p>Message</p>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <p>Closing</p>
+                        </label>
+                        <textarea class="form-control" id="send-msg" rows="12"></textarea>
+                    </div>
+
+
+                    <!-- Button trigger modal -->
+                    <span type="submit" class="btn btn-primary btn-send" onclick="sendConfirm()">
+                        Send
+                    </span>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-send" onclick="cancel()">
+                        Discard
+                    </button>
+                </form>
+                <div id="email--view">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text emailAdd" id="basic-addon1"></span>
+                        </div>
+                        <input type="text" class="form-control readonly--hover" id="view-emailAdd" aria-label="From"
+                            aria-describedby="basic-addon1" readonly />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Cc</span>
+                        </div>
+                        <input type="text" class="form-control readonly--hover" id="view-cc" aria-label="Cc"
+                            aria-describedby="basic-addon1" readonly />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Subject</span>
+                        </div>
+                        <input type="text" class="form-control readonly--hover" id="view-sb" aria-label="Sb"
+                            aria-describedby="basic-addon1" readonly />
+                    </div>
+                    <textarea class="form-control readonly--hover" id="view-msg" rows="12" readonly></textarea>
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="btn btn-primary btn-send" onclick="showCompose()">
+                        Reply
+                    </button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-send" onclick="cancel()">
+                        Discard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
