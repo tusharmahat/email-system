@@ -24,45 +24,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="./script/indexA.js"></script>
 
-  <div class="modal fade" id="send-alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style="display: none">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Is everything right?
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>To:</p>
-          <p><input id="send-check-1" type="checkbox" /> Email address</p>
-          <p>Body:</p>
-          <p><input id="send-check-2" type="checkbox" /> Greetings</p>
-          <p><input id="send-check-3" type="checkbox" /> Message</p>
-          <p><input id="send-check-4" type="checkbox" /> Conclusion</p>
-          <p>
-            <input id="send-check-5" type="checkbox" /> Write a letter closing
-          </p>
-          <div class="input-group-text page-header help--yellow">
-            Make sure to mark every checkbox before sending the email.
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            No
-          </button>
-          <button type="button" class="btn btn-primary" onclick="sendToStudent()">
-            Yes
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
   <div class="logo-name"><span>Admin Email System</span><img id="logo" src="./images/logo.png" alt=""></div>
   <div class="container-fluid">
 
@@ -150,7 +111,7 @@
           <textarea class="form-control" id="send-msg" rows="10" required></textarea>
 
           <!-- Button trigger modal -->
-          <span type="submit" class="btn btn-primary btn-send" onclick="sendConfirm()">
+          <span type="submit" class="btn btn-primary btn-send" onclick="sendToStudent()">
             Send
           </span>
           <!-- Button trigger modal -->

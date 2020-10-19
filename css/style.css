@@ -453,6 +453,9 @@ a .icon {
 .help--yellow {
   /* Sets the background to light yellow */
   background-color: #fafad2;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 /* Selector for modal background 
