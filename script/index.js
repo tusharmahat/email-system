@@ -49,6 +49,7 @@ function sendToAdmin() {
     msg: $("#send-msg").val(),
     read: 0,
     fav: 0,
+    time: JSON.stringify(new Date()),
   };
 
   //Confirmation to send email
@@ -111,11 +112,13 @@ function sendToAdmin() {
           SERVER_URL + "/sendToClientSentItems",
           email,
 
-          insertCallback
+          sendCallback
         ).fail(errorCallback);
       }
-      $("#send-alert").modal("hide");
-      showSent();
+      function sendCallback() {
+        $("#send-alert").modal("hide");
+        showSent();
+      }
     }
   }
 }
@@ -126,7 +129,6 @@ function sendToAdmin() {
  * @Tushar
  */
 function showInbox() {
-  console.log("inbox");
   //Initialize clientInbox variable
   var email = { emails: [] };
 
@@ -163,6 +165,9 @@ function showInbox() {
       var dynamicHTML = "";
       var unreadCount = 0;
       var icon = "";
+      var notReadForDays = 0;
+      var today;
+      var createdTime;
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
         //Gets the read(1) or unread(0) value of the email at index i
@@ -170,6 +175,16 @@ function showInbox() {
         if (readOrNot == " unread") {
           unreadCount++;
         }
+
+        today = new Date();
+        createdTime = new Date(JSON.parse(email.emails[i].time));
+        if (
+          (today - createdTime) / (60000 * 60 * 24) > 1 &&
+          email.emails[i].read == 0
+        ) {
+          notReadForDays += 1;
+        }
+
         if (email.emails[i].fav == 1) {
           icon =
             '<img class="icon icon-fav icon--float--left"  src="./images/fav-add-icon.png';
@@ -196,16 +211,20 @@ function showInbox() {
           email.emails[i].sb +
           "</a></div>";
         i++;
+
+        $(".badge").html("");
+        $(".exclam").html("");
+
+        if (unreadCount > 0) {
+          $(".badge").append(unreadCount);
+        }
+
+        if (notReadForDays > 0) {
+          $(".exclam").append("!");
+        }
       }
     }
     //Display the number of unread emails
-    $(".badge").html("");
-    $(".exclam").html("");
-
-    if (unreadCount > 0) {
-      $(".badge").append(unreadCount);
-      $(".exclam").append("!");
-    }
 
     //select the class to disply the emails
     $("#middle, .col-m").html("");
@@ -271,7 +290,7 @@ function showSent() {
         i +
         ')" data-role="controlgroup" data-type="horizontal">' +
         '<a data-role="button" class="list-email">' +
-        email.emails[i].from +
+        email.emails[i].to +
         '</a><a data-role="button" class="list-sb">' +
         email.emails[i].sb +
         "</a></p>";
@@ -318,8 +337,12 @@ function cancel() {
       showInbox();
     }
     //else open the showSent()
-    else {
+    else if (page == "sent") {
       showSent();
+    } else if (page == "fav") {
+      showFavorites();
+    } else {
+      showUnread();
     }
   }
 }
@@ -455,7 +478,10 @@ function showUnread() {
       var i = 0;
       var readOrNot;
       var icon;
-      var dynamicHTML = "";
+      var dynamicHTML =
+        "<h5 class='help--yellow'>More than a day passed, please read these emails</h5>";
+      var today;
+      var createdTime;
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
         if (email.emails[i].fav == 1) {
@@ -467,7 +493,12 @@ function showUnread() {
         }
         //Gets the read(1) or unread(0) value of the email at index i
         readOrNot = email.emails[i].read == 1 ? "" : " unread";
-        if (readOrNot == " unread") {
+        today = new Date();
+        createdTime = new Date(JSON.parse(email.emails[i].time));
+        if (
+          (today - createdTime) / (60000 * 60 * 24) > 1 &&
+          email.emails[i].read == 0
+        ) {
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -494,6 +525,12 @@ function showUnread() {
     $("#middle,.col-m").html("");
     //Append the sent emails in the empty String
     $("#middle,.col-m").append(dynamicHTML);
+  }
+  try {
+    // Save the value of select to local storage as select
+    localStorage.setItem("page", JSON.stringify("unread"));
+  } catch (localStorageError) {
+    console.log("Error Thrown: " + localStorageError.name);
   }
 }
 
@@ -522,10 +559,8 @@ function addToFav(i) {
       }
 
       //Post request to save clientInbox to the server
-      $.post(SERVER_URL + "/sendToClientInbox", email, insertFavCallback).fail(
-        error
-      );
-      function insertFavCallback() {
+      $.post(SERVER_URL + "/sendToClientInbox", email, favCallback).fail(error);
+      function favCallback() {
         showInbox();
       }
     }
@@ -547,7 +582,7 @@ function navSwipe() {
 function hideSideMenu() {
   //Hide the side menu
   var screenSize = window.matchMedia("(max-width: 768px)");
-  console.log(screenSize);
+  // console.log(screenSize);
   if (screenSize) {
     $("ul").css("left", "-100%");
   }
@@ -629,6 +664,12 @@ function showFavorites() {
     $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
     $("#middle, .col-m").append(dynamicHTML);
+  }
+  try {
+    // Save the value of select to local storage as select
+    localStorage.setItem("page", JSON.stringify("fav"));
+  } catch (localStorageError) {
+    console.log("Error Thrown: " + localStorageError.name);
   }
 }
 

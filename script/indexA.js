@@ -49,17 +49,12 @@ function sendToStudent() {
     msg: $("#send-msg").val(),
     read: 0,
     fav: 0,
+    time: JSON.stringify(new Date()),
   };
 
   //Confirmation to send email
-  sendConfirm();
-  if (
-    $("#send-check-1").is(":checked") &&
-    $("#send-check-2").is(":checked") &&
-    $("#send-check-3").is(":checked") &&
-    $("#send-check-4").is(":checked") &&
-    $("#send-check-5").is(":checked")
-  ) {
+  var sendConfirm = confirm("Please confirm before you send");
+  if (sendConfirm) {
     //Post request to get clientInbox from the server
     $.post(SERVER_URL + "/getClientInbox", email, getCallbackInbox).fail(
       errorCallback
@@ -112,11 +107,13 @@ function sendToStudent() {
           SERVER_URL + "/sendToAdminSentItems",
           email,
 
-          insertCallback
+          sendCallback
         ).fail(errorCallback);
       }
-      $("#send-alert").modal("hide");
-      showSent();
+      function sendCallback() {
+        $("#send-alert").modal("hide");
+        showSent();
+      }
     }
   }
 }
@@ -163,6 +160,9 @@ function showInbox() {
       var dynamicHTML = "";
       var unreadCount = 0;
       var icon = "";
+      var notReadForDays = 0;
+      var today;
+      var createdTime;
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
         //Gets the read(1) or unread(0) value of the email at index i
@@ -170,6 +170,16 @@ function showInbox() {
         if (readOrNot == " unread") {
           unreadCount++;
         }
+
+        today = new Date();
+        createdTime = new Date(JSON.parse(email.emails[i].time));
+        if (
+          (today - createdTime) / (60000 * 60 * 24) > 1 &&
+          email.emails[i].read == 0
+        ) {
+          notReadForDays += 1;
+        }
+
         if (email.emails[i].fav == 1) {
           icon =
             '<img class="icon icon-fav icon--float--left" id="icon" src="./images/fav-add-icon.png';
@@ -197,13 +207,16 @@ function showInbox() {
           "</a></div>";
         i++;
       }
-    }
-    //Display the number of unread emails
-    $(".badge").html("");
-    $(".exclam").html("");
-    if (unreadCount > 0) {
-      $(".badge").append(unreadCount);
-      $(".exclam").append("!");
+
+      //Display the number of unread emails
+      $(".badge").html("");
+      $(".exclam").html("");
+      if (unreadCount > 0) {
+        $(".badge").append(unreadCount);
+      }
+      if (notReadForDays > 0) {
+        $(".exclam").append("!");
+      }
     }
 
     //select the class to disply the emails
@@ -254,8 +267,6 @@ function showSent() {
 
     //Initialize the index of emails
     var i = 0;
-    //Variable to save the read or unread value of email
-    var readOrNot;
     // Create empty String
     var dynamicHTML = "";
 
@@ -270,7 +281,7 @@ function showSent() {
         i +
         ')" data-role="controlgroup" data-type="horizontal">' +
         '<a data-role="button" class="list-email">' +
-        email.emails[i].from +
+        email.emails[i].to +
         '</a><a data-role="button" class="list-sb">' +
         email.emails[i].sb +
         "</a></p>";
@@ -281,12 +292,12 @@ function showSent() {
     $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
     $("#middle, .col-m").append(dynamicHTML);
-    try {
-      // Save the value of select to local storage as select
-      localStorage.setItem("page", JSON.stringify("inbox"));
-    } catch (localStorageError) {
-      console.log("Error Thrown: " + localStorageError.name);
-    }
+  }
+  try {
+    // Save the value of select to local storage as select
+    localStorage.setItem("page", JSON.stringify("sent"));
+  } catch (localStorageError) {
+    console.log("Error Thrown: " + localStorageError.name);
   }
 }
 
@@ -317,8 +328,12 @@ function cancel() {
       showInbox();
     }
     //else open the showSent()
-    else {
+    else if (page == "sent") {
       showSent();
+    } else if (page == "fav") {
+      showFavorites();
+    } else {
+      showUnread();
     }
   }
 }
@@ -379,9 +394,11 @@ function viewEmail(link, i) {
     //View the email in the third column
     //if the link is from inbox change the title to "From" else "To"
     if (link == "inbox") {
+      console.log("inbox");
       $(".emailAdd").html("From");
       $("#view-emailAdd").val(email.emails[i].from);
     } else {
+      console.log("sent");
       $(".emailAdd").html("To");
       $("#view-emailAdd").val(email.emails[i].to);
     }
@@ -454,6 +471,8 @@ function showUnread() {
       var readOrNot;
       var icon;
       var dynamicHTML = "";
+      var today;
+      var createdTime;
       //concatinate the HTML tags through the while loop for all the emails
       while (i < email.emails.length) {
         if (email.emails[i].fav == 1) {
@@ -465,7 +484,13 @@ function showUnread() {
         }
         //Gets the read(1) or unread(0) value of the email at index i
         readOrNot = email.emails[i].read == 1 ? "" : " unread";
-        if (readOrNot == " unread") {
+        readOrNot = email.emails[i].read == 1 ? "" : " unread";
+        today = new Date();
+        createdTime = new Date(JSON.parse(email.emails[i].time));
+        if (
+          (today - createdTime) / (60000 * 60 * 24) > 1 &&
+          email.emails[i].read == 0
+        ) {
           dynamicHTML =
             dynamicHTML +
             icon +
@@ -492,6 +517,12 @@ function showUnread() {
     $("#middle,.col-m").html("");
     //Append the sent emails in the empty String
     $("#middle,.col-m").append(dynamicHTML);
+  }
+  try {
+    // Save the value of select to local storage as select
+    localStorage.setItem("page", JSON.stringify("unread"));
+  } catch (localStorageError) {
+    console.log("Error Thrown: " + localStorageError.name);
   }
 }
 
@@ -520,10 +551,8 @@ function addToFav(i) {
       }
 
       //Post request to save clientInbox to the server
-      $.post(SERVER_URL + "/sendToAdminInbox", email, insertFavCallback).fail(
-        error
-      );
-      function insertFavCallback() {
+      $.post(SERVER_URL + "/sendToAdminInbox", email, favCallback).fail(error);
+      function favCallback() {
         showInbox();
       }
     }
@@ -545,7 +574,7 @@ function navSwipe() {
 function hideSideMenu() {
   //Hide the side menu
   var screenSize = window.matchMedia("(max-width: 768px)");
-  console.log(screenSize);
+  // console.log(screenSize);
   if (screenSize) {
     $("ul").css("left", "-100%");
   }
@@ -627,5 +656,11 @@ function showFavorites() {
     $("#middle, .col-m").html("");
     //Append the sent emails in the empty String
     $("#middle, .col-m").append(dynamicHTML);
+  }
+  try {
+    // Save the value of select to local storage as select
+    localStorage.setItem("page", JSON.stringify("fav"));
+  } catch (localStorageError) {
+    console.log("Error Thrown: " + localStorageError.name);
   }
 }
