@@ -174,9 +174,9 @@ body {
 }
 
 /* class selector for mobile menu */
-.menu-m {
+.menu-m ul {
   /* by default it's display set to none */
-  display: none;
+  display: none !important;
 }
 /* element selector for ul inside class menu */
 .menu ul,
@@ -539,19 +539,19 @@ clicked it show white i.e. does not any border */
     width: 3.5rem;
   }
 
-  ul {
+  .menu-m ul {
+    display: block !important;
     width: 130px !important;
-    padding-left: 5px;
     position: fixed;
     /* height: var(--main-vh-height); */
     left: -100%;
-    transition: all 0.5s;
+    transition: ease-in-out 0.5s;
     /* height: var(--main-vh-height); */
   }
-  .menu ul li {
-    display: block;
-  }
-  .menu ul li a {
+  /* .menu-m ul li {
+    /* display: block; */
+  } */
+  .menu-m ul li a {
     font-size: 20px;
   }
   #select-mail-ins {
