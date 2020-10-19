@@ -534,13 +534,13 @@ function addToFav(i) {
 
 function navSwipe() {
   if ($("#check").is(":checked")) {
-    $(".menu-m").css("display", "block");
-    $("ul").css("left", "40px");
-    $("ul").css("transition", "all 0.5s");
+    // $(".menu-m").css("display", "block");
+    $(".menu-m ul").css("left", "40px");
+    $(".menu-m ul").css("transition", "all 0.5s");
   } else {
-    $(".menu-m").css("display", "none");
-    $("ul").css("left", "-100%");
-    $("ul").css("transition", "all 0.5s");
+    // $(".menu-m").css("display", "none");
+    $(".menu-m ul").css("left", "-100%");
+    $(".menu-m ul").css("transition", "all 0.5s");
   }
 }
 
