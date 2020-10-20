@@ -255,11 +255,14 @@ a .icon {
 }
 
 .badge {
-  padding-left: 5%;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: var(--main-btn-color);
 }
-
+.badge--inbox{
+  color: red;
+  border: 2px red solid;
+border-radius: 50%;
+}
 .exclam {
   font-size: 1.5rem;
   color: red;

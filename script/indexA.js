@@ -215,7 +215,7 @@ function showInbox() {
         $(".badge").append(unreadCount);
       }
       if (notReadForDays > 0) {
-        $(".exclam").append("!");
+        $(".exclam").append("&#9888;");
       }
     }
 

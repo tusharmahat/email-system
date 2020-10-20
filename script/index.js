@@ -211,20 +211,23 @@ function showInbox() {
           email.emails[i].sb +
           "</a></div>";
         i++;
+      }
+      $(".badge").html("");
+      $(".exclam").html("");
 
-        $(".badge").html("");
-        $(".exclam").html("");
-
-        if (unreadCount > 0) {
-          $(".badge").append(unreadCount);
-        }
-
-        if (notReadForDays > 0) {
-          $(".exclam").append("!");
-        }
+      if (unreadCount > 0) {
+        $(".badge").append(unreadCount);
+      }
+      if (notReadForDays > 0) {
+        // var confirmRead = confirm(
+        //   "You have emails that haven't been read for days.\nDo you want to red now?"
+        // );
+        // if (confirmRead) {
+        //   showUnread();
+        // }
+        // $(".exclam").append("&#9888;");
       }
     }
-    //Display the number of unread emails
 
     //select the class to disply the emails
     $("#middle, .col-m").html("");
@@ -683,4 +686,16 @@ function toHelp() {
 
 function ccHelp() {
   $("#help-cc").modal();
+}
+function greetingHelp() {
+  $("#help-greeting").modal();
+}
+function messageHelp() {
+  $("#help-message").modal();
+}
+function closingHelp() {
+  $("#help-closing").modal();
+}
+function example() {
+  $("#help-example").modal();
 }
