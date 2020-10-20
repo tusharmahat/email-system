@@ -456,6 +456,7 @@ a .icon {
   padding: 5px;
   border-radius: 5px;
   text-align: center;
+  width: 100%;
 }
 
 /* Selector for modal background 
