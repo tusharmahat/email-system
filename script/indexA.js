@@ -43,7 +43,7 @@ function sendToStudent() {
                   and save it in newEmail in JSON format*/
   var newEmail = {
     to: $("#send-to").val(),
-    from: "Terry (Terry@humanisticsystems.ca)",
+    from: $("#send-from").val(),
     cc: $("#send-cc").val(),
     sb: $("#send-sb").val(),
     msg: $("#send-msg").val(),
@@ -123,14 +123,16 @@ function sendToStudent() {
  * and displays the instructions
  * @Tushar
  */
-function showInbox() {
+function showInbox(isView) {
   // $(".inbox-active").css("background-color", "var(--main-link-hover-color)");
   // Hide the compose
-  $("#compose").css("display", "none");
-  // Display the instruction to click on email to view
-  $("#select-mail-ins").css("display", "block");
-  // Hide if the email is already viewing from the sent
-  $("#email--view").css("display", "none");
+  if (isView != "view") {
+    $("#compose").css("display", "none");
+    // Display the instruction to click on email to view
+    $("#select-mail-ins").css("display", "block");
+    // Hide if the email is already viewing from the sent
+    $("#email--view").css("display", "none");
+  }
 
   hideSideMenu();
   //Initialize clientInbox variable
@@ -182,17 +184,17 @@ function showInbox() {
 
         if (email.emails[i].fav == 1) {
           icon =
-            '<img class="icon icon-fav icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<div><img class="icon icon-fav icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<div><img class="icon icon--float--left" src="./images/fav-add-icon.png';
         }
         dynamicHTML =
           dynamicHTML +
           icon +
           '" onclick="addToFav(' +
           i +
-          ')" /><div class="list-mail"  id="email-' +
+          ')" /><label class="list-mail hover"  id="email-' +
           i +
           '" onclick="viewEmail(' +
           "'inbox'," +
@@ -202,9 +204,14 @@ function showInbox() {
           readOrNot +
           '">' +
           email.emails[i].from +
-          '</a><a data-role="button" class="list-sb">' +
+          '</a > <a data-role="button" class="list-sb">' +
           email.emails[i].sb +
-          "</a></div>";
+          '</a></label><img class="icon--delete" onclick="deleteEmail(' +
+          "'/getAdminInbox'" +
+          "," +
+          i +
+          ",'/sendToAdminInbox'" +
+          ')" src="./images/delete-icon.png"></div>';
         i++;
       }
 
@@ -237,14 +244,15 @@ function showInbox() {
  * and displays the instructions
  * @Tushar
  */
-function showSent() {
-  // $(".sent-active").css("background-color", "var(--main-link-hover-color)");
-  // Hide the compose
-  $("#compose").css("display", "none");
-  // Display the instruction to click on email to view
-  $("#select-mail-ins").css("display", "block");
-  // Hide if the email is already viewing from the sent
-  $("#email--view").css("display", "none");
+function showSent(isView) {
+  if (isView != "view") {
+    $("#compose").css("display", "none");
+    // Display the instruction to click on email to view
+    $("#select-mail-ins").css("display", "block");
+    // Hide if the email is already viewing from the sent
+    $("#email--view").css("display", "none");
+  }
+
   hideSideMenu();
   //Initialize clientInbox variable
   var email = { emails: [] };
@@ -274,7 +282,7 @@ function showSent() {
     while (i < email.emails.length) {
       dynamicHTML =
         dynamicHTML +
-        '<p class="list-mail"  id="email-' +
+        '<label class="list-mail hover"  id="email-' +
         i +
         '" onclick="viewEmail(' +
         "'sent'," +
@@ -282,9 +290,14 @@ function showSent() {
         ')" data-role="controlgroup" data-type="horizontal">' +
         '<a data-role="button" class="list-email">' +
         email.emails[i].to +
-        '</a><a data-role="button" class="list-sb">' +
+        '</a > <a data-role="button" class="list-sb">' +
         email.emails[i].sb +
-        "</a></p>";
+        '</a></label><img class="icon--delete" onclick="deleteEmail(' +
+        "'/getAdminSentItems'" +
+        "," +
+        i +
+        ",'/sendToAdminSentItems'" +
+        ')" src="./images/delete-icon.png"></div>';
       i++;
     }
 
@@ -408,9 +421,12 @@ function viewEmail(link, i) {
     //Set the read value of email at index itemNum to read (1)
     email.emails[i].read = 1;
     //Post request to save emails to inbox or sentItems to the server according to route
-    $.post(SERVER_URL + "/sendTo" + route, email, insertCallback).fail(
+    $.post(SERVER_URL + "/sendTo" + route, email, viewCallback).fail(
       errorCallback
     );
+    function viewCallback() {
+      route == "AdminInbox" ? showInbox("view") : showSent("view");
+    }
   }
 }
 
@@ -477,26 +493,22 @@ function showUnread() {
       while (i < email.emails.length) {
         if (email.emails[i].fav == 1) {
           icon =
-            '<img class="icon icon-fav icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<div><img class="icon icon-fav icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon icon--float--left" id="icon" src="./images/fav-add-icon.png';
+            '<div><img class="icon icon--float--left" src="./images/fav-add-icon.png';
         }
         //Gets the read(1) or unread(0) value of the email at index i
         readOrNot = email.emails[i].read == 1 ? "" : " unread";
-        readOrNot = email.emails[i].read == 1 ? "" : " unread";
         today = new Date();
         createdTime = new Date(JSON.parse(email.emails[i].time));
-        if (
-          (today - createdTime) / (60000 * 60 * 24) > 1 &&
-          email.emails[i].read == 0
-        ) {
+        if (email.emails[i].read == 0) {
           dynamicHTML =
             dynamicHTML +
             icon +
             '" onclick="addToFav(' +
             i +
-            ')" /><div class="list-mail"  id="email-' +
+            ')" /><label class="list-mail hover"  id="email-' +
             i +
             '" onclick="viewEmail(' +
             "'inbox'," +
@@ -506,9 +518,14 @@ function showUnread() {
             readOrNot +
             '">' +
             email.emails[i].from +
-            '</a><a data-role="button" class="list-sb">' +
+            '</a > <a data-role="button" class="list-sb">' +
             email.emails[i].sb +
-            "</a></div>";
+            '</a></label><img class="icon--delete" onclick="deleteEmail(' +
+            "'/getAdminInbox'" +
+            "," +
+            i +
+            ",'/sendToAdminInbox'" +
+            ')" src="./images/delete-icon.png"></div>';
         }
         i++;
       }
@@ -626,16 +643,16 @@ function showFavorites() {
         }
         if (email.emails[i].fav == 0) {
           icon =
-            '<img class="icon icon--float--left"  src="./images/fav-add-icon.png';
+            '<div><img class="icon icon--float--left"  src="./images/fav-add-icon.png';
         } else {
           icon =
-            '<img class="icon icon-fav icon--float--left" src="./images/fav-add-icon.png';
+            '<div><img class="icon icon-fav icon--float--left" src="./images/fav-add-icon.png';
           dynamicHTML =
             dynamicHTML +
             icon +
             '" onclick="addToFav(' +
             i +
-            ')" /><div class="list-mail"  id="email-' +
+            ')" /><label class="list-mail hover"  id="email-' +
             i +
             '" onclick="viewEmail(' +
             "'inbox'," +
@@ -645,9 +662,14 @@ function showFavorites() {
             readOrNot +
             '">' +
             email.emails[i].from +
-            '</a><a data-role="button" class="list-sb">' +
+            '</a > <a data-role="button" class="list-sb">' +
             email.emails[i].sb +
-            "</a></div>";
+            '</a></label><img class="icon--delete" onclick="deleteEmail(' +
+            "'/getAdminInbox'" +
+            "," +
+            i +
+            ",'/sendToAdminInbox'" +
+            ')" src="./images/delete-icon.png"></div>';
         }
         i++;
       }
@@ -662,5 +684,47 @@ function showFavorites() {
     localStorage.setItem("page", JSON.stringify("fav"));
   } catch (localStorageError) {
     console.log("Error Thrown: " + localStorageError.name);
+  }
+}
+
+/**
+ * Function to delete the emails from the storage according to the arguments passed to it
+ * If the clientInbox local storage is passed then it deletes the mails from the inbox
+ * Else it deletes the mails from the sent emails
+ * @param {String} getRoute is the route from which email is returned
+ * @param {number} i is the index of the email
+ * @param {String} saveRoute is the route to which email is to be saved
+ */
+function deleteEmail(getRoute, i, saveRoute) {
+  //Initialize email
+  var email = { emails: [] };
+
+  //Get the emails from the server from which the email is to be deleted
+  $.post(SERVER_URL + getRoute, email, getCallback).fail(errorCallback);
+
+  /**
+   * Callback function runs after the server throws no error
+   * @param {JSON object} data is the email
+   */
+  function getCallback(data) {
+    if (data.length > 0) {
+      /*Saves the data response from the server to email
+       as JSON object */
+      email = { emails: data };
+    }
+    //Confirmation for deletion of an email
+    var isDelete = confirm("Are you sure want delete this mail?");
+    //If isDelete is true then delete that mail
+    if (isDelete) {
+      //Delete one email at index i
+      email.emails.splice(i, 1);
+      //Post request to save emailss to the server
+      $.post(SERVER_URL + saveRoute, email, deleteCallback).fail(errorCallback);
+      /*Ternary operator to open the inbox page if message is deleted from inbox
+           else, open the sent items page*/
+      function deleteCallback() {
+        getRoute == "/getAdminInbox" ? showInbox() : showSent();
+      }
+    }
   }
 }
