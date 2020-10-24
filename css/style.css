@@ -1,25 +1,35 @@
 /*All Custom properties 
 @Akrit */
+/* Sets attributes for root  */
 :root {
+  /* Sets default gradient for nav */
   --main-nav-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
+  /* Sets default gradient for button */
   --main-btn-color: linear-gradient(
     to right,
     #a8d266 0%,
     #00a1b1 51%,
     #a8d266 100%
   );
+  /* Sets default gradient for btn when hovered */
   --main-btn-hover-color: linear-gradient(
     to right,
     #a8d266 0%,
     #00a1b1 51%,
     #a8d266 100%
   );
+  /* Sets default main font color */
   --main-font-color: #ffffff;
+  /* Sets default main bg color */
   --main-bg-color: #4eccda;
+  /* Sets default main link color when hovered*/
   --main-link-hover-color: #a8d266;
+  /* Sets default main view bg color */
   --main-view-bg-color: #ffffff;
-  --main-vh-height: 92%;
+   /* Sets default main scroll bar color */
   --main-scroll-bar-color: #005681;
+  /* Sets default main col height */
+  --main-col-height: 92%;
 }
 
 /* Selector for all */
@@ -40,101 +50,137 @@
 
 body,
 html {
+  /* Sets margin to 0 by default */
   margin: 0;
+  /* Sets height to 100% */
   height: 100%;
 }
 body {
+  /* Sets background color as the color of main bg */
   background-color: var(--main-bg-color);
+  /* Sets overflow to hidden */
   overflow: hidden;
 }
 
 /* Selector for scroll bar width */
 ::-webkit-scrollbar {
+  /* Sets width to 8px */
   width: 8px;
+  /* Sets height to 8px */
   height: 8px;
 }
 
 /*Selector for scroll bar Track */
 ::-webkit-scrollbar-track {
+  /* Sets shadow of the box to 0 0 5px */
   box-shadow: inset 0 0 5px transparent;
+  /* Sets border radius to 10px */
   border-radius: 10px;
 }
 
 /*Selector for scroll bar Handle */
 ::-webkit-scrollbar-thumb {
+  /* Sets background color as the color of main scroll bar */
   background: var(--main-scroll-bar-color);
+  /* Sets border radius to 10px */
   border-radius: 10px;
 }
 
 /*Selector for scroll bar Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+  /* Sets background color as the color of main link hover */
   background: var(--main-link-hover-color);
 }
 #left {
+  /* Sets height to 100% */
   height: 100%;
   /* Sets border radius to 5px */
   border-radius: 5px;
   /* Sets padding to 0 */
   padding: 0;
-  /* Sets the background color as per declared in the Custom properties */
+  /* Sets background color as the color of main bg */
   background-color: var(--main-bg-color);
+  /* Sets width to 16.67% */
   width: 16.67%;
+  /* Sets position to relative */
   position: relative;
-  float: left;
-  /* text-align: center; */
+  /* Floats content from left */
+  float: left;  
+  /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
 }
 
 .container-fluid,
 .content {
+  /* Sets padding to top:5px right:10px bottom:13px left:10px */
   padding: 5px 10px 13px 10px;
+  /* Sets height to 98% */
   height: 98%;
 }
 
 #right {
+  /* Sets width to 50% */
   width: 50%;
+  /* Sets position to relative */
   position: relative;
+  /* Floats content from right */
   float: right;
-  /* text-align: center; */
+  /* Sets height to 100% */
   height: 100%;
-
+  /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
+  /* Sets shadow of the box to 0 0 8px */
   box-shadow: 0 0 8px black;
+  /* Sets border radius to 5px */
   border-radius: 5px;
+  /* Sets background color */
   background-color: #faf9f8;
 }
 
 #middle {
+  /* Sets height to 100% */
   height: 100%;
+  /* Sets width to 33.33% */
   width: 33.33%;
+  /* Sets position to relative */
   position: relative;
-  /* text-align: center; */
+  /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
+  /* Sets shadow of the box to 0 0 8px */
   box-shadow: 0 0 8px black;
+  /* Sets border radius to 5px */
   border-radius: 5px;
+  /* Sets padding to top, bottom:0px right, left:8px */
   padding: 0 8px;
+  /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
 }
 
 .col-m {
+  /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
-  height: var(--main-vh-height);
+  /* Sets height as the main col height */
+  height: var(--main-col-height);
+  /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
+  /* Sets display none */
   display: none;
 }
 
 /*Class selector for logo(name of app) 
 @Tushar */
 .logo-name {
+  /* Sets width to 100% */
   width: 100%;
+  /* Sets padding to top and bottom:0px and right and left:0.5rem */
   padding: 0 0.5rem;
-  /* Align text to center */
+  /* Align text to left */
   text-align: left;
   /* Sets line height to 3rem */
   line-height: 3rem;
-  /* Sets the color as per declared in the Custom properties */
+  /* Sets color as the color of main font */
   color: var(--main-font-color);
-  /* Sets the background image as per declared in the Custom properties */
+  /* Sets the background image as the color of main nav */
   background-image: var(--main-nav-color);
   /* Sets font size to 2.5 rem */
   font-size: 2.5rem;
@@ -146,15 +192,17 @@ body {
   position: absolute;
   /* Sets right to 50% */
   right: 50%;
+  /* Sets top to -0.5% */
   top: -0.5%;
+  /* Sets border radius to 5px*/
   border-radius: 5px;
-  /* float: right; */
+  /* Sets width to 3.5rem*/
   width: 3.5rem;
 }
 
 /* Class selector for top bar icon which hides the menu to left on small devices */
 .checkbtn {
-  /* Sets color as per declared in the Custom properties */
+  /* Sets color as the color of main font */
   color: var(--main-font-color);
   /* Sets padding of top and bottom to 0 and left and right to 1% */
   padding: 0 1%;
@@ -164,18 +212,19 @@ body {
   float: left;
   /* Sets cursor to pointer */
   cursor: pointer;
-  /* Sets display to block */
+  /* Sets display to none */
   display: none;
 }
 
 /* Id selector for hidden checkbox */
 #check {
+  /* Forces display to none */
   display: none !important;
 }
 
 /* class selector for mobile menu */
 .menu-m ul {
-  /* by default it's display set to none */
+  /* Forces display to none */
   display: none !important;
 }
 /* element selector for ul inside class menu */
@@ -183,9 +232,9 @@ body {
 .menu-m ul {
   /* Sets width to 100% */
   width: 100%;
-  /* Sets height as per declared in the Custom properties  */
-  height: var(--main-vh-height);
-  /* Sets back ground image as per declared in the Custom properties  */
+  /* Sets height as main col height */
+  height: var(--main-col-height);
+  /* Sets back ground image as color of main bg  */
   background-color: var(--main-bg-color);
   /* Sets float to left */
   float: left;
@@ -195,7 +244,7 @@ body {
 .menu ul li,
 .menu-m ul li {
   /* Sets margin top margin to 1rem, right margin to 0,
-   bottom to 4rem, left margin to 0 */
+   bottom to 1rem, left margin to 0 */
   margin: 1rem 0 1rem 0;
 }
 
@@ -204,14 +253,14 @@ body {
 .menu-m li:active {
   /* Sets transition of 0.1 sec */
   transition: 0.1s;
-  /* Sets text transformation to uppercase */
+  /* Sets transformation to translate the element by 4px */
   transform: translateY(4px);
 }
 
 /* element selector for a inside li, li inside ul, ul class menu  */
 .menu ul li a,
 .menu-m li:active {
-  /* Sets color as per declared in the Custom properties */
+  /* Sets color as color of main bg */
   color: var(--main-font-color);
   /* Sets font size to 16px */
   font-size: 16px;
@@ -227,66 +276,92 @@ body {
 li a:active,
 /* element selector for the hover for link inside li */
 li a:hover {
-  /* Sets background color as per declared in the Custom properties */
+  /* Sets background color as the color of main link hover */
   background-color: var(--main-link-hover-color);
   /* Sets cursor to pointer */
   cursor: pointer;
 }
 .icon {
+  /* Sets padding to 1px */
   padding: 1px;
+  /* Sets border radius to 5px */
   border-radius: 5px;
-  /* background-color: yellow; */
+  /* Sets max width to 5px */
   max-width: 20px;
+  /* Sets height to auto */
   height: auto;
+  /* Sets margin of top:0.5rem, right:0.3rem, bottom:0.2rem and left:0 */
   margin: 0.5rem 0.3rem 0.2rem 0;
 }
 
 .icon-fav {
+  /* Sets top margin to 0.7rem */
+  margin-top: 0.7rem;
+  /* Sets background */
   background-color: yellow;
 }
+
+.icon--delete{
+/* Sets width to 20px */
+width: 20px;
+/* Float delete icon to right */
+float: right;
+ /* Sets margin-top to 0.7rem */
+margin-top: 0.9rem;
+/* Sets margin-top to 0.4rem */
+margin-bottom: 0.4rem;
+}
+
 a .icon {
+  /* Sets background color as the color of main font */
   background-color: var(--main-font-color);
+  /* Sets margin-top to 0.2rem */
   margin-top: 0.2rem;
+  /* Sets margin-top to 0.4rem */
   margin-bottom: 0.4rem;
 }
 
 .icon--float--left {
+  /* Floats content from left */
   float: left;
 }
 
 .badge {
+  /* Sets font size to 1rem */
   font-size: 1rem;
+  /* Sets color as color of main btn */
   color: var(--main-btn-color);
 }
 .badge--inbox{
+  /* Sets color to red */
   color: red;
+  /* Sets border to 2px with red solid color */
   border: 2px red solid;
+  /* Sets border radius to 50% */
 border-radius: 50%;
 }
-.exclam {
-  font-size: 1.5rem;
-  color: red;
-}
 /* Mail lists */
-
 .list-mail {
-  padding: 0 5px;
-  margin: 0.5rem 0;
+  /* Sets width to 85% */
+  width: 80%;
+  /* Sets overflow to hidden */
   overflow: hidden;
+  /* Sets top and bottom margin to 0.5 rem */
+  margin: 0.5rem 0;
 }
-.list-mail:hover {
-  /* Sets the bg color to lightgray*/
+
+.list-mail:hover  {
+
+  /* Sets the bg color as the color of main link hover */
   background: var(--main-link-hover-color);
-  /* Sets the border to lightgray*/
+  /* Sets the border as the color of main link hover*/
   border: 1px solid var(--main-link-hover-color);
-  /* Border radius to 5px */
+  /* Sets border radius to 5px */
   border-radius: 5px;
-  /* Sets the top-left border radius to 0.25rem */
-  border-top-left-radius: 0.25rem;
-  /* Sets the bottom-left border radius to 0.25rem */
-  border-bottom-left-radius: 0.25rem;
+  /* Sets cursor to pointer */
   cursor: pointer;
 }
+
 
 /* class selector for unread emails */
 .unread {
@@ -456,6 +531,7 @@ border-radius: 50%;
 .help--yellow {
   /* Sets the background to light yellow */
   background-color: #fafad2;
+margin:0;
   padding: 5px;
   border-radius: 5px;
   text-align: center;
@@ -550,10 +626,10 @@ clicked it show white i.e. does not any border */
     display: block !important;
     width: 130px !important;
     position: fixed;
-    /* height: var(--main-vh-height); */
+    /* height: var(--main-col-height); */
     left: -100%;
     transition: ease-in-out 0.5s;
-    /* height: var(--main-vh-height); */
+    /* height: var(--main-col-height); */
   }
   /* .menu-m ul li {
     /* display: block; */
