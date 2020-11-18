@@ -1,0 +1,788 @@
+/*All Custom properties 
+@Akrit */
+/* Sets attributes for root  */
+:root {
+  /* Sets default gradient for nav */
+  --main-nav-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
+  /* Sets default gradient for button */
+  --main-btn-color: linear-gradient(
+    to right,
+    #a8d266 0%,
+    #00a1b1 51%,
+    #a8d266 100%
+  );
+  /* Sets default gradient for btn when hovered */
+  --main-btn-hover-color: linear-gradient(
+    to right,
+    #a8d266 0%,
+    #00a1b1 51%,
+    #a8d266 100%
+  );
+  /* Sets default main font color */
+  --main-font-color: #ffffff;
+  /* Sets default main bg color */
+  --main-bg-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
+  /* Sets default main link color when hovered*/
+  --main-link-hover-color: #a8d266;
+  /* Sets default main view bg color */
+  --main-view-bg-color: #ffffff;
+  /* Sets default main scroll bar color */
+  --main-scroll-bar-color: #005681;
+  /* Sets default main col height */
+  --main-col-height: 92%;
+}
+
+/* Selector for all */
+* {
+  /* Sets padding to 0 by default */
+  padding: 0;
+  /* Sets margin to 0 by default */
+  margin: 0;
+  /* Sets text decoration to none by default */
+  text-decoration: none;
+  /* Sets list style to none by default */
+  list-style: none;
+  /* Sets box-sizing to border-box */
+  box-sizing: border-box;
+  /* Sets font famiily to sans-serif */
+  font-family: sans-serif;
+}
+
+body,
+html {
+  /* Sets margin to 0 by default */
+  margin: 0;
+  /* Sets height to 100% */
+  height: 100%;
+}
+body {
+  /* Sets background color as the color of main bg */
+  background-image: var(--main-bg-color);
+  /* Sets overflow to hidden */
+  overflow: hidden;
+}
+
+/* Selector for scroll bar width */
+::-webkit-scrollbar {
+  /* Sets width to 8px */
+  width: 8px;
+  /* Sets height to 8px */
+  height: 8px;
+}
+
+/*Selector for scroll bar Track */
+::-webkit-scrollbar-track {
+  /* Sets shadow of the box to 0 0 5px */
+  box-shadow: inset 0 0 5px transparent;
+  /* Sets border radius to 10px */
+  border-radius: 10px;
+}
+
+/*Selector for scroll bar Handle */
+::-webkit-scrollbar-thumb {
+  /* Sets background color as the color of main scroll bar */
+  background: var(--main-scroll-bar-color);
+  /* Sets border radius to 10px */
+  border-radius: 10px;
+}
+
+/*Selector for scroll bar Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  /* Sets background color as the color of main link hover */
+  background: var(--main-link-hover-color);
+}
+#left {
+  /* Sets height to 100% */
+  height: 100%;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets padding to 0 */
+  padding: 0;
+  /* Sets background color as the color of main bg */
+  background-color: var(--main-bg-color);
+  /* Sets width to 16.67% */
+  width: 16.67%;
+  /* Sets position to relative */
+  position: relative;
+  /* Floats content from left */
+  float: left;
+  /* Shows scroll bar if overflow is in y-axis */
+  overflow-y: auto;
+}
+
+.container-fluid,
+.content {
+  /* Sets padding to top:5px right:10px bottom:13px left:10px */
+  padding: 5px 10px 13px 10px;
+  /* Sets height to 98% */
+  height: 98%;
+}
+
+#right {
+  /* Sets width to 50% */
+  width: 50%;
+  /* Sets position to relative */
+  position: relative;
+  /* Floats content from right */
+  float: right;
+  /* Sets height to 100% */
+  height: 100%;
+  /* Shows scroll bar if overflow is in y-axis */
+  overflow-y: auto;
+  /* Sets shadow of the box to 0 0 8px */
+  box-shadow: 0 0 8px black;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets background color */
+  background-color: #faf9f8;
+}
+
+#middle {
+  /* Sets height to 100% */
+  height: 100%;
+  /* Sets width to 33.33% */
+  width: 33.33%;
+  /* Sets position to relative */
+  position: relative;
+  /* Shows scroll bar if overflow is in y-axis */
+  overflow-y: auto;
+  /* Sets shadow of the box to 0 0 8px */
+  box-shadow: 0 0 8px black;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets padding to top, bottom:0px right, left:8px */
+  padding: 0 8px;
+  /* Sets background color as the color of main view bg */
+  background-color: var(--main-view-bg-color);
+}
+
+.col-m {
+  /* Sets background color as the color of main view bg */
+  background-color: var(--main-view-bg-color);
+  /* Sets height as the main col height */
+  height: var(--main-col-height);
+  /* Shows scroll bar if overflow is in y-axis */
+  overflow-y: auto;
+  /* Sets display none */
+  display: none;
+}
+
+/*Class selector for logo(name of app) 
+@Tushar */
+.logo-name {
+  /* Sets width to 100% */
+  width: 100%;
+  /* Sets padding to top and bottom:0px and right and left:0.5rem */
+  padding: 0 0.5rem;
+  /* Align text to left */
+  text-align: left;
+  /* Sets line height to 3rem */
+  line-height: 3rem;
+  /* Sets color as the color of main font */
+  color: var(--main-font-color);
+  /* Sets the background image as the color of main nav */
+  background-image: var(--main-nav-color);
+  /* Sets font size to 2.5 rem */
+  font-size: 2.5rem;
+}
+
+/*Class selector for logo*/
+#logo {
+  /* Sets position to absolute */
+  position: absolute;
+  /* Sets right to 50% */
+  right: 50%;
+  /* Sets top to -0.5% */
+  top: -0.5%;
+  /* Sets border radius to 5px*/
+  border-radius: 5px;
+  /* Sets width to 3.5rem*/
+  width: 3.5rem;
+}
+
+/* Class selector for top bar icon which hides the menu to left on small devices */
+.checkbtn {
+  /* Sets color as the color of main font */
+  color: var(--main-font-color);
+  /* Sets padding of top and bottom to 0 and left and right to 1% */
+  padding: 0 1%;
+  /* Sets font size to 1.8rem */
+  font-size: 1.8rem;
+  /* Sets float to left */
+  float: left;
+  /* Sets cursor to pointer */
+  cursor: pointer;
+  /* Sets display to none */
+  display: none;
+}
+
+/* Id selector for hidden checkbox */
+#check {
+  /* Forces display to none */
+  display: none !important;
+}
+
+/* class selector for mobile menu */
+.menu-m ul {
+  /* Forces display to none */
+  display: none !important;
+}
+/* element selector for ul inside class menu */
+.menu ul,
+.menu-m ul {
+  /* Sets width to 100% */
+  width: 100%;
+  /* Sets height as main col height */
+  height: var(--main-col-height);
+  /* Sets back ground image as color of main bg  */
+  background-color: var(--main-bg-color);
+  /* Sets float to left */
+  float: left;
+}
+
+/* element selector for li inside ul, ul inside class menu  */
+.menu ul li,
+.menu-m ul li {
+  /* Sets margin top margin to 1rem, right margin to 0,
+   bottom to 1rem, left margin to 0 */
+  margin: 1rem 0 1rem 0;
+  /* Sets display to relative */
+  position: relative;
+  display: block;
+}
+
+/* element selector for a inside li, li inside ul, ul class menu  */
+.menu ul li a,
+.menu-m ul li a {
+  /* Sets color as color of main bg */
+  color: var(--main-font-color);
+  /* Sets font size to 16px */
+  font-size: 16px;
+  /* Sets padding to 5px */
+  padding: 5px;
+  /* Sets border radius to 3px */
+  border-radius: 3px;
+  /* Sets text transformation to uppercase */
+  text-transform: uppercase;
+  /* Sets top and bottom margin 0 and left and right to auto */
+  margin: 0 auto;
+  /* Sets display to block */
+  display: block;
+}
+
+/* element selector for the hover for link inside li */
+li a:hover {
+  /* Sets background color as the color of main link hover */
+  background-color: var(--main-link-hover-color);
+  /* Sets cursor to pointer */
+  cursor: pointer;
+  /* text decoration to none */
+  text-decoration: none;
+}
+
+/* Active class selctor and hover pseudo class for tabs */
+.active,
+#tab:hover {
+  /* Change background color as per defined in the variable */
+  background-color: var(--main-link-hover-color);
+}
+
+.icon {
+  /* Sets padding to 1px */
+  padding: 1px;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets max width to 5px */
+  max-width: 20px;
+  /* Sets height to auto */
+  height: auto;
+  /* Sets margin of top:0.5rem, right:0.3rem, bottom:0.2rem and left:0 */
+  margin: 0.5rem 0.3rem 0.2rem 0;
+  cursor: pointer;
+}
+
+.icon-fav {
+  /* Sets top margin to 0.7rem */
+  margin-top: 0.7rem;
+  /* Sets background */
+  background-color: yellow;
+}
+.icon-grey {
+  background-color: lightgray;
+  padding: 0;
+  text-align: center;
+  width: 2.5rem;
+}
+.icon--delete {
+  /* Sets width to 20px */
+  width: 20px;
+  /* Float delete icon to right */
+  float: right;
+  /* Sets margin-top to 0.7rem */
+  margin-top: 0.9rem;
+  /* Sets margin-top to 0.4rem */
+  margin-bottom: 0.4rem;
+}
+
+.icon--no-margin {
+  /* Sets margin to 0 */
+  margin: 0;
+}
+
+a .icon {
+  /* Sets background color as the color of main font */
+  background-color: var(--main-font-color);
+  /* Sets margin-top to 0.2rem */
+  margin-top: 0.2rem;
+  /* Sets margin-top to 0.4rem */
+  margin-bottom: 0.4rem;
+}
+
+.icon--float--left {
+  /* Floats content from left */
+  float: left;
+}
+
+.badge {
+  /* Sets font size to 1rem */
+  font-size: 1rem;
+  /* Sets color as color of main btn */
+  color: var(--main-btn-color);
+}
+.badge--inbox {
+  /* Sets color to red */
+  color: red;
+  /* Sets border to 2px with red solid color */
+  border: 2px red solid;
+  /* Sets border radius to 50% */
+  border-radius: 50%;
+}
+/* Mail lists */
+.list-mail {
+  /* Sets width to 85% */
+  width: 80%;
+  /* Sets overflow to hidden */
+  overflow: hidden;
+  /* Sets top and bottom margin to 0.5 rem */
+  margin: 0.5rem 0;
+}
+
+.list-mail:hover {
+  /* Sets the bg color as the color of main link hover */
+  background: var(--main-link-hover-color);
+  /* Sets the border as the color of main link hover*/
+  border: 1px solid var(--main-link-hover-color);
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets cursor to pointer */
+  cursor: pointer;
+}
+
+/* class selector for unread emails */
+.unread {
+  /* Set the font weight to bold */
+  font-weight: bold;
+}
+
+.list-sb {
+  /* Sets padding left to 0.5rem */
+  padding-left: 0.5rem;
+  /* Sets font weight to 450 */
+  font-weight: 450;
+  /* Sets font size to 0.9rem */
+  font-size: 0.9rem;
+  /* Sets display to block */
+  display: block;
+}
+
+/* Compose */
+
+/* @Tushar */
+
+#compose,
+#email--view {
+  /* Sets display to none */
+  display: none;
+  /* Sets overflow to scroll */
+  overflow: scroll;
+  /* Sets height to 100% */
+  height: 100%;
+  /* Sets background color as the color of main view bg*/
+  background-color: var(--main-view-bg-color);
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets padding to 5px */
+  padding: 5px;
+}
+
+/* @Tushar */
+
+.input-group {
+  /* Sets border bottom to 1px solid as the color of main link hover */
+  border-bottom: 1px solid var(--main-link-hover-color);
+}
+
+/* @Tushar */
+
+.mb-3 {
+  /* Forces margin bottom to 0*/
+  margin-bottom: 0 !important;
+}
+
+/* @Tushar */
+
+#basic-addon1 {
+  /* Sets width to 4rem */
+  width: 4rem;
+  /* Sets border color to #f8fafb */
+  border-color: #f8fafb;
+  /* Sets margin top to 10px */
+  margin-top: 10px;
+  /* Sets margin right to 8px */
+  margin-right: 8px;
+  /* Sets margin bottom to 11px */
+  margin-bottom: 11px;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Sets padding of top, bottom to 4px and left, right to 5px */
+  padding: 4px 5px;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Justify content to center */
+  justify-content: center;
+}
+
+/* @Tushar */
+.readonly--hover:hover {
+  /* Sets cursor to default */
+  cursor: default;
+}
+
+/* @Tushar */
+
+.form-control {
+  /* Sets height to inherit */
+  height: inherit;
+  /* Sets border bottom to 1px solid as the color of main view bg */
+  border: 1px solid var(--main-view-bg-color);
+}
+
+/* @Tushar */
+
+.btn-compose,
+.btn-send {
+  /* Sets margin top to 3px, right to 3px, bottom to 0 and left to 3px*/
+  margin: 3px 3px 0 3px;
+  /* Aligns text to center */
+  text-align: center;
+  /* Sets text transform to uppercase */
+  text-transform: uppercase;
+  /* Sets transition to 0.5s */
+  transition: 0.5s;
+  /* Sets background size to 200% auto */
+  background-size: 200% auto;
+  /* Forces color to #fff */
+  color: #fff !important;
+  /* Sets box shadow to 0 0 8px and color black */
+  box-shadow: 0 0 8px black;
+  /* Sets border radius to 10px */
+  border-radius: 10px;
+  /* Sets border radius to  0.3rem */
+  border-radius: 0.3rem;
+  /* Sets background image as the color of main btn */
+  background-image: var(--main-btn-color);
+  /* Sets border to 1px solid as the color of main link hover */
+  border: 1px solid var(--main-link-hover-color);
+}
+.btn-compose {
+  /* Sets box shadow to 0 0 5px and color #eee */
+  box-shadow: 0 0 5px #eee;
+}
+
+.help-menu {
+  margin-bottom: 10px !important;
+}
+
+.btn-help {
+  /* Aligns text to center */
+  justify-content: center;
+  /* Sets border 1px solid as the color of main btn */
+  border: 1px solid var(--main-btn-color);
+  /* Sets background color to #e9ecef */
+  background-color: #e9ecef;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+}
+
+.btn-help:hover {
+  /* sets cursor to help on hover */
+  cursor: help;
+}
+
+.btn-greetings,
+.btn-closing .btn-body {
+  /* Sets height to 30px */
+  height: 30px;
+  /* Sets float to left */
+  float: left;
+  /* Sets display to block */
+  display: block;
+}
+
+/* @Tushar */
+.btn-compose:hover,
+.btn-send:hover {
+  /* Sets background position right center */
+  background-position: right center;
+  /* Sets color to  #fff */
+  color: #fff;
+  /* Sets text decoration to none */
+  text-decoration: none;
+  /* Sets border 1px solid as the color of main link hover */
+  border: 1px solid var(--main-link-hover-color);
+}
+.btn-compose:active,
+.btn-send:active {
+  /* Sets border 1px solid as the color of main link hover */
+  border: 1px solid var(--main-link-hover-color);
+  /* Sets transition to 0.1s */
+  transition: 0.1s;
+  /* Sets transform to translateY(3px) */
+  transform: translateY(3px);
+}
+
+/*Id selector for click on email instruction 
+@Tushar */
+#select-mail-ins {
+  /* Sets padding top, bottom to 15rem and left, right to 12rem */
+  padding: 15rem 12rem;
+}
+
+/* class selector for modal-content
+@Tushar */
+.modal-content {
+  /* Sets top to -1.8rem */
+  top: -1.8rem;
+  /* Sets left to -42% */
+  left: -42%;
+  /* Sets width to 96% */
+  width: 96%;
+}
+
+/* class selector for modal-body and modal-header
+@Tushar */
+.modal-header,
+.modal-body {
+  /* Set the padding top,bottom to 0.2rem and left,right to 1rem*/
+  padding: 0.2rem 1rem;
+  /* set text align to justify */
+  text-align: justify;
+}
+
+/* class selector for p tag inside modal-body
+@Tushar */
+.modal-body > p {
+  /* Set the padding and margin to 0 */
+  padding: 0;
+  margin: 0;
+}
+
+/* Modal body for help */
+.modal-bod {
+  /* set position to relative */
+  position: relative;
+  -ms-flex: 1 1 auto;
+  /* Flex to auto */
+  flex: 1 1 auto;
+  /* Sets padding to 1rem */
+  padding: 1rem;
+}
+
+/* Class selector for modal-footer
+@Tushar */
+.modal-footer {
+  /* Sets the padding top, bottom to 0.2rem and right,left to 1 rem */
+  padding: 0.2rem 1rem;
+}
+
+/*Selector for help--yellow
+@Tushar*/
+.help--yellow {
+  /* Sets the background to light yellow */
+  background-color: #fafad2;
+  /* Set margin to 0 */
+  margin: 0;
+  /* Set padding to 5px */
+  padding: 5px;
+  /* Set border radius to 5px */
+  border-radius: 5px;
+  /* Aligns text to center */
+  text-align: center;
+  /* Set width to 100% */
+  width: 100%;
+  /* Change the cursor to default */
+  cursor: default;
+}
+
+/* Selector for modal background 
+@Tushar*/
+.modal-backdrop.show {
+  /* Sets opacity to 0.09 */
+  opacity: 0.09;
+}
+
+/*Selector for form-control: disabled and readonly
+@Tushar */
+.form-control:disabled,
+.form-control[readonly] {
+  /* Sets background color as the color of main view bg */
+  background-color: var(--main-view-bg-color);
+}
+
+/* Pseudo selector for element
+@Tushar  */
+input:focus,
+textarea:focus {
+  /* Forces ouline to none */
+  outline: none !important;
+  /* Forces border color as the color of main view bg */
+  border-color: var(--main-view-bg-color) !important;
+  /* Forces box shadow 0 0 10px and color as the color of main view bg */
+  box-shadow: 0 0 10px var(--main-view-bg-color) !important;
+}
+
+.myLabel {
+  /* Sets margin top to 3px */
+  margin-top: 3px;
+  /* Sets margin right to 7px */
+  padding-right: 7px;
+  /* Sets border right to 1px solid and color as the color of main link hover */
+  border-right: 1px solid var(--main-link-hover-color);
+}
+#result {
+  position: absolute;
+  width: 100%;
+  max-width: 870px;
+  cursor: pointer;
+  overflow-y: auto;
+  max-height: 400px;
+  box-sizing: border-box;
+  z-index: 1001;
+}
+.link-class:hover {
+  background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .container-fluid,
+  .content {
+    /* Sets height to 100% */
+    height: 100%;
+  }
+  .content {
+    /* Sets padding to 0 */
+    padding: 0;
+  }
+  #left {
+    /* Forces display to none */
+    display: none !important;
+  }
+  #middle {
+    /* Sets display to none */
+    display: none;
+  }
+  #right {
+    /* Sets display to none */
+    display: none;
+  }
+  .col-m {
+    /* Sets width to 100%*/
+    width: 100%;
+    /* Sets display to block */
+    display: block;
+    /* Sets border radius to 5px */
+    border-radius: 5px;
+  }
+  label {
+    /* Sets padding right to 2% */
+    padding-right: 2%;
+  }
+  .checkbtn {
+    /* Sets font size to 1.7rem */
+    font-size: 1.7rem;
+    /* Sets display to block */
+    display: block;
+  }
+  .logo-name {
+    /* Sets padding top to 0.5rem */
+    padding-top: 0.5rem;
+    /* Sets font size to 1.5rem */
+    font-size: 1.5rem;
+  }
+
+  /*Class selector for logo*/
+  #logo {
+    /* Sets position to absolute */
+    position: absolute;
+    /* Sets right to 5% */
+    right: 5%;
+    /* Sets padding top to -0.5% */
+    top: -0.5%;
+    /* Sets border radius to 5px */
+    border-radius: 5px;
+    /* Sets width to 3.5rem */
+    width: 3.5rem;
+  }
+
+  .menu-m ul {
+    /* Forces display to block */
+    display: block !important;
+    /* Forces width to 130px */
+    width: 130px !important;
+    /* Sets position to fixed */
+    position: fixed;
+    /* Sets left to -100% */
+    left: -100%;
+    /* Sets transition to 0.5s with animation ease-in-out */
+    transition: ease-in-out 0.5s;
+  }
+
+  .menu-m ul li a {
+    /* Sets font size to 20px */
+    font-size: 20px;
+  }
+  #select-mail-ins {
+    /* Sets display to none */
+    display: none;
+  }
+}
+@media (max-width: 372px) {
+  #middle {
+    /* Sets display to none */
+    display: none;
+  }
+  #right {
+    /* Sets display to none */
+    display: none;
+  }
+  label {
+    /* Sets padding right to 2% */
+    padding-right: 2%;
+  }
+  .checkbtn {
+    /* Sets font size to 1.5rem */
+    font-size: 1.5rem;
+    /* Sets display to block */
+    display: block;
+  }
+  .logo-name {
+    /* Sets padding top to 0.5rem */
+    padding-top: 0.5rem;
+    /* Sets font size to 1.3rem */
+    font-size: 1.3rem;
+  }
+  #select-mail-ins {
+    /* Sets display to none */
+    display: none;
+  }
+}
