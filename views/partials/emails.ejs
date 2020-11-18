@@ -1,0 +1,113 @@
+<%var i=0 %><% if(typeof inbox != 'undefined') {%><button>Delete all</button>
+<%inbox.forEach( function(email){%>
+<div>
+  <img
+    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
+    src="../images/fav-add-icon.png"
+    onclick="addToFav('inbox',<%=i%>)"
+  /><label
+    class="list-mail hover"
+    id="email-0"
+    onclick="getEmail('inbox',<%=i%>)"
+    data-role="controlgroup"
+    data-type="horizontal"
+    ><a
+      data-role="button"
+      class="list-email <%=inbox[i].read==true ? '': 'unread'%>"
+      ><%=email.from%></a
+    >
+    <a data-role="button" class="list-sb"><%=email.sb%></a></label
+  ><img
+    class="icon--delete"
+    onclick="deleteOne('inbox',<%=i%>)"
+    src="../images/delete-icon.png"
+  />
+</div>
+<%i++%> <% })%> <%}%> <% if(typeof sent != 'undefined') {%><button>
+  Delete all
+</button>
+<%sent.forEach( function(email){%>
+<div>
+  <label
+    class="list-mail hover"
+    id="email-0"
+    onclick="getEmail('sent',<%=i%>)"
+    data-role="controlgroup"
+    data-type="horizontal"
+    ><a data-role="button" class="list-email"><%=email.to%></a>
+    <a data-role="button" class="list-sb"><%=email.sb%></a></label
+  ><img
+    class="icon--delete"
+    onclick="deleteOne('sent',<%=i%>)"
+    src="../images/delete-icon.png"
+  />
+</div>
+<%i++%> <%})%> <%}%> <% if(typeof fav != 'undefined') {%> <%fav.forEach(
+function(email){ %> <%if(email.fav){%>
+<div>
+  <img
+    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
+    src="../images/fav-add-icon.png"
+    onclick="addToFav('inbox',<%=i%>)"
+  /><label
+    class="list-mail hover"
+    id="email-0"
+    onclick="getEmail('inbox',<%=i%>)"
+    data-role="controlgroup"
+    data-type="horizontal"
+    ><a
+      data-role="button"
+      class="list-email <%=fav[i].read==true ? '': 'unread'%>"
+      ><%=email.from%></a
+    >
+    <a data-role="button" class="list-sb"><%=email.sb%></a></label
+  ><img
+    class="icon--delete"
+    onclick="deleteOne('inbox',<%=i%>)"
+    src="../images/delete-icon.png"
+  />
+</div>
+<%}%><%i++%><%})%> <%}%> <% if(typeof unread != 'undefined') {%>
+<%unread.forEach( function(email){%><%if(!email.read){%>
+<div>
+  <img
+    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
+    src="../images/fav-add-icon.png"
+    onclick="addToFav('inbox',<%=i%>)"
+  /><label
+    class="list-mail hover"
+    id="email-0"
+    onclick="getEmail('inbox',<%=i%>)"
+    data-role="controlgroup"
+    data-type="horizontal"
+    ><a
+      data-role="button"
+      class="list-email <%=unread[i].read==true ? '': 'unread'%>"
+      ><%=email.from%></a
+    >
+    <a data-role="button" class="list-sb"><%=email.sb%></a></label
+  ><img
+    class="icon--delete"
+    onclick="deleteOne('inbox',<%=i%>)"
+    src="../images/delete-icon.png"
+  />
+</div>
+<%}%><%i++%> <% })%> <%}%> <% if(typeof deleted != 'undefined') {%>
+<button>Delete all</button>
+<%deleted.forEach( function(email){%>
+<div>
+  <label
+    class="list-mail hover"
+    id="email-0"
+    onclick="getEmail('sent',<%=i%>)"
+    data-role="controlgroup"
+    data-type="horizontal"
+    ><a data-role="button" class="list-email"><%=email.to%></a>
+    <a data-role="button" class="list-sb"><%=email.sb%></a></label
+  ><img
+    class="icon--delete"
+    onclick="deleteOne('deleted',<%=i%>)"
+    src="../images/delete-icon.png"
+  />
+</div>
+<%i++%> <%})%> <%}%>

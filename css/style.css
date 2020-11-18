@@ -21,12 +21,12 @@
   /* Sets default main font color */
   --main-font-color: #ffffff;
   /* Sets default main bg color */
-  --main-bg-color: #4eccda;
+  --main-bg-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
   /* Sets default main link color when hovered*/
   --main-link-hover-color: #a8d266;
   /* Sets default main view bg color */
   --main-view-bg-color: #ffffff;
-   /* Sets default main scroll bar color */
+  /* Sets default main scroll bar color */
   --main-scroll-bar-color: #005681;
   /* Sets default main col height */
   --main-col-height: 92%;
@@ -57,7 +57,7 @@ html {
 }
 body {
   /* Sets background color as the color of main bg */
-  background-color: var(--main-bg-color);
+  background-image: var(--main-bg-color);
   /* Sets overflow to hidden */
   overflow: hidden;
 }
@@ -105,7 +105,7 @@ body {
   /* Sets position to relative */
   position: relative;
   /* Floats content from left */
-  float: left;  
+  float: left;
   /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
 }
@@ -246,20 +246,14 @@ body {
   /* Sets margin top margin to 1rem, right margin to 0,
    bottom to 1rem, left margin to 0 */
   margin: 1rem 0 1rem 0;
-}
-
-/* element selector for the active li inside class menu */
-.menu li:active,
-.menu-m li:active {
-  /* Sets transition of 0.1 sec */
-  transition: 0.1s;
-  /* Sets transformation to translate the element by 4px */
-  transform: translateY(4px);
+  /* Sets display to relative */
+  position: relative;
+  display: block;
 }
 
 /* element selector for a inside li, li inside ul, ul class menu  */
 .menu ul li a,
-.menu-m li:active {
+.menu-m ul li a {
   /* Sets color as color of main bg */
   color: var(--main-font-color);
   /* Sets font size to 16px */
@@ -270,17 +264,29 @@ body {
   border-radius: 3px;
   /* Sets text transformation to uppercase */
   text-transform: uppercase;
+  /* Sets top and bottom margin 0 and left and right to auto */
+  margin: 0 auto;
+  /* Sets display to block */
+  display: block;
 }
 
-/* element selector for the active link inside li */
-li a:active,
 /* element selector for the hover for link inside li */
 li a:hover {
   /* Sets background color as the color of main link hover */
   background-color: var(--main-link-hover-color);
   /* Sets cursor to pointer */
   cursor: pointer;
+  /* text decoration to none */
+  text-decoration: none;
 }
+
+/* Active class selctor and hover pseudo class for tabs */
+.active,
+#tab:hover {
+  /* Change background color as per defined in the variable */
+  background-color: var(--main-link-hover-color);
+}
+
 .icon {
   /* Sets padding to 1px */
   padding: 1px;
@@ -292,6 +298,7 @@ li a:hover {
   height: auto;
   /* Sets margin of top:0.5rem, right:0.3rem, bottom:0.2rem and left:0 */
   margin: 0.5rem 0.3rem 0.2rem 0;
+  cursor: pointer;
 }
 
 .icon-fav {
@@ -300,16 +307,26 @@ li a:hover {
   /* Sets background */
   background-color: yellow;
 }
+.icon-grey {
+  background-color: lightgray;
+  padding: 0;
+  text-align: center;
+  width: 2.5rem;
+}
+.icon--delete {
+  /* Sets width to 20px */
+  width: 20px;
+  /* Float delete icon to right */
+  float: right;
+  /* Sets margin-top to 0.7rem */
+  margin-top: 0.9rem;
+  /* Sets margin-top to 0.4rem */
+  margin-bottom: 0.4rem;
+}
 
-.icon--delete{
-/* Sets width to 20px */
-width: 20px;
-/* Float delete icon to right */
-float: right;
- /* Sets margin-top to 0.7rem */
-margin-top: 0.9rem;
-/* Sets margin-top to 0.4rem */
-margin-bottom: 0.4rem;
+.icon--no-margin {
+  /* Sets margin to 0 */
+  margin: 0;
 }
 
 a .icon {
@@ -332,13 +349,13 @@ a .icon {
   /* Sets color as color of main btn */
   color: var(--main-btn-color);
 }
-.badge--inbox{
+.badge--inbox {
   /* Sets color to red */
   color: red;
   /* Sets border to 2px with red solid color */
   border: 2px red solid;
   /* Sets border radius to 50% */
-border-radius: 50%;
+  border-radius: 50%;
 }
 /* Mail lists */
 .list-mail {
@@ -350,8 +367,7 @@ border-radius: 50%;
   margin: 0.5rem 0;
 }
 
-.list-mail:hover  {
-
+.list-mail:hover {
   /* Sets the bg color as the color of main link hover */
   background: var(--main-link-hover-color);
   /* Sets the border as the color of main link hover*/
@@ -362,7 +378,6 @@ border-radius: 50%;
   cursor: pointer;
 }
 
-
 /* class selector for unread emails */
 .unread {
   /* Set the font weight to bold */
@@ -370,9 +385,13 @@ border-radius: 50%;
 }
 
 .list-sb {
+  /* Sets padding left to 0.5rem */
   padding-left: 0.5rem;
+  /* Sets font weight to 450 */
   font-weight: 450;
+  /* Sets font size to 0.9rem */
   font-size: 0.9rem;
+  /* Sets display to block */
   display: block;
 }
 
@@ -382,60 +401,69 @@ border-radius: 50%;
 
 #compose,
 #email--view {
+  /* Sets display to none */
   display: none;
+  /* Sets overflow to scroll */
   overflow: scroll;
+  /* Sets height to 100% */
   height: 100%;
+  /* Sets background color as the color of main view bg*/
   background-color: var(--main-view-bg-color);
-  /* border: 1px solid var(--main-link-hover-color); */
+  /* Sets border radius to 5px */
   border-radius: 5px;
+  /* Sets padding to 5px */
   padding: 5px;
 }
 
 /* @Tushar */
 
 .input-group {
+  /* Sets border bottom to 1px solid as the color of main link hover */
   border-bottom: 1px solid var(--main-link-hover-color);
 }
 
 /* @Tushar */
 
 .mb-3 {
+  /* Forces margin bottom to 0*/
   margin-bottom: 0 !important;
 }
 
 /* @Tushar */
 
-.input-group-prepend {
-  margin-left: 3px;
-}
-
-/* @Tushar */
-
 #basic-addon1 {
+  /* Sets width to 4rem */
   width: 4rem;
+  /* Sets border color to #f8fafb */
   border-color: #f8fafb;
-  margin-top: 11px;
+  /* Sets margin top to 10px */
+  margin-top: 10px;
+  /* Sets margin right to 8px */
   margin-right: 8px;
+  /* Sets margin bottom to 11px */
   margin-bottom: 11px;
-  border-radius: 0;
-  padding: 4px 5px;
+  /* Sets border radius to 5px */
   border-radius: 5px;
-}
-
-/* @Tushar */
-#basic-addon1:hover {
-  cursor: help;
+  /* Sets padding of top, bottom to 4px and left, right to 5px */
+  padding: 4px 5px;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+  /* Justify content to center */
+  justify-content: center;
 }
 
 /* @Tushar */
 .readonly--hover:hover {
+  /* Sets cursor to default */
   cursor: default;
 }
 
 /* @Tushar */
 
 .form-control {
+  /* Sets height to inherit */
   height: inherit;
+  /* Sets border bottom to 1px solid as the color of main view bg */
   border: 1px solid var(--main-view-bg-color);
 }
 
@@ -443,63 +471,101 @@ border-radius: 50%;
 
 .btn-compose,
 .btn-send {
+  /* Sets margin top to 3px, right to 3px, bottom to 0 and left to 3px*/
   margin: 3px 3px 0 3px;
+  /* Aligns text to center */
   text-align: center;
+  /* Sets text transform to uppercase */
   text-transform: uppercase;
+  /* Sets transition to 0.5s */
   transition: 0.5s;
+  /* Sets background size to 200% auto */
   background-size: 200% auto;
+  /* Forces color to #fff */
   color: #fff !important;
+  /* Sets box shadow to 0 0 8px and color black */
   box-shadow: 0 0 8px black;
+  /* Sets border radius to 10px */
   border-radius: 10px;
+  /* Sets border radius to  0.3rem */
   border-radius: 0.3rem;
+  /* Sets background image as the color of main btn */
   background-image: var(--main-btn-color);
+  /* Sets border to 1px solid as the color of main link hover */
   border: 1px solid var(--main-link-hover-color);
 }
 .btn-compose {
+  /* Sets box shadow to 0 0 5px and color #eee */
   box-shadow: 0 0 5px #eee;
 }
 
+.help-menu {
+  margin-bottom: 10px !important;
+}
+
 .btn-help {
-  text-align: center;
-  margin-left: 4px;
-  margin-right: 2.5rem !important;
-  width: 5% !important;
+  /* Aligns text to center */
+  justify-content: center;
+  /* Sets border 1px solid as the color of main btn */
   border: 1px solid var(--main-btn-color);
+  /* Sets background color to #e9ecef */
+  background-color: #e9ecef;
+  /* Sets border radius to 5px */
+  border-radius: 5px;
+}
+
+.btn-help:hover {
+  /* sets cursor to help on hover */
+  cursor: help;
 }
 
 .btn-greetings,
 .btn-closing .btn-body {
+  /* Sets height to 30px */
   height: 30px;
+  /* Sets float to left */
   float: left;
+  /* Sets display to block */
   display: block;
 }
-/* @Tushar */
 
+/* @Tushar */
 .btn-compose:hover,
 .btn-send:hover {
-  background-position: right center; /* change the direction of the change here */
+  /* Sets background position right center */
+  background-position: right center;
+  /* Sets color to  #fff */
   color: #fff;
+  /* Sets text decoration to none */
   text-decoration: none;
+  /* Sets border 1px solid as the color of main link hover */
   border: 1px solid var(--main-link-hover-color);
 }
 .btn-compose:active,
 .btn-send:active {
+  /* Sets border 1px solid as the color of main link hover */
   border: 1px solid var(--main-link-hover-color);
+  /* Sets transition to 0.1s */
   transition: 0.1s;
+  /* Sets transform to translateY(3px) */
   transform: translateY(3px);
 }
 
 /*Id selector for click on email instruction 
 @Tushar */
 #select-mail-ins {
+  /* Sets padding top, bottom to 15rem and left, right to 12rem */
   padding: 15rem 12rem;
 }
 
 /* class selector for modal-content
 @Tushar */
 .modal-content {
+  /* Sets top to -1.8rem */
   top: -1.8rem;
+  /* Sets left to -42% */
   left: -42%;
+  /* Sets width to 96% */
   width: 96%;
 }
 
@@ -509,6 +575,8 @@ border-radius: 50%;
 .modal-body {
   /* Set the padding top,bottom to 0.2rem and left,right to 1rem*/
   padding: 0.2rem 1rem;
+  /* set text align to justify */
+  text-align: justify;
 }
 
 /* class selector for p tag inside modal-body
@@ -517,6 +585,17 @@ border-radius: 50%;
   /* Set the padding and margin to 0 */
   padding: 0;
   margin: 0;
+}
+
+/* Modal body for help */
+.modal-bod {
+  /* set position to relative */
+  position: relative;
+  -ms-flex: 1 1 auto;
+  /* Flex to auto */
+  flex: 1 1 auto;
+  /* Sets padding to 1rem */
+  padding: 1rem;
 }
 
 /* Class selector for modal-footer
@@ -531,11 +610,18 @@ border-radius: 50%;
 .help--yellow {
   /* Sets the background to light yellow */
   background-color: #fafad2;
-margin:0;
+  /* Set margin to 0 */
+  margin: 0;
+  /* Set padding to 5px */
   padding: 5px;
+  /* Set border radius to 5px */
   border-radius: 5px;
+  /* Aligns text to center */
   text-align: center;
+  /* Set width to 100% */
   width: 100%;
+  /* Change the cursor to default */
+  cursor: default;
 }
 
 /* Selector for modal background 
@@ -549,7 +635,7 @@ margin:0;
 @Tushar */
 .form-control:disabled,
 .form-control[readonly] {
-  /*  The background while reading email is set to white */
+  /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
 }
 
@@ -557,56 +643,80 @@ margin:0;
 @Tushar  */
 input:focus,
 textarea:focus {
-  /* When the input and text box are 
-clicked it show white i.e. does not any border */
+  /* Forces ouline to none */
   outline: none !important;
+  /* Forces border color as the color of main view bg */
   border-color: var(--main-view-bg-color) !important;
+  /* Forces box shadow 0 0 10px and color as the color of main view bg */
   box-shadow: 0 0 10px var(--main-view-bg-color) !important;
 }
 
 .myLabel {
-  margin-top: 1px;
-  padding: 2px;
+  /* Sets margin top to 3px */
+  margin-top: 3px;
+  /* Sets margin right to 7px */
+  padding-right: 7px;
+  /* Sets border right to 1px solid and color as the color of main link hover */
   border-right: 1px solid var(--main-link-hover-color);
 }
-
-.myLabel p {
-  background-color: #e9ecef;
-  padding: 2px;
-  border-radius: 5px;
+#result {
+  position: absolute;
+  width: 100%;
+  max-width: 870px;
+  cursor: pointer;
+  overflow-y: auto;
+  max-height: 400px;
+  box-sizing: border-box;
+  z-index: 1001;
+}
+.link-class:hover {
+  background-color: #f1f1f1;
 }
 
 @media (max-width: 768px) {
   .container-fluid,
   .content {
+    /* Sets height to 100% */
     height: 100%;
   }
   .content {
+    /* Sets padding to 0 */
     padding: 0;
   }
   #left {
+    /* Forces display to none */
     display: none !important;
   }
   #middle {
+    /* Sets display to none */
     display: none;
   }
   #right {
+    /* Sets display to none */
     display: none;
   }
   .col-m {
+    /* Sets width to 100%*/
     width: 100%;
+    /* Sets display to block */
     display: block;
+    /* Sets border radius to 5px */
     border-radius: 5px;
   }
   label {
+    /* Sets padding right to 2% */
     padding-right: 2%;
   }
   .checkbtn {
+    /* Sets font size to 1.7rem */
     font-size: 1.7rem;
+    /* Sets display to block */
     display: block;
   }
   .logo-name {
+    /* Sets padding top to 0.5rem */
     padding-top: 0.5rem;
+    /* Sets font size to 1.5rem */
     font-size: 1.5rem;
   }
 
@@ -614,52 +724,65 @@ clicked it show white i.e. does not any border */
   #logo {
     /* Sets position to absolute */
     position: absolute;
-    /* Sets right to 50% */
+    /* Sets right to 5% */
     right: 5%;
+    /* Sets padding top to -0.5% */
     top: -0.5%;
+    /* Sets border radius to 5px */
     border-radius: 5px;
-    /* float: right; */
+    /* Sets width to 3.5rem */
     width: 3.5rem;
   }
 
   .menu-m ul {
+    /* Forces display to block */
     display: block !important;
+    /* Forces width to 130px */
     width: 130px !important;
+    /* Sets position to fixed */
     position: fixed;
-    /* height: var(--main-col-height); */
+    /* Sets left to -100% */
     left: -100%;
+    /* Sets transition to 0.5s with animation ease-in-out */
     transition: ease-in-out 0.5s;
-    /* height: var(--main-col-height); */
   }
-  /* .menu-m ul li {
-    /* display: block; */
-  } */
+
   .menu-m ul li a {
+    /* Sets font size to 20px */
     font-size: 20px;
   }
   #select-mail-ins {
+    /* Sets display to none */
     display: none;
   }
 }
 @media (max-width: 372px) {
   #middle {
+    /* Sets display to none */
     display: none;
   }
   #right {
+    /* Sets display to none */
     display: none;
   }
   label {
+    /* Sets padding right to 2% */
     padding-right: 2%;
   }
   .checkbtn {
+    /* Sets font size to 1.5rem */
     font-size: 1.5rem;
+    /* Sets display to block */
     display: block;
   }
   .logo-name {
+    /* Sets padding top to 0.5rem */
     padding-top: 0.5rem;
+    /* Sets font size to 1.3rem */
     font-size: 1.3rem;
   }
   #select-mail-ins {
+    /* Sets display to none */
     display: none;
   }
 }
