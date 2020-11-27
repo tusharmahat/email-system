@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const EmailSchema = require("./Email");
-
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -18,10 +16,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  inbox: [EmailSchema],
-  sent: [EmailSchema],
-  fav: [EmailSchema],
-  deleted: [EmailSchema],
+  inbox: [],
+  sent: [],
+  fav: [],
+  deleted: [],
   date: {
     type: Date,
     default: Date.now,

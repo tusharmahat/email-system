@@ -1,22 +1,98 @@
 var currPage = window.location.href;
-activateTab(currPage);
+
+//Show active tab for desktop and small device
+activateTab(currPage, "tab");
+activateTab(currPage, "tab-m");
+
+$(document).ready(function () {
+  if ($("#email--view").parents("#right").length == 1) {
+    $("#middle-m").css("display", "none");
+    $("#right").css("display", "block");
+  }
+});
+
+// Compose for small device
+$(".btn-compose").on("click", () => {
+  if (isScreenSmall().matches) {
+    $("#middle-m").css("display", "none");
+    $("#right").css("display", "block");
+    $(".menu-m ul").css("left", "-100%");
+  }
+});
+
+// Compose for small device
+$(".btn-back").on("click", () => {
+  if (isScreenSmall().matches) {
+    $("#right").css("display", "none");
+    $("#middle-m").css("display", "block");
+  }
+});
+
+/**
+ * Function to show and hide the menu on left for mobile
+ */
+function navSwipe() {
+  if ($("#check").is(":checked")) {
+    // $(".menu-m").css("display", "block");
+    $(".menu-m ul").css("left", "35px");
+    $(".menu-m ul").css("transition", "all 0.5s");
+  } else {
+    // $(".menu-m").css("display", "none");
+    $(".menu-m ul").css("left", "-100%");
+    $(".menu-m ul").css("transition", "all 0.5s");
+  }
+}
+
+/**
+ * returns the max width of the device
+ */
+function isScreenSmall() {
+  return window.matchMedia("(max-width: 768px)");
+}
+// Show Alert if there are unread emails
+$(function () {
+  if (currPage.match("home")) {
+    // fetch the unread emails count
+    fetch("/users/unread-count")
+      .then((res) => res.json())
+      .then((res) => {
+        //If there there are unread emails show alert for confirmation
+        if (res.count > 0) {
+          $(".menu-m ul").css("left", "35px");
+          // If clicked on yes in the confirmation open unread emails
+          if (
+            confirm(
+              `You have ${res.count} unread emails, Do you want to read them now?`
+            )
+          ) {
+            // Open the unread emails
+            window.location.href = res.url;
+          }
+        }
+      });
+  }
+});
 
 /**
  * Actives the tab which is opened
  * @param {*} currPage
  */
-function activateTab(currPage) {
-  var btns = document.getElementsByClassName("tab");
-  if (currPage.match("inbox") || currPage.match("home")) {
-    btns[0].className += " active";
-  } else if (currPage.match("sent")) {
-    btns[1].className += " active";
-  } else if (currPage.match("fav")) {
-    btns[2].className += " active";
-  } else if (currPage.match("unread")) {
-    btns[3].className += " active";
-  } else {
-    btns[4].className += " active";
+function activateTab(currPage, tab) {
+  var btns = document.getElementsByClassName(tab);
+  if (btns.length > 0) {
+    var i = 0;
+    if (currPage.match("inbox") || currPage.match("home")) {
+      i = 0;
+    } else if (currPage.match("sent")) {
+      i = 1;
+    } else if (currPage.match("fav")) {
+      i = 2;
+    } else if (currPage.match("unread")) {
+      i = 3;
+    } else {
+      i = 4;
+    }
+    btns[i].className += " active";
   }
 }
 
@@ -39,54 +115,7 @@ function showCompose() {
 }
 
 /**
- * It fetches the email from the server using get request
- * @param {*} box
- * @param {*} index
- */
-function getEmail(box, index) {
-  //Fetch that email from the server
-  fetch(`/users/${box}/view/:${index}`)
-    .then((res) => res.json())
-    .then((data) => {
-      // View the email received from the server
-      viewEmail(box, data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-/**
- * It displays the fetched email on the right column of the page
- *
- * @param {*} box
- * @param {*} email
- */
-function viewEmail(box, email) {
-  //Hides the compose column
-  $("#compose").css("display", "none");
-  //hides the instructions about clicking the mail to read
-  $("#select-mail-ins").css("display", "none");
-
-  //Displays the compose column
-  $("#email--view").css("display", "block");
-  //View the email in the third column
-  //if the link is from inbox change the title to "From" else "To"
-  if (box == "inbox") {
-    $(".emailAdd").html("From");
-    $("#view-emailAdd").val(email.from);
-    currPage = "inbox";
-  } else {
-    $(".emailAdd").html("To");
-    $("#view-emailAdd").val(email.to);
-    currPage = "sent";
-  }
-  $("#view-cc").val(email.cc);
-  $("#view-sb").val(email.sb);
-  $("#view-msg").val(email.msg);
-}
-
-/**
+ * Delete a specific email
  *
  * @param {*} box
  * @param {*} index
@@ -96,32 +125,57 @@ function deleteOne(box, index) {
   var isDelete = confirm("Are you sure want delete this mail?");
   //If isDelete is true then delete that mail
   if (isDelete) {
+    // Send post request to delete the email
     fetch(`/users/${box}/delete-one/:${index}`, { method: "POST" })
       .then((res) => {
+        // If redirected then redirected the url that it gets as response
         if (res.redirected) {
           window.location.href = res.url;
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Error while deleting this email, Error:" + err);
+      });
+  }
+}
+/**
+ * Delete all emails of the respective box
+ * @author Tushar
+ * @param {*} box
+ */
+function deleteAll(box) {
+  if (
+    confirm("Are you sure you want to delete all the emails from this box?")
+  ) {
+    fetch(`/users/${box}/delete-all`, { method: "POST" })
+      .then((res) => {
+        // Open the unread emails
+        window.location.href = res.url;
+      })
+      .catch((err) => {
+        console.log("Error while deleting all, Erro: " + err);
       });
   }
 }
 
 /**
+ * Add this email to favorite, itdoes not add in separate box,
+ * it just marks the inbox emails as favorite if clicked on star
  *
  * @param {*} box
  * @param {*} index
  */
 function addToFav(box, index) {
+  // Send post request to add this email to favorite
   fetch(`/users/${box}/add-to-fav/:${index}`, { method: "POST" })
     .then((res) => {
+      // If redirected then redirect to the url that it gets as response
       if (res.redirected) {
         window.location.href = res.url;
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log("Error while adding it to favorite:" + err);
     });
 }
 /**
@@ -131,6 +185,10 @@ function sendConfirm() {
   //Triggers alertbox
   $("#send-alert").modal();
 }
+function manageAcc() {
+  //Triggers alertbox
+  $("#manage-acc").modal();
+}
 
 /**
  * This checks if all the checkboxes are ticked or else changes the bg-color to red of the instructions box
@@ -139,6 +197,7 @@ function sendConfirm() {
  *
  */
 function validate() {
+  // If all the checkboxes are checked then return true
   if (
     $("#send-check-1").is(":checked") &&
     $("#send-check-2").is(":checked") &&
@@ -161,7 +220,7 @@ function validate() {
 }
 
 /**
- *This function shows the recent tab after I cancel the Compose tab
+ *This function redirect to the recent tab after I cancel the Compose tab
  * @Akrit
  */
 function back() {
@@ -176,20 +235,25 @@ function back() {
     $("#select-mail-ins").css("display", "block");
   }
 }
-
+// ---------------------JUST HELP MESSAGES, TOO LONG, DON'T LOOK THESE-----------------------------------//
 //HELP FUNCTIONS WITH MESSSAGES
 /**
- * Generates help according to the topic
+ * Generates help according to the topic arg passed from the buttons
  * @param {String} topic
  */
 function helpGenerate(topic) {
+  // If help-apper is not open, remove the html tag, just to make html look cleaner
   if ($("#help-appear").css("display") === "none") {
     $("#help-appear").remove();
   }
-
+  // variable for the Title of help modal
   var title;
+
+  // variable for the body of help modal
   var body;
+
   if (topic == "subject") {
+    // If help topic is 'subject', set title and body for it
     title = "Subject Line";
     body = `<p>
       Write a few words that describes the general idea of what your email is about.
@@ -202,6 +266,7 @@ function helpGenerate(topic) {
   </p>`;
   }
   if (topic == "to") {
+    // If help topic is 'to', set title and body for it
     title = "Recipient Line";
     body = ` <p>
       Write the email address of the person to whom you want to send the email.
@@ -214,6 +279,7 @@ function helpGenerate(topic) {
   </p>`;
   }
   if (topic == "cc") {
+    // If help topic is 'cc', set title and body for it
     title = "Carbon Copy";
     body = `<p>
       Write the email address of the person to whom you want to send this copy of the email to.
@@ -228,6 +294,7 @@ function helpGenerate(topic) {
   `;
   }
   if (topic == "greeting") {
+    // If help topic is 'greeting', set title and body for it
     title = "Greetings";
     body = `<p>
       Write a word or couple of words to show a sign of welcome or recognition to the person you
@@ -241,6 +308,7 @@ function helpGenerate(topic) {
   </p>`;
   }
   if (topic == "message") {
+    // If help topic is 'message', set title and body for it
     title = "Introduction/Body";
     body = ` <p>
       With short introduction about yourself, write your message in this section.
@@ -254,6 +322,7 @@ function helpGenerate(topic) {
   </p>`;
   }
   if (topic == "closing") {
+    // If help topic is 'closing', set title and body for it
     title = "Closing";
     body = `<p>
       Write a word or couple of words that may provide a good last impression.<br>
@@ -268,6 +337,7 @@ function helpGenerate(topic) {
   </p>`;
   }
   if (topic == "example") {
+    // If help topic is 'example', set title and body for it
     title = "Example";
     body = `Dear April,<br><br>
   
@@ -285,31 +355,37 @@ function helpGenerate(topic) {
       (555) 555-6546`;
   }
   if (topic == "help") {
+    // If help topic is 'help' set title and body for it
     title = "Help";
     body = `
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/inbox-icon.png" alt=""> >> List of received emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/sent-icon.png" alt=""> >> List of sent emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/draft-icon.png" alt=""> >> List of draft emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/fav-icon.png" alt=""> >> List of emails added to favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/unread-icon.png" alt=""> >> List of unread emails</p>
-      <p class="help-menu"><img class="icon icon-fav icon--no-margin" src="./images/fav-add-icon.png"> >> is a favorite email, click to remove it from favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/fav-add-icon.png"> >> is not a favorite email, click on it to add to favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/delete-icon.png"> >> deletes a particular email</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="./images/search.png"> >> Search a particular email using the email address</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/inbox-icon.png" alt=""> >> List of received emails</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/sent-icon.png" alt=""> >> List of sent emails</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/draft-icon.png" alt=""> >> List of draft emails</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/fav-icon.png" alt=""> >> List of emails added to favorite</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/unread-icon.png" alt=""> >> List of unread emails</p>
+      <p class="help-menu"><img class="icon icon-fav icon--no-margin" src="../images/fav-add-icon.png"> >> is a favorite email, click to remove it from favorite</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/fav-add-icon.png"> >> is not a favorite email, click on it to add to favorite</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/delete-icon.png"> >> deletes a particular email</p>
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/delete-all-icon.png"> >> deletes all emails in the box</p>
+      
+      <p class="help-menu"><img class="icon icon--no-margin" src="../images/search.png"> >> Search a particular email using the email address</p>
       <p class="help-menu help--yellow"><span class="unread">Emily_Francis@hotmail.com<span> >> Unread email </p>
-      <p class="help-menu help--yellow">Emily_Francis@hotmail.com >> Read email</p>`;
+      <p class="help-menu help--yellow">Emily_Francis@hotmail.com >> Read email</p>
+      <p class="help-menu"><img class="icon--no-margin" src="../images/storage.png" alt=""> >> Storage between 0 to 95%</p>
+      <p class="help-menu"><img class="icon--no-margin" src="../images/storage-danger.png" alt=""> >> Storage 95% or more</p>`;
   }
-
+  // Call the show help function, passing respective args
   showHelp(title, body);
 }
 
 /**
- *
+ * Displays help model according to the topic and body
  * @param {*} title
  * @param {*} body
  */
 function showHelp(title, body) {
-  var dynamicHTML = `<div class="modal fade" id="help-appear" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  // create html according to the title and body
+  var html = `<div class="modal fade" id="help-appear" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     style="display: none">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -331,14 +407,22 @@ function showHelp(title, body) {
         </div>
     </div>
   </div>`;
-  $("body").append(dynamicHTML);
+  // Display the message
+  $("body").append(html);
   $("#help-appear").modal();
 }
 
+/**
+ * Show more help if clicked on arrow on help model
+ * @param {*} topic
+ */
 function showMore(topic) {
+  // varaible for the title
   var title;
+  // Variable for the body
   var body;
   if (topic == "subject") {
+    // If help topic is 'subject' set title and body for it
     title = "Subject Line";
     body = `<p><b>A Formal example email of the subject line:</b><br>
       <i>Required Student Meeting: December 5th, 9:30 a.m</i></p>
@@ -354,6 +438,7 @@ function showMore(topic) {
   </p><a onclick="helpGenerate('subject')">Back</a>`;
   }
   if (topic == "to") {
+    // If help topic is 'to' set title and body for it
     title = "Recipient Line";
     body = `<p><b>Examples of email address:</b><br><i>Emily_Clarke99@gmail.com<br>James.Hall2020@gmail.com</i></p><br>
   <p><b>Email address names can include the following:</b>
@@ -364,6 +449,7 @@ function showMore(topic) {
   `;
   }
   if (topic == "cc") {
+    // If help topic is 'cc' set title and body for it
     title = "Carbon Copy";
     body = ` <i>To: LucasBalotelli@gmail.com, <br> Cc: Ana.Gomes@icloud.com,
           Carl_Henry11@gmail.com</i><br><br>
@@ -375,6 +461,7 @@ function showMore(topic) {
   `;
   }
   if (topic == "greeting") {
+    // If help topic is 'greeting' set title and body for it
     title = "Greetings";
     body = `
   <p>
@@ -400,6 +487,7 @@ function showMore(topic) {
   </p>`;
   }
   if (topic == "message") {
+    // If help topic is 'message' set title and body for it
     title = "Introduction/Body";
     body = `<p><i>My name is Jordan Smith. I am the professor of Statistics for Saint Mary's University.
           This
@@ -408,6 +496,7 @@ function showMore(topic) {
   `;
   }
   if (topic == "closing") {
+    // If help topic is 'Closing' set title and body for it
     title = "Closing";
     body = `<p><b>Closing sample:</b><br>
       <i>Sincerely with kind regards,<br>
@@ -423,6 +512,7 @@ function showMore(topic) {
   `;
   }
   if (topic == "example") {
+    // If help topic is 'example' set title and body for it
     title = "Example";
     body = `Dear April,<br><br>
   
@@ -439,5 +529,6 @@ function showMore(topic) {
       April_Knope@hotmail.com<br>
       (555) 555-6546`;
   }
+  // Display the modal
   $(".modal-bod").html(body);
 }

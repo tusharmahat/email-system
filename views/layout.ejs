@@ -16,11 +16,13 @@
       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
       crossorigin="anonymous"
     />
-    <title>Your Email System</title>
+    <title>
+      Your Email App | <%if(typeof page !='undefined'){%><%=page%><%}%>
+    </title>
   </head>
   <body>
     <div class="logo-name">
-      <span>Your Email System</span
+      <span>Your Email App</span
       ><img id="logo" src="../images/logo.png" alt="" />
     </div>
     <%- body %>

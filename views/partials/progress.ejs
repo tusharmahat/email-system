@@ -1,0 +1,18 @@
+<%if (typeof inbox !='undefined' || typeof sent !='undefined'|| typeof deleted
+!='undefined'){%>
+<span>
+  <%if(typeof inbox!='undefined'){%>Inbox storage: <%=inbox.length%>/50 <%}%>
+  <%if(typeof sent!='undefined'){%>Sent items storage: <%=sent.length%>/50<%}%>
+  <%if(typeof deleted!='undefined'){%>Deleted storage:
+  <%=deleted.length%>/100<%}%>
+</span>
+<div class="progress">
+  <div
+    class="progress-bar <%if(typeof inbox != 'undefined'){if(inbox.length<45){%>bg-warning<%}else{%>bg-danger<%}}%><%if(typeof sent != 'undefined'){if(sent.length<45){%>bg-warning<%}else{%>bg-danger<%}}%><%if(typeof deleted != 'undefined'){if(deleted.length<95){%>bg-warning<%}else{%>bg-danger<%}}%> active"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    style="width:<%if(typeof inbox != 'undefined'){%><%=(inbox.length/50)*100%><%}%><%if(typeof sent != 'undefined'){%><%=(sent.length/50)*100%><%}%><%if(typeof deleted != 'undefined'){%><%=(deleted.length/100)*100%><%}%>%"
+  ></div>
+</div>
+<%}%>

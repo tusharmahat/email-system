@@ -1,0 +1,88 @@
+<% if(typeof view != 'undefined') {%>
+<div id="email--view">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text emailAdd" id="basic-addon1"
+        ><%if (page=='Sent Items'){%>To<%}else{%>From<%}%></span
+      >
+    </div>
+    <input
+      type="text"
+      class="form-control readonly--hover"
+      id="view-emailAdd"
+      aria-label="From"
+      aria-describedby="basic-addon1"
+      readonly
+      value=" <%if (page=='Sent Items'){%><%=view.to%><%}else{%><%=view.from%><%}%>"
+    />
+  </div>
+  <%if(page=='Deleted Emails'){%>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text emailAdd" id="basic-addon1">To</span>
+    </div>
+    <input
+      type="text"
+      class="form-control readonly--hover"
+      id="view-emailAdd"
+      aria-label="From"
+      aria-describedby="basic-addon1"
+      readonly
+      value=" <%=view.to%>"
+    />
+  </div>
+  <%}%>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Cc</span>
+    </div>
+    <input
+      type="text"
+      class="form-control readonly--hover"
+      id="view-cc"
+      aria-label="Cc"
+      aria-describedby="basic-addon1"
+      readonly
+      value=" <%=view.cc%>"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Subject</span>
+    </div>
+    <input
+      type="text"
+      class="form-control readonly--hover"
+      id="view-sb"
+      aria-label="Sb"
+      aria-describedby="basic-addon1"
+      readonly
+      value=" <%=view.sb%>"
+    />
+  </div>
+  <textarea
+    class="form-control readonly--hover"
+    id="view-msg"
+    rows="14"
+    readonly
+  >
+ <%=view.msg%></textarea
+  >
+
+  <button
+    type="submit"
+    class="btn btn-primary btn-send"
+    onclick="showCompose()"
+  >
+    Reply
+  </button>
+
+  <button type="button" class="btn btn-primary btn-back" onclick="back()">
+    Back
+  </button>
+</div>
+<%} else{%>
+<div id="select-mail-ins">
+  <p>Select an item to read</p>
+</div>
+<%}%>
