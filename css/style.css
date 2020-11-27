@@ -2,8 +2,6 @@
 @Akrit */
 /* Sets attributes for root  */
 :root {
-  /* Sets default gradient for nav */
-  --main-nav-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
   /* Sets default gradient for button */
   --main-btn-color: linear-gradient(
     to right,
@@ -21,7 +19,7 @@
   /* Sets default main font color */
   --main-font-color: #ffffff;
   /* Sets default main bg color */
-  --main-bg-color: linear-gradient(to right, #00a1b1, white, #00a1b1);
+  --main-bg-color: #00a1b1;
   /* Sets default main link color when hovered*/
   --main-link-hover-color: #a8d266;
   /* Sets default main view bg color */
@@ -57,7 +55,7 @@ html {
 }
 body {
   /* Sets background color as the color of main bg */
-  background-image: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   /* Sets overflow to hidden */
   overflow: hidden;
 }
@@ -118,6 +116,16 @@ body {
   height: 98%;
 }
 
+/* Class selector */
+.mt-5,
+.mt4 {
+  /* Sets top margin to 40px */
+  margin-top: 20px !important;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
 #right {
   /* Sets width to 50% */
   width: 50%;
@@ -125,7 +133,7 @@ body {
   position: relative;
   /* Floats content from right */
   float: right;
-  /* Sets height to 100% */
+  /* Sets height */
   height: 100%;
   /* Shows scroll bar if overflow is in y-axis */
   overflow-y: auto;
@@ -151,12 +159,12 @@ body {
   /* Sets border radius to 5px */
   border-radius: 5px;
   /* Sets padding to top, bottom:0px right, left:8px */
-  padding: 0 8px;
+  padding: 0 10px;
   /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
 }
 
-.col-m {
+#middle-m {
   /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
   /* Sets height as the main col height */
@@ -165,6 +173,8 @@ body {
   overflow-y: auto;
   /* Sets display none */
   display: none;
+  /* Sets padding to top, bottom:0px right, left:8px */
+  padding: 0 10px;
 }
 
 /*Class selector for logo(name of app) 
@@ -181,7 +191,7 @@ body {
   /* Sets color as the color of main font */
   color: var(--main-font-color);
   /* Sets the background image as the color of main nav */
-  background-image: var(--main-nav-color);
+  background-color: var(--main-bg-color);
   /* Sets font size to 2.5 rem */
   font-size: 2.5rem;
 }
@@ -193,11 +203,13 @@ body {
   /* Sets right to 50% */
   right: 50%;
   /* Sets top to -0.5% */
-  top: -0.5%;
+  top: 0%;
   /* Sets border radius to 5px*/
   border-radius: 5px;
   /* Sets width to 3.5rem*/
   width: 3.5rem;
+  /* Sets bg color */
+  background-color: #fff;
 }
 
 /* Class selector for top bar icon which hides the menu to left on small devices */
@@ -222,6 +234,19 @@ body {
   display: none !important;
 }
 
+#result {
+  position: absolute;
+  width: 100%;
+  max-width: 870px;
+  cursor: pointer;
+  overflow-y: auto;
+  max-height: 400px;
+  box-sizing: border-box;
+  z-index: 1001;
+}
+.link-class:hover {
+  background-color: #f1f1f1;
+}
 /* class selector for mobile menu */
 .menu-m ul {
   /* Forces display to none */
@@ -231,13 +256,24 @@ body {
 .menu ul,
 .menu-m ul {
   /* Sets width to 100% */
-  width: 100%;
+  width: 98%;
   /* Sets height as main col height */
   height: var(--main-col-height);
   /* Sets back ground image as color of main bg  */
   background-color: var(--main-bg-color);
   /* Sets float to left */
   float: left;
+  /* Border radius */
+  border-radius: 5px;
+}
+/* /* element selector for ul inside class menu-m*/
+.menu-m ul {
+  /* Set height*/
+  height: 87.5%;
+  /* Sets bg color */
+  background-color: #00a1b1;
+  /* Sets padding */
+  padding: 0 2px;
 }
 
 /* element selector for li inside ul, ul inside class menu  */
@@ -245,12 +281,18 @@ body {
 .menu-m ul li {
   /* Sets margin top margin to 1rem, right margin to 0,
    bottom to 1rem, left margin to 0 */
-  margin: 1rem 0 1rem 0;
+  margin: 0.7rem 0 0.7rem 0;
   /* Sets display to relative */
   position: relative;
+  /* Set display to block */
   display: block;
 }
 
+/* element selector for li inside ul, ul inside class menu  */
+.menu-m ul li {
+  /* Sets margin */
+  margin: 0.3rem 0 0.3rem 0;
+}
 /* element selector for a inside li, li inside ul, ul class menu  */
 .menu ul li a,
 .menu-m ul li a {
@@ -269,6 +311,10 @@ body {
   /* Sets display to block */
   display: block;
 }
+.menu-m ul li a {
+  /* Sets font size to 16px */
+  font-size: 12px !important;
+}
 
 /* element selector for the hover for link inside li */
 li a:hover {
@@ -282,7 +328,8 @@ li a:hover {
 
 /* Active class selctor and hover pseudo class for tabs */
 .active,
-#tab:hover {
+.tab-m:hover,
+.tab:hover {
   /* Change background color as per defined in the variable */
   background-color: var(--main-link-hover-color);
 }
@@ -322,6 +369,9 @@ li a:hover {
   margin-top: 0.9rem;
   /* Sets margin-top to 0.4rem */
   margin-bottom: 0.4rem;
+}
+.icon--delete--ac {
+  margin-right: 3rem;
 }
 
 .icon--no-margin {
@@ -367,6 +417,23 @@ a .icon {
   margin: 0.5rem 0;
 }
 
+/* Selector for anchor inside list-mail class */
+a,
+a:hover {
+  /* Sets color to black */
+  color: #000;
+  /* Sets text decoration to none */
+  text-decoration: none;
+}
+
+/* Class seletor for the link in the register and login page */
+.lead a {
+  /* Sets color to black */
+  color: #007bff;
+  /* Sets text decoration to none */
+  text-decoration: underline;
+}
+
 .list-mail:hover {
   /* Sets the bg color as the color of main link hover */
   background: var(--main-link-hover-color);
@@ -401,18 +468,20 @@ a .icon {
 
 #compose,
 #email--view {
-  /* Sets display to none */
-  display: none;
   /* Sets overflow to scroll */
   overflow: scroll;
-  /* Sets height to 100% */
-  height: 100%;
   /* Sets background color as the color of main view bg*/
   background-color: var(--main-view-bg-color);
   /* Sets border radius to 5px */
   border-radius: 5px;
   /* Sets padding to 5px */
   padding: 5px;
+}
+
+/* Selector for compose */
+#compose {
+  /* Sets display to none */
+  display: none;
 }
 
 /* @Tushar */
@@ -470,7 +539,9 @@ a .icon {
 /* @Tushar */
 
 .btn-compose,
-.btn-send {
+.btn-send,
+.btn-back,
+.btn-example {
   /* Sets margin top to 3px, right to 3px, bottom to 0 and left to 3px*/
   margin: 3px 3px 0 3px;
   /* Aligns text to center */
@@ -497,6 +568,7 @@ a .icon {
 .btn-compose {
   /* Sets box shadow to 0 0 5px and color #eee */
   box-shadow: 0 0 5px #eee;
+  width: inherit;
 }
 
 .help-menu {
@@ -518,7 +590,12 @@ a .icon {
   /* sets cursor to help on hover */
   cursor: help;
 }
-
+/* sets margin right to 10px
+@Akrit 
+*/
+.progress {
+  margin-right: 10px;
+}
 .btn-greetings,
 .btn-closing .btn-body {
   /* Sets height to 30px */
@@ -678,10 +755,13 @@ textarea:focus {
   .content {
     /* Sets height to 100% */
     height: 100%;
+    background-color: #00a1b1;
   }
   .content {
-    /* Sets padding to 0 */
-    padding: 0;
+    /* Sets padding to auto */
+    padding-left: auto;
+    width: 98%;
+    float: right;
   }
   #left {
     /* Forces display to none */
@@ -694,8 +774,10 @@ textarea:focus {
   #right {
     /* Sets display to none */
     display: none;
+    /* Set width to 100% */
+    width: 100%;
   }
-  .col-m {
+  #middle-m {
     /* Sets width to 100%*/
     width: 100%;
     /* Sets display to block */
@@ -718,27 +800,37 @@ textarea:focus {
     padding-top: 0.5rem;
     /* Sets font size to 1.5rem */
     font-size: 1.5rem;
+    background-image: none;
+    background-color: #00a1b1;
   }
 
+  /* class selector for compose in small device */
+  .btn-compose {
+    padding: 6px 11px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    width: 9rem;
+  }
   /*Class selector for logo*/
   #logo {
     /* Sets position to absolute */
     position: absolute;
-    /* Sets right to 5% */
-    right: 5%;
-    /* Sets padding top to -0.5% */
-    top: -0.5%;
+    /* Sets right to 1% */
+    right: 1%;
+    /* Sets padding top to 1% */
+    top: 1%;
     /* Sets border radius to 5px */
     border-radius: 5px;
     /* Sets width to 3.5rem */
-    width: 3.5rem;
+    width: 3rem;
+    background-color: white;
   }
 
   .menu-m ul {
     /* Forces display to block */
     display: block !important;
     /* Forces width to 130px */
-    width: 130px !important;
+    width: 150px !important;
     /* Sets position to fixed */
     position: fixed;
     /* Sets left to -100% */
@@ -754,6 +846,14 @@ textarea:focus {
   #select-mail-ins {
     /* Sets display to none */
     display: none;
+  }
+  .modal-content {
+    /* Sets top to -1.8rem */
+    top: 0;
+    /* Sets left to -42% */
+    left: 0;
+    /* Sets width to 96% */
+    width: 96%;
   }
 }
 @media (max-width: 372px) {

@@ -24,7 +24,7 @@
                 <p><input id="send-check-5" type="checkbox" />
                     <label for="send-check-5">Write a letter closing</label> </p>
                 <div class="input-group-text page-header help--yellow" id="help-yellow">
-                    Make sure to mark every checkbox before sending the email.
+                    Mark every checkbox before sending the email.
                 </div>
             </div>
             <div class="modal-footer">
@@ -34,6 +34,57 @@
                 <button type="submit" form="compose" id="btn-yes" class="btn btn-primary">
                     Yes
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="manage-acc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="display: none">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Account registered in the Email System
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">S.No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col" style="text-align: center;">Press</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                
             </div>
         </div>
     </div>
@@ -50,30 +101,32 @@
 
         <div class="menu-m">
             <ul>
+
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
-                <li> <a href="/inbox" class="tab"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
+                <li> <a href="/inbox" class="tab-m"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
                         </span></a></li>
-                <li> <a href="/sent" class="tab"> <img class="icon" src="../images/sent-icon.png"
-                            alt="">Sent
+                <li> <a href="/sent" class="tab-m"> <img class="icon" src="../images/sent-icon.png" alt="">Sent
                         Items
                     </a></li>
 
-                <li> <a href="/fav" class="tab"><img class="icon" src="../images/fav-icon.png"
-                            alt="">Favorites</a></li>
-                <li> <a href="/unread" class="tab"><img class="icon" src="../images/unread-icon.png"
-                            alt="">Unread Emails <span class="badge badge--inbox"></span></a></li>
+                <li> <a href="/fav" class="tab-m"><img class="icon" src="../images/fav-icon.png" alt="">Favorites</a>
+                </li>
+                <li> <a href="/unread" class="tab-m"><img class="icon" src="../images/unread-icon.png" alt="">Unread
+                        Emails <span class="badge badge--inbox"></span></a></li>
 
-                <li> <a href="/deleted" class="tab" onclick=""><img class="icon"
-                            src="../images/delete-icon.png" alt="">Deleted Emails
+                <li> <a href="/deleted" class="tab-m" onclick=""><img class="icon" src="../images/delete-icon.png"
+                            alt="">Deleted Emails
                     </a></li>
+                <li> <a href="/manage" class="tab-m" onclick="helpGenerate('help')"><img class="icon"
+                            src="../images/manage-ac.png" alt="">Manage Accounts </a></li>
+                <li> <a class="tab-m" onclick="manageAcc()"><img class="icon" src="../images/help.png"
+                            alt="">Help</a></li>
                 <br>
+                <%- include ("./partials/progress")%>
                 <br>
-                <br>
-                <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                            src="../images/help.png" alt="">Help</a></li>
-                <p class="lead mb-3"><%=name %></p>
+                <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
                 <a href="/users/logout" class="btn btn-secondary">Logout</a>
             </ul>
 
@@ -93,32 +146,35 @@
                 <li> <a href="/fav" class="tab"><img class="icon" src="../images/fav-icon.png"
                             alt="">Favorites</a></li>
                 <li> <a href="/unread" class="tab"><img class="icon" src="../images/unread-icon.png"
-                            alt="">Unread Emails <span class="badge badge--inbox"></span></a></li>
+                            alt="">Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
+                        class="badge badge--inbox"><%=badge%><%}%></span></a></li>
 
                 <li> <a href="/deleted" class="tab" onclick=""><img class="icon"
                             src="../images/delete-icon.png" alt="">Deleted Emails
                     </a></li>
-                <br>
-                <br>
-                <br>
+                <li> <a class="tab" onclick="manageAcc()"><img class="icon"
+                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li>
                 <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                            src="../images/help.png" alt="">Help</a></li>
-                <p class="lead mb-3"><%=name %></p>
+                    src="../images/help.png" alt="">Help</a></li>
+                <br>
+                <%- include ("./partials/progress")%>
+                        <br>
+                        <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
                 <a href="/users/logout" class="btn btn-secondary">Logout</a>
             </ul>
 
         </div>
-
-        <div class="" id="middle">
+        <div  id="middle-m">
+            <%- include ("./partials/emails")%>
+        </div>
+        <div id="middle">
             <%- include ("./partials/emails")%>
         </div>
 
 
 
         <div class="" id="right">
-            <div id="select-mail-ins">
-                <p>Select an item to read</p>
-            </div>
+            <%- include ("./partials/messages") %>
             <form id="compose" action="/users/send" method="POST" onsubmit=" return validate()">
                 <p class="help--yellow">Did you know clicking on To, Cc, (?)Subject, Greeting, Message, or Closing
                     shows hints?
@@ -130,7 +186,7 @@
 
 
                     <input type="email" id="to" name="to" class="form-control" placeholder="To"
-                        value="<%= typeof to != 'undefined' ? to : '' %>" required/>
+                        value="<%= typeof to != 'undefined' ? to : '' %>" required />
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -167,45 +223,14 @@
                     Send
                 </span>
 
-                <button type="button" class="btn btn-primary btn-send" onclick="back()">
+                <button type="button" class="btn btn-primary btn-back" onclick="back()">
                     Discard
                 </button>
-                <button type="button" class="btn btn-primary btn-send" onclick="helpGenerate('example')">
+                <button type="button" class="btn btn-primary btn-example" onclick="helpGenerate('example')">
                     Example
                 </button>
             </form>
-            <div id="email--view">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text emailAdd" id="basic-addon1"></span>
-                    </div>
-                    <input type="text" class="form-control readonly--hover" id="view-emailAdd" aria-label="From"
-                        aria-describedby="basic-addon1" readonly />
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Cc</span>
-                    </div>
-                    <input type="text" class="form-control readonly--hover" id="view-cc" aria-label="Cc"
-                        aria-describedby="basic-addon1" readonly />
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Subject</span>
-                    </div>
-                    <input type="text" class="form-control readonly--hover" id="view-sb" aria-label="Sb"
-                        aria-describedby="basic-addon1" readonly />
-                </div>
-                <textarea class="form-control readonly--hover" id="view-msg" rows="12" readonly></textarea>
-
-                <button type="submit" class="btn btn-primary btn-send" onclick="showCompose()">
-                    Reply
-                </button>
-
-                <button type="button" class="btn btn-primary btn-send" onclick="back()">
-                    Back
-                </button>
-            </div>
+            <%- include ("./partials/viewEmail")%>
         </div>
     </div>
 </div>

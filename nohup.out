@@ -1,2 +1,91 @@
 Server started on 5000
 DB connected
+Server started on 5000
+DB connected
+Error: /home/groups_2020/group6/public_html/test/views/home.ejs:117
+    115| 
+    116|         <div class="" id="middle">
+ >> 117|             <%- include ("./partials/emails")%>
+    118|         </div>
+    119| 
+    120| 
+
+Could not find matching close tag for "<%".
+    at /home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:739:19
+    at Array.forEach (<anonymous>)
+    at Template.generateSource (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:729:15)
+    at Template.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:583:12)
+    at Object.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:396:16)
+    at handleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:233:18)
+    at includeFile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:321:10)
+    at include (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:689:16)
+    at eval (/home/groups_2020/group6/public_html/test/views/home.ejs:31:17)
+    at home (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:691:17)
+    at tryHandleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:272:36)
+    at View.exports.renderFile [as engine] (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:489:10)
+    at View.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:640:10)
+    at Function.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:592:3)
+    at ServerResponse.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/response.js:1012:7)
+SyntaxError: /home/groups_2020/group6/public_html/test/views/home.ejs:117
+    115| 
+    116|         <div class="" id="middle">
+ >> 117|             <%- include ("./partials/emails")%>
+    118|         </div>
+    119| 
+    120| 
+
+Unexpected identifier in /home/groups_2020/group6/public_html/test/views/partials/emails.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:661:12)
+    at Object.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:396:16)
+    at handleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:233:18)
+    at includeFile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:321:10)
+    at include (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:689:16)
+    at eval (/home/groups_2020/group6/public_html/test/views/home.ejs:31:17)
+    at home (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:691:17)
+    at tryHandleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:272:36)
+    at View.exports.renderFile [as engine] (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:489:10)
+    at View.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:640:10)
+    at Function.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:592:3)
+    at ServerResponse.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/response.js:1012:7)
+    at ServerResponse.res.render (/home/groups_2020/group6/public_html/test/node_modules/express-ejs-layouts/lib/express-layouts.js:77:18)
+    at User.findOne.then (/home/groups_2020/group6/public_html/test/routes/index.js:41:11)
+SyntaxError: /home/groups_2020/group6/public_html/test/views/home.ejs:117
+    115| 
+    116|         <div class="" id="middle">
+ >> 117|             <%- include ("./partials/emails")%>
+    118|         </div>
+    119| 
+    120| 
+
+Unexpected identifier in /home/groups_2020/group6/public_html/test/views/partials/emails.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:661:12)
+    at Object.compile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:396:16)
+    at handleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:233:18)
+    at includeFile (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:321:10)
+    at include (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:689:16)
+    at eval (/home/groups_2020/group6/public_html/test/views/home.ejs:31:17)
+    at home (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:691:17)
+    at tryHandleCache (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:272:36)
+    at View.exports.renderFile [as engine] (/home/groups_2020/group6/public_html/test/node_modules/ejs/lib/ejs.js:489:10)
+    at View.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/view.js:135:8)
+    at tryRender (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:640:10)
+    at Function.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/application.js:592:3)
+    at ServerResponse.render (/home/groups_2020/group6/public_html/test/node_modules/express/lib/response.js:1012:7)
+    at ServerResponse.res.render (/home/groups_2020/group6/public_html/test/node_modules/express-ejs-layouts/lib/express-layouts.js:77:18)
+    at User.findOne.then (/home/groups_2020/group6/public_html/test/routes/index.js:41:11)
+inbox
+Server started on 5000
+DB connected
+Error while sending email. Error: TypeError: Cannot read property 'inbox' of null
