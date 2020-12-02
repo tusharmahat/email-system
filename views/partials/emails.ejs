@@ -1,7 +1,9 @@
-<%var i=0 %><% if(typeof inbox != 'undefined') {%><a
-  onclick="deleteAll('inbox')"
-  ><img src="../images/delete-all-icon.png"
-/></a>
+<%var i=0 %><% if(typeof inbox != 'undefined') {%>
+<form class="btn-delete-all" action="/users/inbox/delete-all" method="POST">
+  <button type="submit">
+    <img class="icon--delete" src="../images/delete-all-icon.png" />
+  </button>
+</form>
 
 <%inbox.forEach( function(email){%>
 <div>
@@ -10,7 +12,7 @@
     src="../images/fav-add-icon.png"
     onclick="addToFav('inbox',<%=i%>)"
   /><a href="/inbox/<%=i%>"
-    ><label class="list-mail hover">
+    ><label class="list-mail">
       <span
         id="view"
         name="view"
@@ -19,30 +21,38 @@
       >
       <span data-role="button" class="list-sb"><%=email.sb%></span></label
     ></a
-  ><img
-    class="icon--delete"
-    onclick="deleteOne('inbox',<%=i%>)"
-    src="../images/delete-icon.png"
-  />
+  >
+  <form
+    class="btn-delete"
+    action="/users/inbox/delete-one/<%=i%>"
+    method="POST"
+  >
+    <button type="submit">
+      <img class="icon--delete" src="../images/delete-icon.png" />
+    </button>
+  </form>
 </div>
-<%i++%> <% })%> <%}%> <% if(typeof sent != 'undefined') {%><a
-  onclick="deleteAll('sent')"
-  ><img src="../images/delete-all-icon.png"
-/></a>
+<%i++%> <% })%> <%}%> <% if(typeof sent != 'undefined') {%>
+<form class="btn-delete-all" action="/users/sent/delete-all" method="POST">
+  <button type="submit">
+    <img class="icon--delete" src="../images/delete-all-icon.png" />
+  </button>
+</form>
 <%sent.forEach( function(email){%>
 <div>
   <a href="/sent/<%=i%>">
-    <label class="list-mail hover"
+    <label class="list-mail"
       ><span href="/sent/<%=i%>" data-role="button" class="list-email"
         ><%=email.to%></span
       >
       <span data-role="button" class="list-sb"><%=email.sb%></span></label
     ></a
-  ><img
-    class="icon--delete"
-    onclick="deleteOne('sent',<%=i%>)"
-    src="../images/delete-icon.png"
-  />
+  >
+  <form class="btn-delete" action="/users/sent/delete-one/<%=i%>" method="POST">
+    <button type="submit">
+      <img class="icon--delete" src="../images/delete-icon.png" />
+    </button>
+  </form>
 </div>
 <%i++%> <%})%> <%}%> <% if(typeof fav != 'undefined') {%> <%fav.forEach(
 function(email){ %> <%if(email.fav){%>
@@ -52,7 +62,7 @@ function(email){ %> <%if(email.fav){%>
     src="../images/fav-add-icon.png"
     onclick="addToFav('inbox',<%=i%>)"
   /><a href="/fav/<%=i%>"
-    ><label class="list-mail hover">
+    ><label class="list-mail">
       <span
         id="view"
         name="view"
@@ -61,11 +71,16 @@ function(email){ %> <%if(email.fav){%>
       >
       <span data-role="button" class="list-sb"><%=email.sb%></span></label
     ></a
-  ><img
-    class="icon--delete"
-    onclick="deleteOne('inbox',<%=i%>)"
-    src="../images/delete-icon.png"
-  />
+  >
+  <form
+    class="btn-delete"
+    action="/users/inbox/delete-one/<%=i%>"
+    method="POST"
+  >
+    <button type="submit">
+      <img class="icon--delete" src="../images/delete-icon.png" />
+    </button>
+  </form>
 </div>
 <%}%><%i++%><%})%> <%}%> <% if(typeof unread != 'undefined') {%>
 <%unread.forEach( function(email){%><%if(!email.read){%>
@@ -75,7 +90,7 @@ function(email){ %> <%if(email.fav){%>
     src="../images/fav-add-icon.png"
     onclick="addToFav('inbox',<%=i%>)"
   /><a href="/unread/<%=i%>"
-    ><label class="list-mail hover">
+    ><label class="list-mail">
       <span
         id="view"
         name="view"
@@ -84,29 +99,41 @@ function(email){ %> <%if(email.fav){%>
       >
       <span data-role="button" class="list-sb"><%=email.sb%></span></label
     ></a
-  ><img
-    class="icon--delete"
-    onclick="deleteOne('inbox',<%=i%>)"
-    src="../images/delete-icon.png"
-  />
+  >
+  <form
+    class="btn-delete"
+    action="/users/inbox/delete-one/<%=i%>"
+    method="POST"
+  >
+    <button type="submit">
+      <img class="icon--delete" src="../images/delete-icon.png" />
+    </button>
+  </form>
 </div>
-<%}%><%i++%> <% })%> <%}%> <% if(typeof deleted != 'undefined') {%><a
-  onclick="deleteAll('deleted')"
-  ><img src="../images/delete-all-icon.png"
-/></a>
+<%}%><%i++%> <% })%> <%}%> <% if(typeof deleted != 'undefined') {%>
+<form class="btn-delete-all" action="/users/deleted/delete-all" method="POST">
+  <button type="submit">
+    <img class="icon--delete" src="../images/delete-all-icon.png" />
+  </button>
+</form>
 <%deleted.forEach( function(email){%>
 <div>
   <a href="/deleted/<%=i%>">
-    <label class="list-mail hover"
+    <label class="list-mail"
       ><span href="/deleted/<%=i%>" data-role="button" class="list-email"
         ><%=email.to%></span
       >
       <span data-role="button" class="list-sb"><%=email.sb%></span></label
     ></a
-  ><img
-    class="icon--delete"
-    onclick="deleteOne('deleted',<%=i%>)"
-    src="../images/delete-icon.png"
-  />
+  >
+  <form
+    class="btn-delete"
+    action="/users/deleted/delete-one/<%=i%>"
+    method="POST"
+  >
+    <button type="submit">
+      <img class="icon--delete" src="../images/delete-icon.png" />
+    </button>
+  </form>
 </div>
 <%i++%> <%})%> <%}%>

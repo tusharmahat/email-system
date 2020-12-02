@@ -1,8 +1,11 @@
 var currPage = window.location.href;
 
 //Show active tab for desktop and small device
-activateTab(currPage, "tab");
-activateTab(currPage, "tab-m");
+if (isScreenSmall().matches) {
+  activateTab(currPage, "tab-m");
+} else {
+  activateTab(currPage, "tab");
+}
 
 $(document).ready(function () {
   if ($("#email--view").parents("#right").length == 1) {
@@ -80,22 +83,26 @@ $(function () {
 function activateTab(currPage, tab) {
   var btns = document.getElementsByClassName(tab);
   if (btns.length > 0) {
-    var i = 0;
     if (currPage.match("inbox") || currPage.match("home")) {
-      i = 0;
+      btns[1].className += " active";
     } else if (currPage.match("sent")) {
-      i = 1;
+      btns[2].className += " active";
     } else if (currPage.match("fav")) {
-      i = 2;
+      btns[3].className += " active";
     } else if (currPage.match("unread")) {
-      i = 3;
-    } else {
-      i = 4;
+      btns[4].className += " active";
+    } else if (currPage.match("deleted")) {
+      btns[5].className += " active";
     }
-    btns[i].className += " active";
   }
 }
-
+function deleteAcAlert() {
+  if (confirm("Are you sure want to delete this account?")) {
+    return true;
+  } else {
+    return false;
+  }
+}
 /**
  * This function shows compose on the third column on click
  * after hiding the instructions
@@ -115,50 +122,6 @@ function showCompose() {
 }
 
 /**
- * Delete a specific email
- *
- * @param {*} box
- * @param {*} index
- */
-function deleteOne(box, index) {
-  //Confirmation for deletion of an email
-  var isDelete = confirm("Are you sure want delete this mail?");
-  //If isDelete is true then delete that mail
-  if (isDelete) {
-    // Send post request to delete the email
-    fetch(`/users/${box}/delete-one/:${index}`, { method: "POST" })
-      .then((res) => {
-        // If redirected then redirected the url that it gets as response
-        if (res.redirected) {
-          window.location.href = res.url;
-        }
-      })
-      .catch((err) => {
-        console.log("Error while deleting this email, Error:" + err);
-      });
-  }
-}
-/**
- * Delete all emails of the respective box
- * @author Tushar
- * @param {*} box
- */
-function deleteAll(box) {
-  if (
-    confirm("Are you sure you want to delete all the emails from this box?")
-  ) {
-    fetch(`/users/${box}/delete-all`, { method: "POST" })
-      .then((res) => {
-        // Open the unread emails
-        window.location.href = res.url;
-      })
-      .catch((err) => {
-        console.log("Error while deleting all, Erro: " + err);
-      });
-  }
-}
-
-/**
  * Add this email to favorite, itdoes not add in separate box,
  * it just marks the inbox emails as favorite if clicked on star
  *
@@ -167,7 +130,7 @@ function deleteAll(box) {
  */
 function addToFav(box, index) {
   // Send post request to add this email to favorite
-  fetch(`/users/${box}/add-to-fav/:${index}`, { method: "POST" })
+  fetch(`/users/${box}/add-to-fav/${index}`, { method: "POST" })
     .then((res) => {
       // If redirected then redirect to the url that it gets as response
       if (res.redirected) {
@@ -184,10 +147,6 @@ function addToFav(box, index) {
 function sendConfirm() {
   //Triggers alertbox
   $("#send-alert").modal();
-}
-function manageAcc() {
-  //Triggers alertbox
-  $("#manage-acc").modal();
 }
 
 /**
@@ -224,15 +183,20 @@ function validate() {
  * @Akrit
  */
 function back() {
-  var isCancel = confirm("Are you sure want to cancel, and go back?");
-  //If isCancel is true then go back to the respective page
-  if (isCancel) {
-    //Hides the compose column
-    $("#compose").css("display", "none");
-    //Hides the view column
-    $("#email--view").css("display", "none");
-    //Displays the instructions about clicking the mail to read
-    $("#select-mail-ins").css("display", "block");
+  if (!isScreenSmall().matches) {
+    var isCancel = confirm("Are you sure want to cancel, and go back?");
+    //If isCancel is true then go back to the respective page
+    if (isCancel) {
+      //Hides the compose column
+      $("#compose").css("display", "none");
+      //Hides the view column
+      $("#email--view").css("display", "none");
+      //Displays the instructions about clicking the mail to read
+      $("#select-mail-ins").css("display", "block");
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 // ---------------------JUST HELP MESSAGES, TOO LONG, DON'T LOOK THESE-----------------------------------//

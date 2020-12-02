@@ -1,0 +1,32 @@
+<%if(typeof names != 'undefined' && typeof emails != 'undefined'){%>
+
+<p class="help--yellow">
+  To delete any account registered, click on delete icon. The user can again
+  resgister with the same email address
+</p>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col" style="text-align: center">Press</th>
+    </tr>
+    <%var i=0%> <%names.forEach( function(name){%>
+    <tr>
+      <td><%=name%></td>
+      <td class="break-out"><%=emails[i]%></td>
+      <td>
+        <a
+          href="/users/delete-acc/<%=emails[i]%>"
+          onclick="return deleteAcAlert()"
+          ><img
+            class="icon--delete icon--delete--ac"
+            src="../images/delete-icon.png"
+        /></a>
+      </td>
+    </tr>
+    <%i++%> <%})%>
+  </thead>
+  <tbody class="manage-acc-table-row"></tbody>
+</table>
+<%}%>
