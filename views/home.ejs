@@ -38,58 +38,6 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="manage-acc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style="display: none">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Account registered in the Email System
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" style="text-align: center;">Press</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container-fluid">
 
     <label for="check" class="checkbtn">
@@ -119,10 +67,12 @@
                 <li> <a href="/deleted" class="tab-m" onclick=""><img class="icon" src="../images/delete-icon.png"
                             alt="">Deleted Emails
                     </a></li>
-                <li> <a href="/manage" class="tab-m" onclick="helpGenerate('help')"><img class="icon"
-                            src="../images/manage-ac.png" alt="">Manage Accounts </a></li>
-                <li> <a class="tab-m" onclick="manageAcc()"><img class="icon" src="../images/help.png"
-                            alt="">Help</a></li>
+                <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
+                <li> <a  href='/manage-acc' class="tab-m"><img class="icon"
+                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li><%}%><%}%>
+                <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
+                <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
+                        src="../images/help.png" alt="">Help</a></li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
                 <br>
@@ -152,23 +102,27 @@
                 <li> <a href="/deleted" class="tab" onclick=""><img class="icon"
                             src="../images/delete-icon.png" alt="">Deleted Emails
                     </a></li>
-                <li> <a class="tab" onclick="manageAcc()"><img class="icon"
-                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li>
+                <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
+                <li> <a href='/manage-acc' class="tab"><img class="icon"
+                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li><%}%><%}%>
+                <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
                 <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                    src="../images/help.png" alt="">Help</a></li>
+                        src="../images/help.png" alt="">Help</a></li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
-                        <br>
-                        <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
+                <br>
+                <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
                 <a href="/users/logout" class="btn btn-secondary">Logout</a>
             </ul>
 
         </div>
         <div  id="middle-m">
-            <%- include ("./partials/emails")%>
+            <%- include ("./partials/emails")%> 
+            <%- include ("./partials/manageAcc")%>
         </div>
         <div id="middle">
             <%- include ("./partials/emails")%>
+            <%- include ("./partials/manageAcc")%>
         </div>
 
 
@@ -223,7 +177,7 @@
                     Send
                 </span>
 
-                <button type="button" class="btn btn-primary btn-back" onclick="back()">
+                <button type="button" class="btn btn-primary btn-back" onclick="return back();">
                     Discard
                 </button>
                 <button type="button" class="btn btn-primary btn-example" onclick="helpGenerate('example')">
