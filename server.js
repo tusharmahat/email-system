@@ -1,3 +1,7 @@
+/**
+ * server.js main app to run server
+ * @author Tushar
+ */
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
@@ -5,6 +9,8 @@ mongoose.set("useFindAndModify", false);
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const compression = require("compression");
+
 //Passport config
 require("./config/passport")(passport);
 
@@ -17,9 +23,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // static assets like javascript and css are served from these folders
 app.use("/scripts", express.static(__dirname + "/scripts"));
+app.use("/scripts", express.static(__dirname + "/images"));
 app.use("/css", express.static(__dirname + "/css"));
 // root
 app.use(express.static(__dirname));
+app.use(compression());
 
 // set up allowance characteristics for cross-origin resource sharing (CORS)
 var allowCrossDomain = function (req, res, next) {

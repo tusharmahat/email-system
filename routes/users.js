@@ -1,3 +1,9 @@
+/**
+ * users.js
+ * users route
+ *
+ * @author Tushar
+ */
 //------------------------------REQUIRED IMPORTS------------------------//
 const express = require("express");
 const router = express.Router();
@@ -421,7 +427,7 @@ router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
       //update the inbox of the user in the database
       findAndUpdate(query, updateObj, options);
 
-      //redirect to from where it was triggered
+      //redirect to favorite
       res.redirect(`/${req.params.box}`);
     })
     .catch((err) => {

@@ -1,4 +1,8 @@
-/*All Custom properties 
+/* 
+CSS files for the layout
+@author Tushar, Akrit, Xinhao Li
+
+All Custom properties 
 @Akrit */
 /* Sets attributes for root  */
 :root {
@@ -48,11 +52,10 @@
 
 body,
 html {
-  /* Sets margin to 0 by default */
-  margin: 0;
   /* Sets height to 100% */
   height: 100%;
 }
+
 body {
   /* Sets background color as the color of main bg */
   background-color: var(--main-bg-color);
@@ -94,8 +97,6 @@ body {
   height: 100%;
   /* Sets border radius to 5px */
   border-radius: 5px;
-  /* Sets padding to 0 */
-  padding: 0;
   /* Sets background color as the color of main bg */
   background-color: var(--main-bg-color);
   /* Sets width to 16.67% */
@@ -121,6 +122,11 @@ body {
 .mt4 {
   /* Sets top margin to 40px */
   margin-top: 20px !important;
+}
+
+/* Class selector for Login, register card body */
+.card-body {
+  width: 100%;
 }
 
 .form-group {
@@ -158,8 +164,8 @@ body {
   box-shadow: 0 0 8px black;
   /* Sets border radius to 5px */
   border-radius: 5px;
-  /* Sets padding to top, bottom:0px right, left:8px */
-  padding: 0 10px;
+  /* Sets padding to top, bottom:0px right, left:10px */
+  padding: 5px 10px;
   /* Sets background color as the color of main view bg */
   background-color: var(--main-view-bg-color);
 }
@@ -174,7 +180,7 @@ body {
   /* Sets display none */
   display: none;
   /* Sets padding to top, bottom:0px right, left:8px */
-  padding: 0 10px;
+  padding: 5px 10px;
 }
 
 /*Class selector for logo(name of app) 
@@ -202,8 +208,6 @@ body {
   position: absolute;
   /* Sets right to 50% */
   right: 50%;
-  /* Sets top to -0.5% */
-  top: 0%;
   /* Sets border radius to 5px*/
   border-radius: 5px;
   /* Sets width to 3.5rem*/
@@ -216,8 +220,6 @@ body {
 .checkbtn {
   /* Sets color as the color of main font */
   color: var(--main-font-color);
-  /* Sets padding of top and bottom to 0 and left and right to 1% */
-  padding: 0 1%;
   /* Sets font size to 1.8rem */
   font-size: 1.8rem;
   /* Sets float to left */
@@ -234,19 +236,6 @@ body {
   display: none !important;
 }
 
-#result {
-  position: absolute;
-  width: 100%;
-  max-width: 870px;
-  cursor: pointer;
-  overflow-y: auto;
-  max-height: 400px;
-  box-sizing: border-box;
-  z-index: 1001;
-}
-.link-class:hover {
-  background-color: #f1f1f1;
-}
 /* class selector for mobile menu */
 .menu-m ul {
   /* Forces display to none */
@@ -335,56 +324,29 @@ li a:hover {
 }
 
 .icon {
-  /* Sets padding to 1px */
-  padding: 1px;
+  /* Sets font size to 20px */
+  font-size: 20px;
+  /* Sets padding to 2px */
+  padding: 2px;
+  /* Sets color to black */
+  color: #000;
   /* Sets border radius to 5px */
   border-radius: 5px;
-  /* Sets max width to 5px */
-  max-width: 20px;
-  /* Sets height to auto */
-  height: auto;
-  /* Sets margin of top:0.5rem, right:0.3rem, bottom:0.2rem and left:0 */
-  margin: 0.5rem 0.3rem 0.2rem 0;
+  /* Sets cursor to pointer */
   cursor: pointer;
 }
 
 .icon-fav {
-  /* Sets top margin to 0.7rem */
-  margin-top: 0.7rem;
-  /* Sets background */
-  background-color: yellow;
-}
-.icon-grey {
-  background-color: lightgray;
-  padding: 0;
-  text-align: center;
-  width: 2.5rem;
-}
-.icon--delete {
-  /* Sets width to 20px */
-  width: 20px;
-  /* Sets margin-top to 0.7rem */
-  margin-top: 0.9rem;
-  /* Sets margin-top to 0.4rem */
-  margin-bottom: 0.4rem;
   /* Sets border radius to 50% */
   border-radius: 50%;
-}
-.icon--delete:hover {
-  /* Sets the background to light yellow */
-  background-color: red;
+  /* Sets background */
+  background-color: yellow;
 }
 
 /* table word break out class selector */
 .break-out {
   word-wrap: break-word;
   word-break: break-all;
-}
-
-/* Icon--no-margin class selector */
-.icon--no-margin {
-  /* Sets margin to 0 */
-  margin: 0;
 }
 
 /* Icon inside an anchor tag class selector */
@@ -397,18 +359,13 @@ a .icon {
   margin-bottom: 0.4rem;
 }
 
-.icon--float--left {
-  /* Floats content from left */
-  float: left;
-}
-
-.badge {
-  /* Sets font size to 1rem */
-  font-size: 1rem;
-  /* Sets color as color of main btn */
-  color: var(--main-btn-color);
-}
-.badge--inbox {
+.badge-unread {
+  /* Sets width to 1.6rem */
+  width: 1.6rem;
+  /* Sets text algin to center */
+  text-align: center;
+  /* Sets font size to 1.2rem */
+  font-size: 1.2rem;
   /* Sets color to red */
   color: red;
   /* Sets border to 2px with red solid color */
@@ -416,17 +373,25 @@ a .icon {
   /* Sets border radius to 50% */
   border-radius: 50%;
 }
+
+#middle > div,
+#middle-m > div {
+  border-bottom: 1px solid lightgray;
+}
 /* Mail lists */
 .list-mail {
-  /* Sets width to 80% */
-  width: 80%;
+  /* Sets width to 75% */
+  width: 75%;
   /* Sets overflow to hidden */
   overflow-x: unset;
   /* Sets top and bottom margin to 0.5 rem */
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   /* For text overflow set word wrap to break word */
   word-wrap: break-word;
   word-break: break-all;
+  margin: 0.5rem 0;
+  line-height: 1rem;
+  padding-left: 10px;
 }
 
 /* Selector for anchor inside list-mail class */
@@ -448,9 +413,9 @@ a:hover {
 
 .list-mail:hover {
   /* Sets the bg color as the color of main link hover */
-  background: var(--main-link-hover-color);
+  background: lightgray;
   /* Sets the border as the color of main link hover*/
-  border: 1px solid var(--main-link-hover-color);
+  border: 1px solid lightgray;
   /* Sets border radius to 5px */
   border-radius: 5px;
   /* Sets cursor to pointer */
@@ -527,16 +492,8 @@ a:hover {
   border-radius: 5px;
   /* Sets padding of top, bottom to 4px and left, right to 5px */
   padding: 4px 5px;
-  /* Sets border radius to 5px */
-  border-radius: 5px;
   /* Justify content to center */
   justify-content: center;
-}
-
-/* @Tushar */
-.readonly--hover:hover {
-  /* Sets cursor to default */
-  cursor: default;
 }
 
 /* @Tushar */
@@ -587,6 +544,14 @@ a:hover {
   margin-bottom: 10px !important;
 }
 
+/* Class selector */
+.help-ex {
+  /* Set text decoration to none */
+  text-decoration: underline;
+  /* Sets cursor to pointer */
+  cursor: pointer;
+}
+
 .btn-help {
   /* Aligns text to center */
   justify-content: center;
@@ -598,28 +563,37 @@ a:hover {
   border-radius: 5px;
 }
 
-/* Delete button class selector */
 .btn-delete {
-  /* Sets position to absolute */
-  position: relative;
-  /* Sets display to inline block */
-  display: inline;
-  /* Sets float to right */
+  /* margin-top: 1rem; */
   float: right;
-  /* Sets border radius to 50% */
-  border-radius: 50%;
 }
-.btn-delete button,
-.btn-delete-all button {
-  /* Sets background to white */
-  background-color: white;
+.btn-fav {
+  float: left;
+}
+
+#middle > form > button,
+#middle-m > form > button,
+#middle > div > form > button,
+#middle-m > div > form > button {
+  padding-top: 0.75rem;
+  /* Sets size to 20px */
+  font-size: 20px;
   /* Sets border to none */
   border: none;
-  /* Sets border radius to 50% */
-  border-radius: 50%;
   /* Sets outline to none */
-  outline: none;
+  outline-style: none;
+  /* Sets background to white */
+  background-color: white;
 }
+
+/* Selcetor for delete icon */
+.btn-delete > button > i:hover,
+#middle > form > button > i:hover,
+#middle-m > form > button > i:hover {
+  /* Sets the color to red */
+  color: red;
+}
+
 .btn-help:hover {
   /* sets cursor to help on hover */
   cursor: help;
@@ -770,19 +744,6 @@ textarea:focus {
   /* Sets border right to 1px solid and color as the color of main link hover */
   border-right: 1px solid var(--main-link-hover-color);
 }
-#result {
-  position: absolute;
-  width: 100%;
-  max-width: 870px;
-  cursor: pointer;
-  overflow-y: auto;
-  max-height: 400px;
-  box-sizing: border-box;
-  z-index: 1001;
-}
-.link-class:hover {
-  background-color: #f1f1f1;
-}
 
 @media (max-width: 768px) {
   .container-fluid,
@@ -792,8 +753,6 @@ textarea:focus {
     background-color: #00a1b1;
   }
   .content {
-    /* Sets padding to auto */
-    padding-left: auto;
     width: 98%;
     float: right;
   }

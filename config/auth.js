@@ -1,3 +1,8 @@
+/**
+ * auth.js for authentication
+ * @author Tushar
+ */
+//Export authentication model
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
     if (req.isAuthenticated()) {

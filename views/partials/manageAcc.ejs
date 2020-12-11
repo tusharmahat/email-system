@@ -1,8 +1,8 @@
-<%if(typeof names != 'undefined' && typeof emails != 'undefined'){%>
-
+<%# manageAcc.ejs to manage Accounts @author Tushar %> <%if(typeof names !=
+'undefined' && typeof emails != 'undefined'){%>
 <p class="help--yellow">
-  To delete any account registered, click on delete icon. The user can again
-  resgister with the same email address
+  To delete any Studentt's account registered, click on delete icon. The student
+  can again resgister with the same email address
 </p>
 <table class="table">
   <thead class="thead-dark">
@@ -11,22 +11,19 @@
       <th scope="col">Email</th>
       <th scope="col" style="text-align: center">Press</th>
     </tr>
-    <%var i=0%> <%names.forEach( function(name){%>
+    <%var i=0%> <%types.forEach( function(type){%> <%if(type !="Specialist" ){%>
     <tr>
-      <td><%=name%></td>
+      <td><%=names[i]%></td>
       <td class="break-out"><%=emails[i]%></td>
       <td>
         <a
           href="/users/delete-acc/<%=emails[i]%>"
-          onclick="return deleteAcAlert()"
-          ><img
-            class="icon--delete icon--delete--ac"
-            src="../images/delete-icon.png"
-        /></a>
+          onclick="return confirmDelete('this','account')"
+          ><i class="icon fas fa-trash-alt"></i
+        ></a>
       </td>
     </tr>
-    <%i++%> <%})%>
+    <%}%> <%i++%><%})%> <%}%>
   </thead>
   <tbody class="manage-acc-table-row"></tbody>
 </table>
-<%}%>

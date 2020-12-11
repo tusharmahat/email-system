@@ -1,138 +1,179 @@
-<%var i=0 %><% if(typeof inbox != 'undefined') {%>
-<form class="btn-delete-all" action="/users/inbox/delete-all" method="POST">
+<%# email.ejs for listing emails @author Tushar %> <%var i=0 %><% if(typeof
+inbox != 'undefined') {%>
+  <div class="container">
+    <form role="form">
+          <div class="form-group">
+            <input type="input" class="form-control input-lg" id="text-search" placeholder="Type your search character">
+          </div>
+    </form>
+    <div id="filter-records"></div>
+    </div>
+<form
+  class="btn-delete-all"
+  action="/users/inbox/delete-all"
+  method="POST"
+  onsubmit="return confirmDelete('all','emails')"
+>
   <button type="submit">
-    <img class="icon--delete" src="../images/delete-all-icon.png" />
+    <i class="icon fas fa-trash-alt"></i>
   </button>
 </form>
 
+
 <%inbox.forEach( function(email){%>
-<div>
-  <img
-    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
-    src="../images/fav-add-icon.png"
-    onclick="addToFav('inbox',<%=i%>)"
-  /><a href="/inbox/<%=i%>"
-    ><label class="list-mail">
-      <span
+<div id="view-<%=i%>">
+  <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
+    <button type="submit">
+      <i
+        class="icon <%= email.fav? 'icon-fav': '' %>  far fa-star"
+      ></i>
+    </button>
+  </form>
+  <a href="/inbox/-<%=i%>"
+    ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> >
+      <label
         id="view"
         name="view"
-        class="list-email <%=inbox[i].read==true ? '': 'unread'%>"
-        ><%=email.from%></span
+        class="<%=inbox[i].read==true ? '': 'unread'%>"
       >
-      <span data-role="button" class="list-sb"><%=email.sb%></span></label
+      <%=email.from%> </label
+      >
+      <label data-role="button" class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
     class="btn-delete"
     action="/users/inbox/delete-one/<%=i%>"
     method="POST"
+    onsubmit="return confirmDelete('this','email')"
   >
     <button type="submit">
-      <img class="icon--delete" src="../images/delete-icon.png" />
+      <i class="icon far fa-times-circle"></i>
     </button>
   </form>
 </div>
 <%i++%> <% })%> <%}%> <% if(typeof sent != 'undefined') {%>
-<form class="btn-delete-all" action="/users/sent/delete-all" method="POST">
+<form
+  class="btn-delete-all"
+  action="/users/sent/delete-all"
+  method="POST"
+  onsubmit="return confirmDelete('all','emails')"
+>
   <button type="submit">
-    <img class="icon--delete" src="../images/delete-all-icon.png" />
+    <i class="icon fas fa-trash-alt"></i>
   </button>
 </form>
 <%sent.forEach( function(email){%>
-<div>
-  <a href="/sent/<%=i%>">
-    <label class="list-mail"
-      ><span href="/sent/<%=i%>" data-role="button" class="list-email"
-        ><%=email.to%></span
+<div id="view-<%=i%>">
+  <a href="/sent/-<%=i%>">
+    <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style="background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/sent/<%=i%>" data-role="button" class=""
+        ><%=email.to%></label
       >
-      <span data-role="button" class="list-sb"><%=email.sb%></span></label
+      <label data-role="button" class="list-sb"><%=email.sb%></label></label
     ></a
   >
-  <form class="btn-delete" action="/users/sent/delete-one/<%=i%>" method="POST">
+  <form
+    class="btn-delete"
+    action="/users/sent/delete-one/<%=i%>"
+    method="POST"
+    onsubmit="return confirmDelete('this','email')"
+  >
     <button type="submit">
-      <img class="icon--delete" src="../images/delete-icon.png" />
+      <i class="icon far fa-times-circle"></i>
     </button>
   </form>
 </div>
 <%i++%> <%})%> <%}%> <% if(typeof fav != 'undefined') {%> <%fav.forEach(
 function(email){ %> <%if(email.fav){%>
-<div>
-  <img
-    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
-    src="../images/fav-add-icon.png"
-    onclick="addToFav('inbox',<%=i%>)"
-  /><a href="/fav/<%=i%>"
-    ><label class="list-mail">
-      <span
-        id="view"
-        name="view"
-        class="list-email <%=fav[i].read==true ? '': 'unread'%>"
-        ><%=email.to%></span
+<div id="view-<%=i%>">
+  <form class="btn-fav" action="/users/fav/add-to-fav/<%=i%>" method="POST">
+    <button type="submit">
+      <i
+        class="icon <%= email.fav? 'icon-fav': '' %>  far fa-star"
+      ></i>
+    </button>
+  </form>
+  <a href="/fav/-<%=i%>"
+    ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%>>
+      <label id="view" name="view" class="<%=fav[i].read==true ? '': 'unread'%>"
+        ><%=email.to%></label
       >
-      <span data-role="button" class="list-sb"><%=email.sb%></span></label
+      <label data-role="button" class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
     class="btn-delete"
     action="/users/inbox/delete-one/<%=i%>"
     method="POST"
+    onsubmit="return confirmDelete('this','email')"
   >
     <button type="submit">
-      <img class="icon--delete" src="../images/delete-icon.png" />
+      <i class="icon far fa-times-circle"></i>
     </button>
   </form>
 </div>
 <%}%><%i++%><%})%> <%}%> <% if(typeof unread != 'undefined') {%>
 <%unread.forEach( function(email){%><%if(!email.read){%>
-<div>
-  <img
-    class="icon <%= email.fav? 'icon-fav': '' %> icon--float--left"
-    src="../images/fav-add-icon.png"
-    onclick="addToFav('inbox',<%=i%>)"
-  /><a href="/unread/<%=i%>"
-    ><label class="list-mail">
-      <span
+<div id="view-<%=i%>">
+  <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
+    <button type="submit">
+      <i
+      class="icon <%= email.fav? 'icon-fav': '' %>  far fa-star"
+      onclick="addToFav('inbox',<%=i%>)"
+    ></i
+    >
+    </button>
+  </form>
+  <a href="/unread/-<%=i%>"
+    ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%>>
+      <label
         id="view"
         name="view"
-        class="list-email <%=unread[i].read==true ? '': 'unread'%>"
-        ><%=email.from%></span
+        class="<%=unread[i].read==true ? '': 'unread'%>"
+        ><%=email.from%></;
       >
-      <span data-role="button" class="list-sb"><%=email.sb%></span></label
+      <label data-role="button" class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
     class="btn-delete"
     action="/users/inbox/delete-one/<%=i%>"
     method="POST"
+    onsubmit="return confirmDelete('this','email')"
   >
     <button type="submit">
-      <img class="icon--delete" src="../images/delete-icon.png" />
+      <i class="icon far fa-times-circle"></i>
     </button>
   </form>
 </div>
 <%}%><%i++%> <% })%> <%}%> <% if(typeof deleted != 'undefined') {%>
-<form class="btn-delete-all" action="/users/deleted/delete-all" method="POST">
+<form
+  class="btn-delete-all"
+  action="/users/deleted/delete-all"
+  method="POST"
+  onsubmit="return confirmDelete('all','emails')"
+>
   <button type="submit">
-    <img class="icon--delete" src="../images/delete-all-icon.png" />
+    <i class="icon fas fa-trash-alt"></i>
   </button>
 </form>
 <%deleted.forEach( function(email){%>
-<div>
-  <a href="/deleted/<%=i%>">
-    <label class="list-mail"
-      ><span href="/deleted/<%=i%>" data-role="button" class="list-email"
-        ><%=email.to%></span
+<div id="view-<%=i%>">
+  <a href="/deleted/-<%=i%>">
+    <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/deleted/<%=i%>" data-role="button" class=""
+        ><%=email.to%></label
       >
-      <span data-role="button" class="list-sb"><%=email.sb%></span></label
+      <label data-role="button" class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
     class="btn-delete"
     action="/users/deleted/delete-one/<%=i%>"
     method="POST"
+    onsubmit="return confirmDelete('this','email')"
   >
     <button type="submit">
-      <img class="icon--delete" src="../images/delete-icon.png" />
+      <i class="icon far fa-times-circle"></i>
     </button>
   </form>
 </div>

@@ -1,3 +1,6 @@
+<%# home.ejs main page after login
+    @author Tushar, Akrit
+%>
 <div class="modal fade" id="send-alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     style="display: none">
     <div class="modal-dialog" role="document">
@@ -53,26 +56,28 @@
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
-                <li> <a href="/inbox" class="tab-m"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
+                <li> <a href="/inbox" class="tab-m"><i class="icon far fa-envelope"></i> Inbox
                         </span></a></li>
-                <li> <a href="/sent" class="tab-m"> <img class="icon" src="../images/sent-icon.png" alt="">Sent
+                <li> <a href="/sent" class="tab-m"> <i class="icon far fa-paper-plane"></i> Sent
                         Items
                     </a></li>
 
-                <li> <a href="/fav" class="tab-m"><img class="icon" src="../images/fav-icon.png" alt="">Favorites</a>
+                <li> <a href="/fav" class="tab-m"><i class="icon far fa-heart"></i> Favorites</a>
                 </li>
-                <li> <a href="/unread" class="tab-m"><img class="icon" src="../images/unread-icon.png" alt="">Unread
-                        Emails <span class="badge badge--inbox"></span></a></li>
+                <li> <a href="/unread" class="tab-m"><i class="icon fas fa-mail-bulk"></i>
+                    Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
+                class="badge-unread"><%=badge%><%}%></span></a></li>
 
-                <li> <a href="/deleted" class="tab-m" onclick=""><img class="icon" src="../images/delete-icon.png"
-                            alt="">Deleted Emails
+                <li> <a href="/deleted" class="tab-m" onclick=""> <i class="icon fas fa-trash-alt"></i> Deleted Emails
                     </a></li>
                 <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
-                <li> <a  href='/manage-acc' class="tab-m"><img class="icon"
-                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li><%}%><%}%>
+                <li> <a  href='/manage-acc' class="tab-m">
+                    <i class="icon fas fa-user-cog"></i> Manage Accounts</a>
+                </li><%}%><%}%>
                 <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
-                <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                        src="../images/help.png" alt="">Help</a></li><%}%><%}%>
+                <li> <a class="tab-m" onclick="helpGenerate('help')">
+                    <i class="icon far fa-question-circle"></i> Help</a>
+                </li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
                 <br>
@@ -86,28 +91,36 @@
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
-                <li> <a href="/inbox" class="tab"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
-                        </span></a></li>
-                <li> <a href="/sent" class="tab"> <img class="icon" src="../images/sent-icon.png"
-                            alt="">Sent
+                <li> <a href="/inbox" class="tab">
+                    <i class="icon far fa-envelope"></i> Inbox
+                    </a>
+                </li>
+                <li> <a href="/sent" class="tab">
+                    <i class="icon far fa-paper-plane"></i> Sent
                         Items
-                    </a></li>
-
-                <li> <a href="/fav" class="tab"><img class="icon" src="../images/fav-icon.png"
-                            alt="">Favorites</a></li>
-                <li> <a href="/unread" class="tab"><img class="icon" src="../images/unread-icon.png"
-                            alt="">Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
-                        class="badge badge--inbox"><%=badge%><%}%></span></a></li>
-
-                <li> <a href="/deleted" class="tab" onclick=""><img class="icon"
-                            src="../images/delete-icon.png" alt="">Deleted Emails
-                    </a></li>
+                    </a>
+                </li>
+                <li> <a href="/fav" class="tab">
+                    <i class="icon far fa-heart"></i> Favorites
+                    </a>
+                </li>
+                <li> <a href="/unread" class="tab">
+                    <i class="icon fas fa-mail-bulk"></i>
+                    Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <label
+                    class="badge-unread"><%=badge%><%}%></span></a>
+                </li>
+                <li> <a href="/deleted" class="tab" onclick="">
+                    <i class="icon fas fa-trash-alt"></i> Deleted Emails
+                    </a>
+                </li>
                 <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
-                <li> <a href='/manage-acc' class="tab"><img class="icon"
-                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li><%}%><%}%>
+                <li> <a href='/manage-acc' class="tab">
+                    <i class="icon fas fa-user-cog"></i>Manage Accounts</a>
+                </li><%}%><%}%>
                 <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
-                <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                        src="../images/help.png" alt="">Help</a></li><%}%><%}%>
+                <li> <a class="tab" onclick="helpGenerate('help')">
+                    <i class="icon far fa-question-circle"></i> Help</a>
+                </li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
                 <br>
