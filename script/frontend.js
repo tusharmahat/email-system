@@ -1,34 +1,170 @@
-var currPage = window.location.href;
+/**
+ * frontend.js for the frontend
+ *
+ * functions for small devices as well as desktop
+ * help messages are also in the functions
+ */
 
-//Show active tab for desktop and small device
-if (isScreenSmall().matches) {
-  activateTab(currPage, "tab-m");
-} else {
-  activateTab(currPage, "tab");
-}
-
+// If the document is ready run the necessary functions
 $(document).ready(function () {
+  var currPage = window.location.href;
+
+  // Plugin to autoscroll to the opened email in the middle column
+  $.fn.scrollDivToElement = function (childSel) {
+    if (!this.length) return this;
+
+    return this.each(function () {
+      let parentEl = $(this);
+      let childEl = parentEl.find(childSel);
+
+      if (childEl.length > 0) {
+        parentEl.scrollTop(
+          parentEl.scrollTop() -
+            parentEl.offset().top +
+            childEl.offset().top -
+            parentEl.outerHeight() / 2 +
+            childEl.outerHeight() / 2
+        );
+      }
+    });
+  };
+
+  // Get the index of opened email from the link
+  var openedIndex = currPage.split("-");
+  //Show active tab for desktop and small device
+  if (isScreenSmall().matches) {
+    $("#middle").remove();
+    activateTab(currPage, "tab-m");
+  } else {
+    $("#middle-m").remove();
+    // auto scroll to the email in the middle div
+    $("#middle").scrollDivToElement(`#view-${openedIndex[1]}`);
+    activateTab(currPage, "tab");
+  }
+  // Show Alert if there are unread emails
+  $(function () {
+    if (currPage.match("home")) {
+      // fetch the unread emails count
+      fetch("/users/unread-count")
+        .then((res) => res.json())
+        .then((res) => {
+          //If there there are unread emails show alert for confirmation
+          if (res.count > 0) {
+            $(".menu-m ul").css("left", "35px");
+            // If clicked on yes in the confirmation open unread emails
+            if (
+              confirm(
+                `You have ${res.count} unread emails, Do you want to read them now?`
+              )
+            ) {
+              // Open the unread emails
+              window.location.href = res.url;
+            }
+          }
+        });
+    }
+  });
+
+  // If email view element is shown hide the middle column in small devices
+  // Show only the right column to view email
   if ($("#email--view").parents("#right").length == 1) {
     $("#middle-m").css("display", "none");
     $("#right").css("display", "block");
   }
+
+  // If there no emails in the list, it shows "no emails" message
+  // For desktop
+  if ($("#middle").children().length == 0) {
+    $("#middle").html(`<p class="help--yellow">No emails</p>`);
+  }
+
+  // If there no emails in the list, it shows "no emails" message
+  // For small devices
+  if ($("#middle-m").children().length == 0) {
+    $("#middle-m").html(`<p class="help--yellow">No emails</p>`);
+  }
+  // Compose for small device
+  $(".btn-compose").on("click", () => {
+    if (isScreenSmall().matches) {
+      $("#middle-m").css("display", "none");
+      $("#right").css("display", "block");
+      $(".menu-m ul").css("left", "-100%");
+    }
+  });
+
+  // Compose for small device
+  $(".btn-back").on("click", () => {
+    if (isScreenSmall().matches) {
+      $("#right").css("display", "none");
+      $("#middle-m").css("display", "block");
+    }
+  });
 });
 
-// Compose for small device
-$(".btn-compose").on("click", () => {
-  if (isScreenSmall().matches) {
-    $("#middle-m").css("display", "none");
-    $("#right").css("display", "block");
-    $(".menu-m ul").css("left", "-100%");
+$("#text-search").keyup(function () {
+  var searchField = $(this).val();
+  if (searchField === "") {
+    $("#filter-records").html("");
+    return;
   }
-});
-
-// Compose for small device
-$(".btn-back").on("click", () => {
-  if (isScreenSmall().matches) {
-    $("#right").css("display", "none");
-    $("#middle-m").css("display", "block");
-  }
+  var data = [
+    {
+      id: "1",
+      employee_name: "Tiger Nixon",
+      employee_salary: "320800",
+      employee_age: "61",
+      profile_image: "default_profile.png",
+    },
+    {
+      id: "2",
+      employee_name: "Garrett Winters",
+      employee_salary: "434343",
+      employee_age: "63",
+      profile_image: "default_profile.png",
+    },
+    {
+      id: "3",
+      employee_name: "Ashton Cox",
+      employee_salary: "86000",
+      employee_age: "66",
+      profile_image: "default_profile.png",
+    },
+    {
+      id: "4",
+      employee_name: "Cedric Kelly",
+      employee_salary: "433060",
+      employee_age: "22",
+      profile_image: "default_profile.png",
+    },
+  ];
+  var regex = new RegExp(searchField, "i");
+  var output = '<div class="row">';
+  var count = 1;
+  $.each(data, function (key, val) {
+    if (
+      val.employee_salary.search(regex) != -1 ||
+      val.employee_name.search(regex) != -1
+    ) {
+      output += '<div class="col-md-6 well">';
+      output +=
+        '<div class="col-md-3"><img class="img-responsive" src="' +
+        val.profile_image +
+        '" alt="' +
+        val.employee_name +
+        '" /></div>';
+      output += '<div class="col-md-7">';
+      output += "<h5>" + val.employee_name + "</h5>";
+      output += "<p>" + val.employee_salary + "</p>";
+      output += "</div>";
+      output += "</div>";
+      if (count % 2 == 0) {
+        output += '</div><div class="row">';
+      }
+      count++;
+    }
+  });
+  output += "</div>";
+  $("#filter-records").html(output);
 });
 
 /**
@@ -52,29 +188,6 @@ function navSwipe() {
 function isScreenSmall() {
   return window.matchMedia("(max-width: 768px)");
 }
-// Show Alert if there are unread emails
-$(function () {
-  if (currPage.match("home")) {
-    // fetch the unread emails count
-    fetch("/users/unread-count")
-      .then((res) => res.json())
-      .then((res) => {
-        //If there there are unread emails show alert for confirmation
-        if (res.count > 0) {
-          $(".menu-m ul").css("left", "35px");
-          // If clicked on yes in the confirmation open unread emails
-          if (
-            confirm(
-              `You have ${res.count} unread emails, Do you want to read them now?`
-            )
-          ) {
-            // Open the unread emails
-            window.location.href = res.url;
-          }
-        }
-      });
-  }
-});
 
 /**
  * Actives the tab which is opened
@@ -84,20 +197,20 @@ function activateTab(currPage, tab) {
   var btns = document.getElementsByClassName(tab);
   if (btns.length > 0) {
     if (currPage.match("inbox") || currPage.match("home")) {
-      btns[1].className += " active";
+      btns[0].className += " active";
     } else if (currPage.match("sent")) {
-      btns[2].className += " active";
+      btns[1].className += " active";
     } else if (currPage.match("fav")) {
-      btns[3].className += " active";
+      btns[2].className += " active";
     } else if (currPage.match("unread")) {
-      btns[4].className += " active";
+      btns[3].className += " active";
     } else if (currPage.match("deleted")) {
-      btns[5].className += " active";
+      btns[4].className += " active";
     }
   }
 }
-function deleteAcAlert() {
-  if (confirm("Are you sure want to delete this account?")) {
+function confirmDelete(pointer, item) {
+  if (confirm(`Are you sure want to delete ${pointer} ${item}?`)) {
     return true;
   } else {
     return false;
@@ -121,26 +234,6 @@ function showCompose() {
   $("#compose").css("display", "block");
 }
 
-/**
- * Add this email to favorite, itdoes not add in separate box,
- * it just marks the inbox emails as favorite if clicked on star
- *
- * @param {*} box
- * @param {*} index
- */
-function addToFav(box, index) {
-  // Send post request to add this email to favorite
-  fetch(`/users/${box}/add-to-fav/${index}`, { method: "POST" })
-    .then((res) => {
-      // If redirected then redirect to the url that it gets as response
-      if (res.redirected) {
-        window.location.href = res.url;
-      }
-    })
-    .catch((err) => {
-      console.log("Error while adding it to favorite:" + err);
-    });
-}
 /**
  * This opens the alert modal to confirm using checkboxes before sending the email
  */
@@ -224,9 +317,9 @@ function helpGenerate(topic) {
       But beware of making your subject line too long.<br><br>
   </p>
   
-  <p>
+  <p class="help-ex" onclick="showMore('subject')">
       <b>Click here for examples of Subject Line:</b><br>
-      <a class="help-ex" onclick="showMore('subject')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('subject')"><i class="icon fas fa-caret-right"></i></a>
   </p>`;
   }
   if (topic == "to") {
@@ -237,9 +330,9 @@ function helpGenerate(topic) {
       <br><br>
   </p>
   
-  <p>
+  <p class="help-ex" onclick="showMore('to')">
       <b> Click here for examples of an email recipient:</b><br>
-      <a class="help-ex" onclick="showMore('to')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('to')"><i class="icon fas fa-caret-right"></i></a>
   </p>`;
   }
   if (topic == "cc") {
@@ -250,9 +343,9 @@ function helpGenerate(topic) {
       <br><br>
   </p>
   
-  <p>
+  <p class="help-ex" onclick="showMore('cc')">
       <b> Click here for examples of a Cc:</b><br>
-      <a class="help-ex" onclick="showMore('cc')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('cc')"><i class="icon fas fa-caret-right"></i></a>
   </p>
   
   `;
@@ -266,9 +359,9 @@ function helpGenerate(topic) {
       sending this email to.<br><br>
   </p>
   
-  <p>
+  <p class="help-ex" onclick="showMore('greeting')">
       <b>Click here for examples of greetings:</b><br>
-      <a class="help-ex" onclick="showMore('greeting')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('greeting')"><i class="icon fas fa-caret-right"></i></a>
   </p>`;
   }
   if (topic == "message") {
@@ -280,9 +373,9 @@ function helpGenerate(topic) {
       misunderstand any of your important points and gets the actual message you are trying to
       convey.<br><br>
   </p>
-  <p>
+  <p class="help-ex" onclick="showMore('message')">
       <b>Click here for examples of Messages:</b><br>
-      <a class="help-ex" onclick="showMore('message')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('message')"><i class="icon fas fa-caret-right"></i></a>
   </p>`;
   }
   if (topic == "closing") {
@@ -295,9 +388,9 @@ function helpGenerate(topic) {
       <br><br>
   </p>
   
-  <p>
+  <p class="help-ex" onclick="showMore('closing')">
       <b>Click here for examples of Closings:</b><br>
-      <a class="help-ex" onclick="showMore('closing')"><img class="icon" src="./images/more.png" alt=""></a>
+      <a onclick="showMore('closing')"><i class="icon fas fa-caret-right"></i></a>
   </p>`;
   }
   if (topic == "example") {
@@ -322,16 +415,14 @@ function helpGenerate(topic) {
     // If help topic is 'help' set title and body for it
     title = "Help";
     body = `
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/inbox-icon.png" alt=""> >> List of received emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/sent-icon.png" alt=""> >> List of sent emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/draft-icon.png" alt=""> >> List of draft emails</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/fav-icon.png" alt=""> >> List of emails added to favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/unread-icon.png" alt=""> >> List of unread emails</p>
-      <p class="help-menu"><img class="icon icon-fav icon--no-margin" src="../images/fav-add-icon.png"> >> is a favorite email, click to remove it from favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/fav-add-icon.png"> >> is not a favorite email, click on it to add to favorite</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/delete-icon.png"> >> deletes a particular email</p>
-      <p class="help-menu"><img class="icon icon--no-margin" src="../images/delete-all-icon.png"> >> deletes all emails in the box</p>
-      
+      <p class="help-menu"><i class="icon far fa-envelope"></i> >> List of received emails</p>
+      <p class="help-menu"><i class="icon far fa-paper-plane"></i> >> List of sent emails</p>
+      <p class="help-menu"><i class="icon far fa-heart"></i> >> List of emails added to favorite</p>
+      <p class="help-menu"><i class="icon fas fa-mail-bulk"></i> >> List of unread emails</p>
+      <p class="help-menu"><i class="icon-fav far fa-star"></i> >> is a favorite email, click to remove it from favorite</p>
+      <p class="help-menu"><i class="far fa-star"></i> >> is not a favorite email, click on it to add to favorite</p>
+      <p class="help-menu"><i class="far fa-times-circle"></i> >> deletes a particular email</p>
+      <p class="help-menu"><i class="fas fa-trash-alt"></i> >> deletes all emails in the box</p>
       <p class="help-menu"><img class="icon icon--no-margin" src="../images/search.png"> >> Search a particular email using the email address</p>
       <p class="help-menu help--yellow"><span class="unread">Emily_Francis@hotmail.com<span> >> Unread email </p>
       <p class="help-menu help--yellow">Emily_Francis@hotmail.com >> Read email</p>

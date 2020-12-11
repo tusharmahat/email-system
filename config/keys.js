@@ -1,3 +1,10 @@
+/**
+ * keys.js that contains credentials
+ * to run the server and to connect
+ * to the database
+ *
+ * @author Tushar
+ */
 var username = "group6"; // username
 var password = "germany%40front%4046"; // password
 var localHost = "127.0.0.1"; //local host IP address
@@ -17,6 +24,7 @@ var credentialsString =
   "/" +
   database;
 
+// export modules
 module.exports = {
   MongoURI: credentialsString,
 };

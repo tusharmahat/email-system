@@ -1,5 +1,5 @@
-<%if (typeof inbox !='undefined' || typeof sent !='undefined'|| typeof deleted
-!='undefined'){%>
+<%# progress.ejs to show storage progress @author Tushar %> <%if (typeof inbox
+!='undefined' || typeof sent !='undefined'|| typeof deleted !='undefined'){%>
 <span>
   <%if(typeof inbox!='undefined'){%>Inbox storage: <%=inbox.length%>/50 <%}%>
   <%if(typeof sent!='undefined'){%>Sent items storage: <%=sent.length%>/50<%}%>
