@@ -1,27 +1,22 @@
 <%# email.ejs for listing emails @author Tushar %> <%var i=0 %><% if(typeof
-inbox != 'undefined') {%>
-  <div class="container">
-    <form role="form">
-          <div class="form-group">
-            <input type="input" class="form-control input-lg" id="text-search" placeholder="Type your search character">
-          </div>
-    </form>
-    <div id="filter-records"></div>
-    </div>
+inbox != 'undefined') {%>    
+<div class="form-group search-box">
+  <i class="icon fas fa-search"></i>
+  <input type="input" class="form-control input-lg text-search"  placeholder="Type email to search">
+</div>
 <form
-  class="btn-delete-all"
-  action="/users/inbox/delete-all"
-  method="POST"
-  onsubmit="return confirmDelete('all','emails')"
+class="btn-delete-all"
+action="/users/inbox/delete-all"
+method="POST"
+onsubmit="return confirmDelete('all','emails')"
 >
-  <button type="submit">
-    <i class="icon fas fa-trash-alt"></i>
-  </button>
+<button type="submit">
+  <i class="icon fas fa-trash-alt"></i>
+</button>
 </form>
 
-
 <%inbox.forEach( function(email){%>
-<div id="view-<%=i%>">
+<div class="view">
   <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -53,6 +48,10 @@ inbox != 'undefined') {%>
   </form>
 </div>
 <%i++%> <% })%> <%}%> <% if(typeof sent != 'undefined') {%>
+  <div class="form-group search-box">
+    <i class="icon fas fa-search"></i>
+    <input type="input" class="form-control input-lg text-search"  placeholder="Type email to search">
+  </div>
 <form
   class="btn-delete-all"
   action="/users/sent/delete-all"
@@ -64,7 +63,7 @@ inbox != 'undefined') {%>
   </button>
 </form>
 <%sent.forEach( function(email){%>
-<div id="view-<%=i%>">
+<div class="view">
   <a href="/sent/-<%=i%>">
     <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style="background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/sent/<%=i%>" data-role="button" class=""
         ><%=email.to%></label
@@ -85,7 +84,7 @@ inbox != 'undefined') {%>
 </div>
 <%i++%> <%})%> <%}%> <% if(typeof fav != 'undefined') {%> <%fav.forEach(
 function(email){ %> <%if(email.fav){%>
-<div id="view-<%=i%>">
+<div class="view">
   <form class="btn-fav" action="/users/fav/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -114,7 +113,7 @@ function(email){ %> <%if(email.fav){%>
 </div>
 <%}%><%i++%><%})%> <%}%> <% if(typeof unread != 'undefined') {%>
 <%unread.forEach( function(email){%><%if(!email.read){%>
-<div id="view-<%=i%>">
+<div class="view">
   <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -147,6 +146,10 @@ function(email){ %> <%if(email.fav){%>
   </form>
 </div>
 <%}%><%i++%> <% })%> <%}%> <% if(typeof deleted != 'undefined') {%>
+  <div class="form-group search-box">
+    <i class="icon fas fa-search"></i>
+    <input type="input" class="form-control input-lg text-search"  placeholder="Type email to search">
+  </div>
 <form
   class="btn-delete-all"
   action="/users/deleted/delete-all"
@@ -158,7 +161,7 @@ function(email){ %> <%if(email.fav){%>
   </button>
 </form>
 <%deleted.forEach( function(email){%>
-<div id="view-<%=i%>">
+<div class="view">
   <a href="/deleted/-<%=i%>">
     <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/deleted/<%=i%>" data-role="button" class=""
         ><%=email.to%></label

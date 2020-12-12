@@ -4,11 +4,9 @@
  * functions for small devices as well as desktop
  * help messages are also in the functions
  */
-
+var currPage = window.location.href;
 // If the document is ready run the necessary functions
 $(document).ready(function () {
-  var currPage = window.location.href;
-
   // Plugin to autoscroll to the opened email in the middle column
   $.fn.scrollDivToElement = function (childSel) {
     if (!this.length) return this;
@@ -33,10 +31,8 @@ $(document).ready(function () {
   var openedIndex = currPage.split("-");
   //Show active tab for desktop and small device
   if (isScreenSmall().matches) {
-    $("#middle").remove();
     activateTab(currPage, "tab-m");
   } else {
-    $("#middle-m").remove();
     // auto scroll to the email in the middle div
     $("#middle").scrollDivToElement(`#view-${openedIndex[1]}`);
     activateTab(currPage, "tab");
@@ -101,70 +97,81 @@ $(document).ready(function () {
   });
 });
 
-$("#text-search").keyup(function () {
+// Search function
+$(".text-search").keyup(function () {
   var searchField = $(this).val();
   if (searchField === "") {
     $("#filter-records").html("");
     return;
   }
-  var data = [
-    {
-      id: "1",
-      employee_name: "Tiger Nixon",
-      employee_salary: "320800",
-      employee_age: "61",
-      profile_image: "default_profile.png",
-    },
-    {
-      id: "2",
-      employee_name: "Garrett Winters",
-      employee_salary: "434343",
-      employee_age: "63",
-      profile_image: "default_profile.png",
-    },
-    {
-      id: "3",
-      employee_name: "Ashton Cox",
-      employee_salary: "86000",
-      employee_age: "66",
-      profile_image: "default_profile.png",
-    },
-    {
-      id: "4",
-      employee_name: "Cedric Kelly",
-      employee_salary: "433060",
-      employee_age: "22",
-      profile_image: "default_profile.png",
-    },
-  ];
-  var regex = new RegExp(searchField, "i");
-  var output = '<div class="row">';
-  var count = 1;
-  $.each(data, function (key, val) {
-    if (
-      val.employee_salary.search(regex) != -1 ||
-      val.employee_name.search(regex) != -1
-    ) {
-      output += '<div class="col-md-6 well">';
-      output +=
-        '<div class="col-md-3"><img class="img-responsive" src="' +
-        val.profile_image +
-        '" alt="' +
-        val.employee_name +
-        '" /></div>';
-      output += '<div class="col-md-7">';
-      output += "<h5>" + val.employee_name + "</h5>";
-      output += "<p>" + val.employee_salary + "</p>";
+  var box = "";
+  if (currPage.includes("inbox")) {
+    box = "inbox";
+  } else if (currPage.includes("sent")) {
+    box = "sent";
+  } else {
+    box = "deleted";
+  }
+
+  // Fetch emails and search using email or subject
+  fetch(`/search/${box}`)
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      var regex = new RegExp(searchField, "i");
+      var output = "";
+      var count = 0;
+      $.each(res, function (key, val) {
+        if (
+          val.from.search(regex) != -1 ||
+          val.to.search(regex) != -1 ||
+          val.sb.search(regex) != -1
+        ) {
+          output += `<div class="view">${
+            box == "inbox"
+              ? `<form class="btn-fav" action="/users/${box}/add-to-fav/${count}" method="POST">
+          <button type="submit">
+            <i
+              class="icon${val.fav == true ? " icon-fav" : ""} far fa-star"
+            ></i>
+          </button>
+        </form>`
+              : ""
+          }
+          <a href="/${box}/-${count}"
+            ><label class="list-mail">
+              <label
+                id="view"
+                name="view"
+                class="${box != "inbox" ? "" : "unread"}${
+            val.read != true ? "" : "unread"
+          }"
+              >
+              ${box == "inbox" ? val.from : val.to} </label
+              >
+              <label data-role="button" class="list-sb">${val.sb}</label></label
+            ></a
+          >
+          <form
+            class="btn-delete"
+            action="/users/${box}/delete-one/${count}"
+            method="POST"
+            onsubmit="return confirmDelete('this','email')"
+          >
+            <button type="submit">
+              <i class="icon far fa-times-circle"></i>
+            </button>
+          </form>
+        </div>`;
+        }
+        count++;
+      });
       output += "</div>";
-      output += "</div>";
-      if (count % 2 == 0) {
-        output += '</div><div class="row">';
-      }
-      count++;
-    }
-  });
-  output += "</div>";
-  $("#filter-records").html(output);
+      $(".view").remove();
+      $("#middle").append(output);
+      $("#middle-m").append(output);
+    });
 });
 
 /**
