@@ -305,7 +305,28 @@ router.get("/manage-acc", ensureAuthenticated, (req, res) => {
       console.log("Error while getting accounts, Error: " + err);
     });
 });
-
+//View sent items
+router.get("/search/:box", ensureAuthenticated, (req, res) => {
+  var box = req.params.box;
+  //Find the inbox emails of this user
+  User.findOne({ email: req.user.email })
+    .then((user) => {
+      switch (box) {
+        case "inbox":
+          res.send(user.inbox);
+          break;
+        case "sent":
+          res.send(user.sent);
+          break;
+        case "deleted":
+          res.send(user.deleted);
+          break;
+      }
+    })
+    .catch((err, aff, res) => {
+      console.log(err);
+    });
+});
 function countUnread(inbox) {
   var count = 0;
   inbox.forEach((email) => {

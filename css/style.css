@@ -461,6 +461,13 @@ a:hover {
   display: none;
 }
 
+.search-box,
+.search-box > input {
+  display: inline;
+  width: 80%;
+  color: black;
+}
+
 /* @Tushar */
 
 .input-group {
@@ -566,6 +573,10 @@ a:hover {
 .btn-delete {
   /* margin-top: 1rem; */
   float: right;
+}
+.btn-delete-all {
+  /* margin-top: 1rem; */
+  display: inline;
 }
 .btn-fav {
   float: left;
