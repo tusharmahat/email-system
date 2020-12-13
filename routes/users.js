@@ -107,7 +107,7 @@ router.post("/register", (req, res) => {
   }
 });
 
-//-----------------------SEND & DELETE HANDLES--------------------------//
+//-----------------------SEND, ADD-TO-FAVORITE & DELETE HANDLES--------------------------//
 //Send Handle
 router.post("/send", ensureAuthenticated, (req, res) => {
   // Date of email creation
@@ -125,7 +125,7 @@ router.post("/send", ensureAuthenticated, (req, res) => {
   };
 
   //Query to search recipient
-  var query = { email: email.to };
+  const queryTo = { email: email.to };
 
   //Update object for the recipient's inbox
   const updateObj1 = {
@@ -148,23 +148,34 @@ router.post("/send", ensureAuthenticated, (req, res) => {
   };
 
   //find the recipient
-  User.findOne(query)
+  User.findOne(queryTo)
     .then((user) => {
       if (user.inbox.length < 50) {
         //If the recipient's inbox is not full then send
-
-        User.updateOne(query, updateObj1).catch((err) => {
+        User.updateOne(queryTo, updateObj1).catch((err) => {
           console.log(err);
         });
 
-        // //Query to search the sender
-        query = { email: req.user.email };
+        // If email has cc then send the cc
+        if (email.cc.length > 0) {
+          // query to search the cc recipient
+          const queryCc = { email: email.cc };
+          // f ind the recipient and update the inbox
+          User.findOne(queryCc).then((user) => {
+            User.updateOne(queryCc, updateObj1).catch((err) => {
+              console.log(err);
+            });
+          });
+        }
+
+        //Query to search the sender
+        const queryFrom = { email: req.user.email };
 
         // Update sent items of the sender
-        User.findOne(query).then((user) => {
+        User.findOne(queryFrom).then((user) => {
           if (user.sent.length < 50) {
             //If the recipient's sent items is not full then send
-            User.updateOne(query, updateObj2).then(() => {
+            User.updateOne(queryFrom, updateObj2).then(() => {
               // If sent redirect to sent items
               res.redirect("/sent");
             });
@@ -373,29 +384,6 @@ router.post("/:box/delete-all", ensureAuthenticated, (req, res) => {
     });
 });
 
-// Unread count handle
-router.get("/unread-count", ensureAuthenticated, (req, res) => {
-  // Find the userfrom the database
-  const query = { email: req.user.email };
-  User.findOne(query)
-    .then((user) => {
-      // Variable unread count
-      var count = 0;
-
-      // Count the unread emails
-      for (var i = 0; i < user.inbox.length; i++) {
-        if (!user.inbox[i].read) {
-          count++;
-        }
-      }
-      // Send response
-      res.send({ count: count, url: "./unread" });
-    })
-    .catch((err) => {
-      console.log("Error while counting the unread emails, Error: " + err);
-    });
-});
-
 //Add email to favorite
 router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
   //Get the index of the email being deleted
@@ -435,12 +423,36 @@ router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
     });
 });
 
-// Unread count handle
+// Unread count to show alert at login
+router.get("/unread-count", ensureAuthenticated, (req, res) => {
+  // Find the userfrom the database
+  const query = { email: req.user.email };
+  User.findOne(query)
+    .then((user) => {
+      // Variable unread count
+      var count = 0;
+
+      // Count the unread emails
+      for (var i = 0; i < user.inbox.length; i++) {
+        if (!user.inbox[i].read) {
+          count++;
+        }
+      }
+      // Send response
+      res.send({ count: count, url: "./unread" });
+    })
+    .catch((err) => {
+      console.log("Error while counting the unread emails, Error: " + err);
+    });
+});
+
+// Manage account handle
 router.get("/delete-acc/:email", ensureAuthenticated, (req, res) => {
   const email = req.params.email;
-  console.log(email);
-  // Find and delete the user from the database
+
+  // Check if the email being deleted is not the specialist
   if (email != req.user.email) {
+    // Find nad delete the users from the database
     User.findOneAndDelete({ email: email }, function (err, docs) {
       if (err) {
         console.log(err);
@@ -450,6 +462,7 @@ router.get("/delete-acc/:email", ensureAuthenticated, (req, res) => {
     });
   }
 });
+
 //----------------------------LOGIN & LOGOUT HANDLE--------------------------//
 //Login Handle
 router.post("/login", (req, res, next) => {

@@ -34,7 +34,7 @@ $(document).ready(function () {
     activateTab(currPage, "tab-m");
   } else {
     // auto scroll to the email in the middle div
-    $("#middle").scrollDivToElement(`#view-${openedIndex[1]}`);
+    $("#middle").scrollDivToElement(`.view-${openedIndex[1]}`);
     activateTab(currPage, "tab");
   }
   // Show Alert if there are unread emails

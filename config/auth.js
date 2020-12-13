@@ -8,7 +8,9 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     }
+    // If the route is not authenticated send message to flash
     req.flash("error_msg", "Please login");
+    // Redirect to login page
     res.redirect("/users/login");
   },
 };

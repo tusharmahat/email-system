@@ -42,17 +42,13 @@
     </div>
 </div>
 <div class="container-fluid">
-
     <label for="check" class="checkbtn">
         <input type="checkbox" id="check" onclick="navSwipe()">
         <i class="fas fa-bars"></i>
     </label>
-
     <div class="row content">
-
         <div class="menu-m">
             <ul>
-
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
@@ -61,13 +57,11 @@
                 <li> <a href="/sent" class="tab-m"> <i class="icon far fa-paper-plane"></i> Sent
                         Items
                     </a></li>
-
                 <li> <a href="/fav" class="tab-m"><i class="icon far fa-heart"></i> Favorites</a>
                 </li>
                 <li> <a href="/unread" class="tab-m"><i class="icon fas fa-mail-bulk"></i>
                     Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
                 class="badge-unread"><%=badge%><%}%></span></a></li>
-
                 <li> <a href="/deleted" class="tab-m" onclick=""> <i class="icon fas fa-trash-alt"></i> Deleted Emails
                     </a></li>
                 <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
@@ -84,7 +78,6 @@
                 <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
                 <a href="/users/logout" class="btn btn-secondary">Logout</a>
             </ul>
-
         </div>
         <div class="menu" id="left">
             <ul>
@@ -127,7 +120,6 @@
                 <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
                 <a href="/users/logout" class="btn btn-secondary">Logout</a>
             </ul>
-
         </div>
         <div  id="middle-m">
             <%- include ("./partials/emails")%> 
@@ -137,9 +129,6 @@
             <%- include ("./partials/emails")%>
             <%- include ("./partials/manageAcc")%>
         </div>
-
-
-
         <div class="" id="right">
             <%- include ("./partials/messages") %>
             <form id="compose" action="/users/send" method="POST" onsubmit=" return validate()">
@@ -150,8 +139,6 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text btn-help" id="basic-addon1" onclick="helpGenerate('to')">To</span>
                     </div>
-
-
                     <input type="email" id="to" name="to" class="form-control" placeholder="To"
                         value="<%= typeof to != 'undefined' ? to : '' %>" required />
                 </div>
@@ -167,7 +154,6 @@
                     <input type="text" id="sb" name="sb" class="form-control" placeholder="Subject"
                         value="<%= typeof sb != 'undefined' ? sb : '' %>" />
                 </div>
-
                 <div class="input-group mb-3">
                     <label class="myLabel" for="body">
                         <p class="btn-help" onclick="helpGenerate('greeting')">Greeting</p>
@@ -184,12 +170,9 @@
                     <textarea type="text" id="msg" name="msg" class="form-control" placeholder=""
                         value="<%= typeof msg != 'undefined' ? msg : '' %>" row="12"></textarea>
                 </div>
-
-
                 <span onclick="sendConfirm()" class="btn btn-primary btn-send">
                     Send
                 </span>
-
                 <button type="button" class="btn btn-primary btn-back" onclick="return back();">
                     Discard
                 </button>
