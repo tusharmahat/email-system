@@ -66,15 +66,19 @@ router.get("/inbox", ensureAuthenticated, (req, res) => {
 router.get("/inbox/-:i", ensureAuthenticated, (req, res) => {
   readThisEmail(req, res, "inbox");
 });
+//View a sent email
 router.get("/sent/-:i", ensureAuthenticated, (req, res) => {
   readThisEmail(req, res, "sent");
 });
+//View a deleted email
 router.get("/deleted/-:i", ensureAuthenticated, (req, res) => {
   readThisEmail(req, res, "deleted");
 });
+//View a fav email
 router.get("/fav/-:i", ensureAuthenticated, (req, res) => {
   readThisEmail(req, res, "fav");
 });
+//View an unread email
 router.get("/unread/-:i", ensureAuthenticated, (req, res) => {
   readThisEmail(req, res, "unread");
 });
@@ -180,8 +184,8 @@ function readThisEmail(req, res, box) {
       console.log(err);
     });
 }
-//-------------------------------------------------------------------------------------------//
 
+//-------------------------------------------------------------------------------------------//
 //View sent items
 router.get("/sent", ensureAuthenticated, (req, res) => {
   //Find the sent emails of this user
@@ -207,7 +211,7 @@ router.get("/sent", ensureAuthenticated, (req, res) => {
 
 //View sent items
 router.get("/fav", ensureAuthenticated, (req, res) => {
-  //Find the sent emails of this user
+  //Find the inbox emails of this user, the fav ones will be filtered in the frontend
   User.findOne({ email: req.user.email })
     .then((user) => {
       const count = countUnread(user.inbox);
@@ -228,7 +232,7 @@ router.get("/fav", ensureAuthenticated, (req, res) => {
     });
 });
 
-//View sent items
+//Unread emails handle
 router.get("/unread", ensureAuthenticated, (req, res) => {
   //Find the inbox emails of this user
   User.findOne({ email: req.user.email })
@@ -251,7 +255,7 @@ router.get("/unread", ensureAuthenticated, (req, res) => {
     });
 });
 
-//View sent items
+//Deleted emails handle
 router.get("/deleted", ensureAuthenticated, (req, res) => {
   User.findOne({ email: req.user.email })
     .then((user) => {
@@ -272,6 +276,7 @@ router.get("/deleted", ensureAuthenticated, (req, res) => {
       console.log(err);
     });
 });
+
 // Manage account handle
 router.get("/manage-acc", ensureAuthenticated, (req, res) => {
   // Find all users from the database
@@ -305,12 +310,13 @@ router.get("/manage-acc", ensureAuthenticated, (req, res) => {
       console.log("Error while getting accounts, Error: " + err);
     });
 });
-//View sent items
+//Search handle
 router.get("/search/:box", ensureAuthenticated, (req, res) => {
   var box = req.params.box;
-  //Find the inbox emails of this user
+  //Find emails of this user
   User.findOne({ email: req.user.email })
     .then((user) => {
+      // Check the box, and send the respective emails
       switch (box) {
         case "inbox":
           res.send(user.inbox);
@@ -327,6 +333,12 @@ router.get("/search/:box", ensureAuthenticated, (req, res) => {
       console.log(err);
     });
 });
+
+/**
+ * Count the number of unread emails
+ *
+ * @param {*} inbox
+ */
 function countUnread(inbox) {
   var count = 0;
   inbox.forEach((email) => {

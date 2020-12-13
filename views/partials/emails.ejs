@@ -14,9 +14,8 @@ onsubmit="return confirmDelete('all','emails')"
   <i class="icon fas fa-trash-alt"></i>
 </button>
 </form>
-
 <%inbox.forEach( function(email){%>
-<div class="view">
+<div class="view-<%=i%>">
   <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -26,14 +25,11 @@ onsubmit="return confirmDelete('all','emails')"
   </form>
   <a href="/inbox/-<%=i%>"
     ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> >
-      <label
-        id="view"
-        name="view"
-        class="<%=inbox[i].read==true ? '': 'unread'%>"
+      <label  class="<%=inbox[i].read==true ? '': 'unread'%>"
       >
       <%=email.from%> </label
       >
-      <label data-role="button" class="list-sb"><%=email.sb%></label></label
+      <label  class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
@@ -63,12 +59,12 @@ onsubmit="return confirmDelete('all','emails')"
   </button>
 </form>
 <%sent.forEach( function(email){%>
-<div class="view">
+<div class="view-<%=i%>">
   <a href="/sent/-<%=i%>">
     <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style="background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/sent/<%=i%>" data-role="button" class=""
         ><%=email.to%></label
       >
-      <label data-role="button" class="list-sb"><%=email.sb%></label></label
+      <label class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
@@ -84,7 +80,7 @@ onsubmit="return confirmDelete('all','emails')"
 </div>
 <%i++%> <%})%> <%}%> <% if(typeof fav != 'undefined') {%> <%fav.forEach(
 function(email){ %> <%if(email.fav){%>
-<div class="view">
+<div class="view-<%=i%>">
   <form class="btn-fav" action="/users/fav/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -94,7 +90,7 @@ function(email){ %> <%if(email.fav){%>
   </form>
   <a href="/fav/-<%=i%>"
     ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%>>
-      <label id="view" name="view" class="<%=fav[i].read==true ? '': 'unread'%>"
+      <label class="<%=fav[i].read==true ? '': 'unread'%>"
         ><%=email.to%></label
       >
       <label data-role="button" class="list-sb"><%=email.sb%></label></label
@@ -113,7 +109,7 @@ function(email){ %> <%if(email.fav){%>
 </div>
 <%}%><%i++%><%})%> <%}%> <% if(typeof unread != 'undefined') {%>
 <%unread.forEach( function(email){%><%if(!email.read){%>
-<div class="view">
+<div class="view-<%=i%>">
   <form class="btn-fav" action="/users/inbox/add-to-fav/<%=i%>" method="POST">
     <button type="submit">
       <i
@@ -125,10 +121,7 @@ function(email){ %> <%if(email.fav){%>
   </form>
   <a href="/unread/-<%=i%>"
     ><label class="list-mail"  <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%>>
-      <label
-        id="view"
-        name="view"
-        class="<%=unread[i].read==true ? '': 'unread'%>"
+      <label class="<%=unread[i].read==true ? '': 'unread'%>"
         ><%=email.from%></;
       >
       <label data-role="button" class="list-sb"><%=email.sb%></label></label
@@ -161,12 +154,12 @@ function(email){ %> <%if(email.fav){%>
   </button>
 </form>
 <%deleted.forEach( function(email){%>
-<div class="view">
+<div class="view-<%=i%>">
   <a href="/deleted/-<%=i%>">
     <label class="list-mail" <%if(typeof index!='undefined'){if(i-index==0){%>style=" background: lightgray; border: 1px solid lightgray; border-radius: 5px;"<%}%><%}%> ><label href="/deleted/<%=i%>" data-role="button" class=""
         ><%=email.to%></label
       >
-      <label data-role="button" class="list-sb"><%=email.sb%></label></label
+      <label class="list-sb"><%=email.sb%></label></label
     ></a
   >
   <form
