@@ -4,17 +4,24 @@
  * functions for small devices as well as desktop
  * help messages are also in the functions
  */
+// Current url
 var currPage = window.location.href;
-// If the document is ready run the necessary functions
+/**
+ * If the document is ready run the necessary functions
+ * @author Tushar
+ *  */
 $(document).ready(function () {
   // Plugin to autoscroll to the opened email in the middle column
   $.fn.scrollDivToElement = function (childSel) {
     if (!this.length) return this;
 
     return this.each(function () {
+      // parent element
       let parentEl = $(this);
+      // child element to which to be scrolled
       let childEl = parentEl.find(childSel);
 
+      // if there is child scroll top
       if (childEl.length > 0) {
         parentEl.scrollTop(
           parentEl.scrollTop() -
@@ -34,10 +41,14 @@ $(document).ready(function () {
     activateTab(currPage, "tab-m");
   } else {
     // auto scroll to the email in the middle div
-    $("#middle").scrollDivToElement(`.view-${openedIndex[1]}`);
+    $("#middle").scrollDivToElement(`#view-${openedIndex[1]}`);
     activateTab(currPage, "tab");
   }
-  // Show Alert if there are unread emails
+
+  /**
+   * Show Alert if there are unread emails
+   * @author Tushar
+   */
   $(function () {
     if (currPage.match("home")) {
       // fetch the unread emails count
@@ -88,7 +99,7 @@ $(document).ready(function () {
     }
   });
 
-  // Compose for small device
+  // Back for small device
   $(".btn-back").on("click", () => {
     if (isScreenSmall().matches) {
       $("#right").css("display", "none");
@@ -97,7 +108,11 @@ $(document).ready(function () {
   });
 });
 
-// Search function
+/**
+ * Search function to search email using email or, Subject
+ *
+ * @author Tushar
+ */
 $(".text-search").keyup(function () {
   var searchField = $(this).val();
   if (searchField === "") {
@@ -105,7 +120,8 @@ $(".text-search").keyup(function () {
     return;
   }
   var box = "";
-  if (currPage.includes("inbox")) {
+  // check from which box search is being triggered
+  if (currPage.includes("inbox") || currPage.includes("home")) {
     box = "inbox";
   } else if (currPage.includes("sent")) {
     box = "sent";
@@ -119,9 +135,11 @@ $(".text-search").keyup(function () {
       return res.json();
     })
     .then((res) => {
+      // regular expression to search email
       var regex = new RegExp(searchField, "i");
       var output = "";
       var count = 0;
+      // if found show append in html
       $.each(res, function (key, val) {
         if (
           val.from.search(regex) != -1 ||
@@ -176,6 +194,8 @@ $(".text-search").keyup(function () {
 
 /**
  * Function to show and hide the menu on left for mobile
+ *
+ * @author Tushar
  */
 function navSwipe() {
   if ($("#check").is(":checked")) {
@@ -190,7 +210,9 @@ function navSwipe() {
 }
 
 /**
- * returns the max width of the device
+ * returns whether the screen width is max or not
+ *
+ *@author Tushar
  */
 function isScreenSmall() {
   return window.matchMedia("(max-width: 768px)");
@@ -198,10 +220,13 @@ function isScreenSmall() {
 
 /**
  * Actives the tab which is opened
+ *
+ * @author Tushar
  * @param {*} currPage
  */
 function activateTab(currPage, tab) {
   var btns = document.getElementsByClassName(tab);
+  // adds active class to the tab according to the url
   if (btns.length > 0) {
     if (currPage.match("inbox") || currPage.match("home")) {
       btns[0].className += " active";
@@ -216,6 +241,15 @@ function activateTab(currPage, tab) {
     }
   }
 }
+
+/**
+ * Confirmation to delete item
+ *
+ * @author Tushar
+ *
+ * @param {*} pointer
+ * @param {*} item
+ */
 function confirmDelete(pointer, item) {
   if (confirm(`Are you sure want to delete ${pointer} ${item}?`)) {
     return true;
@@ -223,10 +257,26 @@ function confirmDelete(pointer, item) {
     return false;
   }
 }
+
+/**
+ * Confirmation to logout
+ *
+ * @author Tushar
+ *
+ */
+function confirmLogout() {
+  if (confirm(`Are you sure want to logout?`)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /**
  * This function shows compose on the third column on click
  * after hiding the instructions
- * @Tushar
+ *
+ * @author Tushar
  */
 function showCompose() {
   //hides the instructions about clicking the mail to read
@@ -243,6 +293,8 @@ function showCompose() {
 
 /**
  * This opens the alert modal to confirm using checkboxes before sending the email
+ *
+ * @author Tushar
  */
 function sendConfirm() {
   //Triggers alertbox
@@ -250,7 +302,8 @@ function sendConfirm() {
 }
 
 /**
- * This checks if all the checkboxes are ticked or else changes the bg-color to red of the instructions box
+ * This checks if all the checkboxes are ticked or else changes the bg-color of the instructions box to red
+ *
  * @author Tushar
  * @contributer Akrit
  *
@@ -279,8 +332,9 @@ function validate() {
 }
 
 /**
- *This function redirect to the recent tab after I cancel the Compose tab
- * @Akrit
+ * This function redirect to the recent tab after I cancel the Compose tab
+ *
+ * @author Akrit
  */
 function back() {
   if (!isScreenSmall().matches) {
@@ -303,6 +357,9 @@ function back() {
 //HELP FUNCTIONS WITH MESSSAGES
 /**
  * Generates help according to the topic arg passed from the buttons
+ *
+ * function @author Tushar
+ * messages @author Diogo, contributer @Akrit
  * @param {String} topic
  */
 function helpGenerate(topic) {
@@ -442,6 +499,9 @@ function helpGenerate(topic) {
 
 /**
  * Displays help model according to the topic and body
+ *
+ * function @author Tushar
+ * messages @author Diogo, contributer @Akrit
  * @param {*} title
  * @param {*} body
  */
@@ -476,6 +536,9 @@ function showHelp(title, body) {
 
 /**
  * Show more help if clicked on arrow on help model
+ *
+ * function @author Tushar
+ * messages @author Diogo, contributer @Akrit
  * @param {*} topic
  */
 function showMore(topic) {

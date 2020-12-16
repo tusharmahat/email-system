@@ -406,7 +406,6 @@ router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
         //Add to fav
         user.inbox[i].fav = true;
       }
-
       //updated inbox
       var updateObj = {
         inbox: user.inbox,
@@ -446,7 +445,7 @@ router.get("/unread-count", ensureAuthenticated, (req, res) => {
     });
 });
 
-// Manage account handle
+// Delete account handle
 router.get("/delete-acc/:email", ensureAuthenticated, (req, res) => {
   const email = req.params.email;
 
