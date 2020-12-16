@@ -2,6 +2,8 @@
  * server.js main app to run server
  * @author Tushar
  */
+
+// import required modules
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
@@ -14,6 +16,7 @@ const compression = require("compression");
 //Passport config
 require("./config/passport")(passport);
 
+// Express router
 const app = express();
 
 // enable recognition of incoming data as JSON
@@ -69,7 +72,7 @@ app.use(passport.session());
 //Connect flash middleware
 app.use(flash());
 
-//Global vars
+//flash messages
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.alert_msg = req.flash("alert_msg");
@@ -84,6 +87,7 @@ app.use("/users", require("./routes/users"));
 
 const PORT = process.env.PORT || 5000;
 
+// Run server
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
 });

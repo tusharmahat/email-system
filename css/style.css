@@ -1,6 +1,6 @@
 /* 
 CSS files for the layout
-@author Tushar, Akrit, Xinhao Li
+@author Tushar, Akrit
 
 All Custom properties 
 @Akrit */
@@ -8,13 +8,6 @@ All Custom properties
 :root {
   /* Sets default gradient for button */
   --main-btn-color: linear-gradient(
-    to right,
-    #a8d266 0%,
-    #00a1b1 51%,
-    #a8d266 100%
-  );
-  /* Sets default gradient for btn when hovered */
-  --main-btn-hover-color: linear-gradient(
     to right,
     #a8d266 0%,
     #00a1b1 51%,
@@ -126,10 +119,13 @@ body {
 
 /* Class selector for Login, register card body */
 .card-body {
+  max-height: 90vh;
+  overflow-y: auto;
   width: 100%;
 }
 
 .form-group {
+  /* Sets margin to 10px */
   margin-bottom: 10px;
 }
 #right {
@@ -185,7 +181,7 @@ body {
 
 /*Class selector for logo(name of app) 
 @Tushar */
-.logo-name {
+.logo-name > a {
   /* Sets width to 100% */
   width: 100%;
   /* Sets padding to top and bottom:0px and right and left:0.5rem */
@@ -196,8 +192,6 @@ body {
   line-height: 3rem;
   /* Sets color as the color of main font */
   color: var(--main-font-color);
-  /* Sets the background image as the color of main nav */
-  background-color: var(--main-bg-color);
   /* Sets font size to 2.5 rem */
   font-size: 2.5rem;
 }

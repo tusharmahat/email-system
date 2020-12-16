@@ -67,7 +67,10 @@ body {
 .mt4 {
   margin-top: 20px !important;
 }
-.card-body {
+
+div > .card-body {
+  max-height: 90vh;
+  overflow-y: auto;
   width: 100%;
 }
 .form-group {
@@ -100,13 +103,12 @@ body {
   display: none;
   padding: 5px 10px;
 }
-.logo-name {
+.logo-name > a {
   width: 100%;
   padding: 0 0.5rem;
   text-align: left;
   line-height: 3rem;
   color: var(--main-font-color);
-  background-color: var(--main-bg-color);
   font-size: 2.5rem;
 }
 #logo {

@@ -11,7 +11,7 @@ const { ensureAuthenticated } = require("../config/auth");
 //User model
 const User = require("../models/User");
 
-//Welcome page
+//Login page
 router.get("/", (req, res) => {
   res.render(`login`);
 });
@@ -135,7 +135,7 @@ function readThisEmail(req, res, box) {
           resData
         );
       } else {
-        // If unread emails change into read
+        // unread emails change into read
         user.inbox[i].read = true;
         var updateObj = {
           inbox: user.inbox,

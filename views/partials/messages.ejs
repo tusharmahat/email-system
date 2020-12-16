@@ -1,7 +1,7 @@
 <%# messages.ejs to show errors @author Tushar %> <% if(typeof errors !=
 'undefined') {%> <%errors.forEach( function(error){%>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <span<%= error.msg %></span>
+  <span><%= error.msg %></span>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
