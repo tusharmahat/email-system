@@ -1,3 +1,6 @@
+<%# home.ejs main page after login
+    @author Tushar, Akrit
+%>
 <div class="modal fade" id="send-alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
     style="display: none">
     <div class="modal-dialog" role="document">
@@ -38,141 +41,94 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="manage-acc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    style="display: none">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Account registered in the Email System
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">S.No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" style="text-align: center;">Press</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td><img class="icon--delete icon--delete--ac" onclick="deleteOne('deleted',0)" src="../images/delete-icon.png"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container-fluid">
-
     <label for="check" class="checkbtn">
         <input type="checkbox" id="check" onclick="navSwipe()">
         <i class="fas fa-bars"></i>
     </label>
-
     <div class="row content">
-
         <div class="menu-m">
             <ul>
-
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
-                <li> <a href="/inbox" class="tab-m"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
+                <li> <a href="/inbox" class="tab-m"><i class="icon far fa-envelope"></i> Inbox
                         </span></a></li>
-                <li> <a href="/sent" class="tab-m"> <img class="icon" src="../images/sent-icon.png" alt="">Sent
+                <li> <a href="/sent" class="tab-m"> <i class="icon far fa-paper-plane"></i> Sent
                         Items
                     </a></li>
-
-                <li> <a href="/fav" class="tab-m"><img class="icon" src="../images/fav-icon.png" alt="">Favorites</a>
+                <li> <a href="/fav" class="tab-m"><i class="icon far fa-heart"></i> Favorites</a>
                 </li>
-                <li> <a href="/unread" class="tab-m"><img class="icon" src="../images/unread-icon.png" alt="">Unread
-                        Emails <span class="badge badge--inbox"></span></a></li>
-
-                <li> <a href="/deleted" class="tab-m" onclick=""><img class="icon" src="../images/delete-icon.png"
-                            alt="">Deleted Emails
+                <li> <a href="/unread" class="tab-m"><i class="icon fas fa-mail-bulk"></i>
+                    Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
+                class="badge-unread"><%=badge%><%}%></span></a></li>
+                <li> <a href="/deleted" class="tab-m" onclick=""> <i class="icon fas fa-trash-alt"></i> Deleted Emails
                     </a></li>
-                <li> <a href="/manage" class="tab-m" onclick="helpGenerate('help')"><img class="icon"
-                            src="../images/manage-ac.png" alt="">Manage Accounts </a></li>
-                <li> <a class="tab-m" onclick="manageAcc()"><img class="icon" src="../images/help.png"
-                            alt="">Help</a></li>
+                <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
+                <li> <a  href='/manage-acc' class="tab-m">
+                    <i class="icon fas fa-user-cog"></i> Manage Accounts</a>
+                </li><%}%><%}%>
+                <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
+                <li> <a class="tab-m" onclick="helpGenerate('help')">
+                    <i class="icon far fa-question-circle"></i> Help</a>
+                </li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
                 <br>
                 <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
-                <a href="/users/logout" class="btn btn-secondary">Logout</a>
+                <a href="/users/logout" class="btn btn-secondary" onclick="return confirmLogout()">Logout</a>
             </ul>
-
         </div>
         <div class="menu" id="left">
             <ul>
                 <a class="btn btn-primary btn-compose" onclick="showCompose()" role="button">
                     New message
                 </a>
-                <li> <a href="/inbox" class="tab"><img class="icon" src="../images/inbox-icon.png" alt="">Inbox
-                        </span></a></li>
-                <li> <a href="/sent" class="tab"> <img class="icon" src="../images/sent-icon.png"
-                            alt="">Sent
+                <li> <a href="/inbox" class="tab">
+                    <i class="icon far fa-envelope"></i> Inbox
+                    </a>
+                </li>
+                <li> <a href="/sent" class="tab">
+                    <i class="icon far fa-paper-plane"></i> Sent
                         Items
-                    </a></li>
-
-                <li> <a href="/fav" class="tab"><img class="icon" src="../images/fav-icon.png"
-                            alt="">Favorites</a></li>
-                <li> <a href="/unread" class="tab"><img class="icon" src="../images/unread-icon.png"
-                            alt="">Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <span
-                        class="badge badge--inbox"><%=badge%><%}%></span></a></li>
-
-                <li> <a href="/deleted" class="tab" onclick=""><img class="icon"
-                            src="../images/delete-icon.png" alt="">Deleted Emails
-                    </a></li>
-                <li> <a class="tab" onclick="manageAcc()"><img class="icon"
-                        src="../images/manage-ac.png" alt="">Manage Accounts</a></li>
-                <li> <a class="tab" onclick="helpGenerate('help')"><img class="icon"
-                    src="../images/help.png" alt="">Help</a></li>
+                    </a>
+                </li>
+                <li> <a href="/fav" class="tab">
+                    <i class="icon far fa-heart"></i> Favorites
+                    </a>
+                </li>
+                <li> <a href="/unread" class="tab">
+                    <i class="icon fas fa-mail-bulk"></i>
+                    Unread Emails<% if( typeof badge!='undefined' && badge >0){%> <label
+                    class="badge-unread"><%=badge%><%}%></span></a>
+                </li>
+                <li> <a href="/deleted" class="tab" onclick="">
+                    <i class="icon fas fa-trash-alt"></i> Deleted Emails
+                    </a>
+                </li>
+                <%if(typeof type!='undefined'){%><%if(type=='Specialist'){%>
+                <li> <a href='/manage-acc' class="tab">
+                    <i class="icon fas fa-user-cog"></i>Manage Accounts</a>
+                </li><%}%><%}%>
+                <%if(typeof type!='undefined'){%><%if(type !='Specialist'){%>
+                <li> <a class="tab" onclick="helpGenerate('help')">
+                    <i class="icon far fa-question-circle"></i> Help</a>
+                </li><%}%><%}%>
                 <br>
                 <%- include ("./partials/progress")%>
-                        <br>
-                        <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
-                <a href="/users/logout" class="btn btn-secondary">Logout</a>
+                <br>
+                <p class="lead mb-3"><%if (typeof name !='undefined'){%><%=name %><%}%></p>
+                <a href="/users/logout" class="btn btn-secondary"  onclick="return confirmLogout()">Logout</a>
             </ul>
-
         </div>
         <div  id="middle-m">
-            <%- include ("./partials/emails")%>
+            <%- include ("./partials/emails")%> 
+            <%- include ("./partials/manageAcc")%>
         </div>
         <div id="middle">
             <%- include ("./partials/emails")%>
+            <%- include ("./partials/manageAcc")%>
         </div>
-
-
-
         <div class="" id="right">
             <%- include ("./partials/messages") %>
             <form id="compose" action="/users/send" method="POST" onsubmit=" return validate()">
@@ -183,8 +139,6 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text btn-help" id="basic-addon1" onclick="helpGenerate('to')">To</span>
                     </div>
-
-
                     <input type="email" id="to" name="to" class="form-control" placeholder="To"
                         value="<%= typeof to != 'undefined' ? to : '' %>" required />
                 </div>
@@ -200,7 +154,6 @@
                     <input type="text" id="sb" name="sb" class="form-control" placeholder="Subject"
                         value="<%= typeof sb != 'undefined' ? sb : '' %>" />
                 </div>
-
                 <div class="input-group mb-3">
                     <label class="myLabel" for="body">
                         <p class="btn-help" onclick="helpGenerate('greeting')">Greeting</p>
@@ -217,13 +170,10 @@
                     <textarea type="text" id="msg" name="msg" class="form-control" placeholder=""
                         value="<%= typeof msg != 'undefined' ? msg : '' %>" row="12"></textarea>
                 </div>
-
-
                 <span onclick="sendConfirm()" class="btn btn-primary btn-send">
                     Send
                 </span>
-
-                <button type="button" class="btn btn-primary btn-back" onclick="back()">
+                <button type="button" class="btn btn-primary btn-back" onclick="return back();">
                     Discard
                 </button>
                 <button type="button" class="btn btn-primary btn-example" onclick="helpGenerate('example')">

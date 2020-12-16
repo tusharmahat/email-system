@@ -1,3 +1,4 @@
+<%# login.ejs for login page @author Tushar %>
 <div class="row mt-5">
   <div class="col-md-5 m-auto">
     <div class="card card-body">
@@ -12,6 +13,7 @@
             name="email"
             class="form-control"
             placeholder="Enter Email"
+            oninput="this.value=this.value.toLowerCase()"
           />
         </div>
         <div class="form-group">

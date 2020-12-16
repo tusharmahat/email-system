@@ -1,3 +1,9 @@
+/**
+ * users.js
+ * users route
+ *
+ * @author Tushar
+ */
 //------------------------------REQUIRED IMPORTS------------------------//
 const express = require("express");
 const router = express.Router();
@@ -101,7 +107,7 @@ router.post("/register", (req, res) => {
   }
 });
 
-//-----------------------SEND & DELETE HANDLES--------------------------//
+//-----------------------SEND, ADD-TO-FAVORITE & DELETE HANDLES--------------------------//
 //Send Handle
 router.post("/send", ensureAuthenticated, (req, res) => {
   // Date of email creation
@@ -119,7 +125,7 @@ router.post("/send", ensureAuthenticated, (req, res) => {
   };
 
   //Query to search recipient
-  var query = { email: email.to };
+  const queryTo = { email: email.to };
 
   //Update object for the recipient's inbox
   const updateObj1 = {
@@ -142,50 +148,62 @@ router.post("/send", ensureAuthenticated, (req, res) => {
   };
 
   //find the recipient
-  User.findOne(query)
+  User.findOne(queryTo)
     .then((user) => {
       if (user.inbox.length < 50) {
         //If the recipient's inbox is not full then send
-        User.updateOne(query, updateObj1).catch((err) => {
+        User.updateOne(queryTo, updateObj1).catch((err) => {
           console.log(err);
         });
 
-        // //Query to search the sender
-        query = { email: req.user.email };
+        // If email has cc then send the cc
+        if (email.cc.length > 0) {
+          // query to search the cc recipient
+          const queryCc = { email: email.cc };
+          // f ind the recipient and update the inbox
+          User.findOne(queryCc).then((user) => {
+            User.updateOne(queryCc, updateObj1).catch((err) => {
+              console.log(err);
+            });
+          });
+        }
+
+        //Query to search the sender
+        const queryFrom = { email: req.user.email };
 
         // Update sent items of the sender
-        User.findOne(query).then((user) => {
+        User.findOne(queryFrom).then((user) => {
           if (user.sent.length < 50) {
             //If the recipient's sent items is not full then send
-            User.updateOne(query, updateObj2).then(() => {
+            User.updateOne(queryFrom, updateObj2).then(() => {
               // If sent redirect to sent items
               res.redirect("/sent");
             });
           } else {
             // If the sents items is full sent flash msg
-            req.flash("success_msg", "Your sent items is full");
+            req.flash("alert_msg", "Your sent items is full");
           }
         });
       } else {
         // If the inobx is full sent flash msg
-        req.flash("success_msg", "Recipient's inbox is full");
+        req.flash("alert_msg", "Recipient's inbox is full");
         // Redirect to inbox
         res.redirect("/inbox");
       }
     })
     .catch((err) => {
-      // Console log error
-      req.flash("success_msg", "Recipient's email address invalid");
+      // Send flash message to front end
+      req.flash("alert_msg", "Recipient's email address invalid");
       // Redirect to inbox
       res.redirect("/inbox");
       console.log("Error while sending email. Error: " + err);
     });
 });
 
-//Delete this email
+//Delete one email according to the parameter in the request
 router.post("/:box/delete-one/:index", ensureAuthenticated, (req, res) => {
   //Get the index of the email being deleted
-  const i = parseInt(req.params.index.split(":")[1]);
+  const i = req.params.index;
 
   //Query to search the user
   const query = { email: req.user.email };
@@ -196,7 +214,7 @@ router.post("/:box/delete-one/:index", ensureAuthenticated, (req, res) => {
     new: true,
   };
 
-  // Get that email from the db
+  // Use the query to find the user
   User.findOne(query)
     .then((user) => {
       // emails variable
@@ -216,29 +234,16 @@ router.post("/:box/delete-one/:index", ensureAuthenticated, (req, res) => {
           emails = user.deleted;
       }
 
-      //delete email
+      //delete email from the respective box
       const deleted = emails.splice(i, 1);
 
       // Deleted obj variable
       var deleteObj;
 
-      // Push the deleted email to the deleted box
-      if (req.params.box != "deleted") {
-        deleteObj = {
-          $push: {
-            deleted: {
-              $each: deleted,
-              $position: 0,
-            },
-          },
-        };
-        //Update deleted data
-        findAndUpdate(query, deleteObj, options);
-      }
-
-      // update variable for other boxes
+      // update variable for the boxes from which email is deleted
       var updateObj;
 
+      // After deleting the emails
       if (req.params.box == "inbox") {
         // Update for inbox
         updateObj = {
@@ -249,15 +254,38 @@ router.post("/:box/delete-one/:index", ensureAuthenticated, (req, res) => {
         updateObj = {
           sent: emails,
         };
+      }
+      // Push the deleted email to the deleted box
+      if (req.params.box != "deleted" && user.deleted.length < 100) {
+        // If the deleted box is not full
+        deleteObj = {
+          $push: {
+            deleted: {
+              $each: deleted,
+              $position: 0,
+            },
+          },
+        };
+
+        //Update deleted emails in the deleted email box
+        findAndUpdate(query, deleteObj, options);
+
+        // Update the emails in the box from which email was deleted
+        findAndUpdate(query, updateObj, options);
       } else if (req.params.box == "deleted") {
-        // Update for deleted
+        // If deleted from the deleted email box, Update for deleted
         updateObj = {
           deleted: emails,
         };
+        // Update the emails in the deleted email box
+        findAndUpdate(query, updateObj, options);
+      } else {
+        // If the inobx is full sent flash msg
+        req.flash(
+          "alert_msg",
+          "Deleted emails box is full, make some space in deleted emails"
+        );
       }
-
-      // Update the data in the box after deletion
-      findAndUpdate(query, updateObj, options);
       // Redirect to the respective box
       res.redirect(`/${req.params.box}`);
     })
@@ -297,7 +325,10 @@ router.post("/:box/delete-all", ensureAuthenticated, (req, res) => {
       var deleteObj;
 
       // If the email being deleted from the deleted box, then delete it permanently
-      if (req.params.box != "deleted") {
+      if (
+        req.params.box != "deleted" &&
+        user.deleted.length + deleted.length <= 100
+      ) {
         deleteObj = {
           $push: {
             deleted: {
@@ -313,22 +344,38 @@ router.post("/:box/delete-all", ensureAuthenticated, (req, res) => {
       // If it is deleted from other box, then send it to deleted box
       var updateObj = {};
       //update the
-      if (req.params.box == "inbox") {
+      if (
+        req.params.box == "inbox" &&
+        user.deleted.length + deleted.length <= 100
+      ) {
         updateObj = {
           inbox: [],
         };
-      } else if (req.params.box == "sent") {
+        // Update the data
+        findAndUpdate(query, updateObj, options);
+      } else if (
+        req.params.box == "sent" &&
+        user.deleted.length + deleted.length <= 100
+      ) {
         updateObj = {
           sent: [],
         };
+        // Update the data
+        findAndUpdate(query, updateObj, options);
       } else if (req.params.box == "deleted") {
         updateObj = {
           deleted: [],
         };
+        // Update the data
+        findAndUpdate(query, updateObj, options);
+      } else {
+        // If the inobx is full sent flash msg
+        req.flash(
+          "alert_msg",
+          "Deleted emails box is full, make some space in deleted emails"
+        );
       }
 
-      // Update the data
-      findAndUpdate(query, updateObj, options);
       // Redirect to the respective box
       res.redirect(`/${req.params.box}`);
     })
@@ -337,7 +384,45 @@ router.post("/:box/delete-all", ensureAuthenticated, (req, res) => {
     });
 });
 
-// Unread count handle
+//Add email to favorite
+router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
+  //Get the index of the email being deleted
+  const i = req.params.index;
+  //Query to search the user
+  const query = { email: req.user.email };
+  // Options for findOneAndUpdate
+  const options = {
+    upsert: true,
+    new: true,
+  };
+
+  // Find that user from the db
+  User.findOne(query)
+    .then((user) => {
+      if (user.inbox[i].fav) {
+        //Remove from fav
+        user.inbox[i].fav = false;
+      } else {
+        //Add to fav
+        user.inbox[i].fav = true;
+      }
+      //updated inbox
+      var updateObj = {
+        inbox: user.inbox,
+      };
+
+      //update the inbox of the user in the database
+      findAndUpdate(query, updateObj, options);
+
+      //redirect to favorite
+      res.redirect(`/${req.params.box}`);
+    })
+    .catch((err) => {
+      console.log("Error while fetching the email");
+    });
+});
+
+// Unread count to show alert at login
 router.get("/unread-count", ensureAuthenticated, (req, res) => {
   // Find the userfrom the database
   const query = { email: req.user.email };
@@ -360,43 +445,21 @@ router.get("/unread-count", ensureAuthenticated, (req, res) => {
     });
 });
 
-//Add email to favorite
-router.post("/:box/add-to-fav/:index", ensureAuthenticated, (req, res) => {
-  //Get the index of the email being deleted
-  const i = parseInt(req.params.index.split(":")[1]);
-  //Query to search the user
-  const query = { email: req.user.email };
-  // Options for findOneAndUpdate
-  const options = {
-    upsert: true,
-    new: true,
-  };
+// Delete account handle
+router.get("/delete-acc/:email", ensureAuthenticated, (req, res) => {
+  const email = req.params.email;
 
-  // Find that user from the db
-  User.findOne(query)
-    .then((user) => {
-      if (user.inbox[i].fav) {
-        //Remove from fav
-        user.inbox[i].fav = false;
+  // Check if the email being deleted is not the specialist
+  if (email != req.user.email) {
+    // Find nad delete the users from the database
+    User.findOneAndDelete({ email: email }, function (err, docs) {
+      if (err) {
+        console.log(err);
       } else {
-        //Add to fav
-        user.inbox[i].fav = true;
+        res.redirect(`/manage-acc`);
       }
-
-      //updated inbox
-      var updateObj = {
-        inbox: user.inbox,
-      };
-
-      //update the inbox of the user in the database
-      findAndUpdate(query, updateObj, options);
-
-      //redirect to from where it was triggered
-      res.redirect(`/${req.params.box}`);
-    })
-    .catch((err) => {
-      console.log("Error while fetching the email");
     });
+  }
 });
 
 //----------------------------LOGIN & LOGOUT HANDLE--------------------------//
