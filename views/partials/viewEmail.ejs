@@ -1,4 +1,5 @@
-<% if(typeof view != 'undefined') {%>
+<%# viewEmail.ejs to view Emails @author Tushar %> <% if(typeof view !=
+'undefined') {%>
 <div id="email--view">
   <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -9,7 +10,7 @@
     <input
       type="text"
       class="form-control readonly--hover"
-      id="view-emailAdd"
+      id="view-emailFrom"
       aria-label="From"
       aria-describedby="basic-addon1"
       readonly
@@ -24,8 +25,8 @@
     <input
       type="text"
       class="form-control readonly--hover"
-      id="view-emailAdd"
-      aria-label="From"
+      id="view-emailTo"
+      aria-label="To"
       aria-describedby="basic-addon1"
       readonly
       value=" <%=view.to%>"
@@ -63,12 +64,11 @@
   <textarea
     class="form-control readonly--hover"
     id="view-msg"
-    rows="14"
+    rows="12"
     readonly
   >
  <%=view.msg%></textarea
   >
-
   <button
     type="submit"
     class="btn btn-primary btn-send"
@@ -76,7 +76,6 @@
   >
     Reply
   </button>
-
   <button type="button" class="btn btn-primary btn-back" onclick="back()">
     Back
   </button>

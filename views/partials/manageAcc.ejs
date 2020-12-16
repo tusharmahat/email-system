@@ -1,0 +1,29 @@
+<%# manageAcc.ejs to manage Accounts @author Tushar %> <%if(typeof names !=
+'undefined' && typeof emails != 'undefined'){%>
+<p class="help--yellow">
+  To delete any Student's account registered, click on delete icon. The student
+  can again resgister with the same email address
+</p>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col" style="text-align: center">Press</th>
+    </tr>
+    <%var i=0%> <%types.forEach( function(type){%> <%if(type !="Specialist" ){%>
+    <tr>
+      <td><%=names[i]%></td>
+      <td class="break-out"><%=emails[i]%></td>
+      <td>
+        <a
+          href="/users/delete-acc/<%=emails[i]%>"
+          onclick="return confirmDelete('this','account')"
+          ><i class="icon fas fa-trash-alt"></i
+        ></a>
+      </td>
+    </tr>
+    <%}%> <%i++%><%})%> <%}%>
+  </thead>
+  <tbody class="manage-acc-table-row"></tbody>
+</table>

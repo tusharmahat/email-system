@@ -1,3 +1,12 @@
+/**
+ * User.js
+ * contains User model which has
+ * user schema having attributes:
+ * User(user name, email, password,
+ * type,inbox,sent,deleted,date)
+ *
+ * @author Tushar
+ */
 const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   name: {
@@ -18,7 +27,6 @@ const UserSchema = new mongoose.Schema({
   },
   inbox: [],
   sent: [],
-  fav: [],
   deleted: [],
   date: {
     type: Date,

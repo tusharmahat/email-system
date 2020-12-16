@@ -1,3 +1,9 @@
+/**
+ * server.js main app to run server
+ * @author Tushar
+ */
+
+// import required modules
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
@@ -5,9 +11,12 @@ mongoose.set("useFindAndModify", false);
 const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const compression = require("compression");
+
 //Passport config
 require("./config/passport")(passport);
 
+// Express router
 const app = express();
 
 // enable recognition of incoming data as JSON
@@ -17,9 +26,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // static assets like javascript and css are served from these folders
 app.use("/scripts", express.static(__dirname + "/scripts"));
+app.use("/scripts", express.static(__dirname + "/images"));
 app.use("/css", express.static(__dirname + "/css"));
 // root
 app.use(express.static(__dirname));
+app.use(compression());
 
 // set up allowance characteristics for cross-origin resource sharing (CORS)
 var allowCrossDomain = function (req, res, next) {
@@ -61,9 +72,10 @@ app.use(passport.session());
 //Connect flash middleware
 app.use(flash());
 
-//Global vars
+//flash messages
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
+  res.locals.alert_msg = req.flash("alert_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
   next();
@@ -75,6 +87,7 @@ app.use("/users", require("./routes/users"));
 
 const PORT = process.env.PORT || 5000;
 
+// Run server
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
 });
