@@ -12,6 +12,7 @@
                 - EJS
                 - JavaScript
                 - MongoDB
+                - Passport
    
 
                 
