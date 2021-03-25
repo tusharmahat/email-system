@@ -11,6 +11,8 @@
                 - Bcrypt
                 - EJS
                 - JavaScript
+                - MongoDB
+   
 
                 
 
