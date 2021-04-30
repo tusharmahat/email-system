@@ -12,7 +12,7 @@ var localPort = "27017"; // port number of the local port
 var database = "group6"; // name of database
 
 // create the credentials string used for database connection
-var credentialsString =;mongodb://uojihcpaqrkui95mcih1:W3AjD6nsQjwyOILSW7VZ@bf83o6yl2qal8vh-mongodb.services.clever-cloud.com:27017/bf83o6yl2qal8vh";
+var credentialsString ="mongodb://uojihcpaqrkui95mcih1:W3AjD6nsQjwyOILSW7VZ@bf83o6yl2qal8vh-mongodb.services.clever-cloud.com:27017/bf83o6yl2qal8vh";
 
 //   "mongodb://" +
 //   username +
