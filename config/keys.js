@@ -12,7 +12,7 @@ var localPort = "27017"; // port number of the local port
 var database = "group6"; // name of database
 
 // create the credentials string used for database connection
-var credentialsString ="mongodb+srv://tusharmahat:Sasha200101@cluster0.h6cz2xs.mongodb.net/test";
+var credentialsString ="mongodb+srv://tusharmahat:Sasha200101@cluster0.h6cz2xs.mongodb.net/?retryWrites=true&w=majority";
 
 //   "mongodb://" +
 //   username +
