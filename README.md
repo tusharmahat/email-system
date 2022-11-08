@@ -14,7 +14,7 @@ This is an outlook clone which I did for my software development course. The app
                 - MongoDB
                 - Passport
 
-## link: https://emailappclone.herokuapp.com/
+## link: https://email-system.onrender.com
 ## Screenshots:
 ### Login
 ![image](https://user-images.githubusercontent.com/44932604/116635756-f7c25100-a935-11eb-8677-21b0bc49b787.png)
