@@ -1,4 +1,4 @@
-# Project for CSCI3428
+# Project for CSCI3428(Software Development)
 # Email system for Austism Nova Scotia(open source)
 This is an outlook clone which I did for my software development course. The appearance is inspired from outlook, but the features are different and very basic ones. This is still in progress, I will be adding more features in it.
 # Technologies used:
