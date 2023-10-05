@@ -1,39 +1,51 @@
-<%# layout.ejs for main layout @author Tushar %>
-<!DOCTYPE html>
-<html lang="en">
+<%# layout.ejs
+  for
+  main
+  layout
+  @author
+  Tushar
+  %>
+  <!DOCTYPE html>
+  <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <!-- CDN for bootdtrap -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet"
+      href="https://cdn.usebootstrap.com/bootstrap/4.6.0/css/bootstrap.min.css" />
     <!-- link of the style.css for userdefined styling -->
-    <link rel="stylesheet" href="../css/style.min.css" />
+    <link rel="stylesheet"
+      href="../css/style.min.css" />
     <!-- CDN for fontawesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-    />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <title>
-      Your Email App<%if(typeof page !='undefined'){%> | <%=page%><%}%>
+      Your Email App<%if(typeof page
+        !='undefined'
+        ){%> | <%=page%>
+          <%}%>
     </title>
   </head>
+
   <body>
     <div class="logo-name">
-      <a href="/home">Your Email App</a
-      ><img id="logo" src="../images/logo.png" alt="" />
+      <a href="/home">Your Email App</a><img id="logo"
+        src="../images/logo.png"
+        alt="" />
     </div>
-    <%- body %>
-    <!-- CDN for jquery -->
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-      crossorigin="anonymous"
-    ></script>
-    <!-- CDN for bootstrap script -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../script/frontend.min.js"></script>
+    <%- body
+      %>
+      <!-- CDN for jquery -->
+      <script
+        src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.slim.min.js"
+        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+        crossorigin="anonymous"></script>
+      CDN for bootstrap script
+      <script
+        src="https://cdn.usebootstrap.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+      <script src="../script/frontend.min.js"></script>
   </body>
-</html>
+
+  </html>
