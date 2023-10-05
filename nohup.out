@@ -101,3 +101,9 @@ Server started on 5000
 DB connected
 Server started on 5000
 DB connected
+nohup: server.js: No such file or directory
+nohup: nodejs: No such file or directory
+nohup: nodejs: No such file or directory
+nohup: server.js: No such file or directory
+Server started on 5001
+DB connected
