@@ -1,6 +1,0 @@
-[build]
-  command = "node server.js" # Replace with your actual build command
-  publish = "/" # Replace with the directory containing your built files
-
-[build.environment]
-  NODE_VERSION = "16.20.1" # Replace with your desired Node.js version
