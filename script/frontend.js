@@ -38,6 +38,7 @@ $(document).ready(function () {
 
   // Function to escape special characters for jQuery selectors
   function escapeSelector(selector) {
+    // Escape only the special characters needed for jQuery selectors
     return selector.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
   }
 
@@ -54,6 +55,7 @@ $(document).ready(function () {
     $("#middle").scrollDivToElement(sanitizedSelector);
     activateTab(currPage, "tab");
   }
+
 
   /**
    * Show Alert if there are unread emails
