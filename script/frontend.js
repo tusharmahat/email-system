@@ -37,7 +37,7 @@ $(document).ready(function () {
   };
 
   // Get the index of opened email from the link
-  var openedIndex = currPage.split("-");
+  var openedIndex = currPage.split("/-");
   var selector = `#view-${openedIndex[1]}`;
   console.log('Selector:', selector); // Debug log
 
