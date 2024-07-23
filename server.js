@@ -6,6 +6,7 @@
 // import required modules
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+require('dotenv').config();
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 const flash = require("connect-flash");
@@ -31,8 +32,6 @@ app.use("/css", express.static(__dirname + "/css"));
 // root
 app.use(express.static(__dirname));
 
-app.use(compression());
-
 // set up allowance characteristics for cross-origin resource sharing (CORS)
 const cors = require('cors');
 app.use(cors({
@@ -43,12 +42,13 @@ app.use(cors({
 
 
 //DB config
-const db = require("./config/keys").MongoURI;
+const mongoUri = process.env.MONGO_URI;
 
 //connect to mongo
-mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("DB connected"))
+mongoose.connect(mongoUri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log("DB connected"))
   .catch((err) => console.log(err));
 
 //EJS middleware
