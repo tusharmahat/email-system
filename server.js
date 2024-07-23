@@ -26,20 +26,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // static assets like javascript and css are served from these folders
 app.use("/scripts", express.static(__dirname + "/scripts"));
-app.use("/scripts", express.static(__dirname + "/images"));
+app.use("/images", express.static(__dirname + "/images"));
 app.use("/css", express.static(__dirname + "/css"));
 // root
 app.use(express.static(__dirname));
+const compression = require('compression');
 app.use(compression());
 
 // set up allowance characteristics for cross-origin resource sharing (CORS)
-var allowCrossDomain = function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-};
-app.use(allowCrossDomain);
+const cors = require('cors');
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
+
 
 //DB config
 const db = require("./config/keys").MongoURI;
