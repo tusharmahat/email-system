@@ -30,7 +30,6 @@ app.use("/images", express.static(__dirname + "/images"));
 app.use("/css", express.static(__dirname + "/css"));
 // root
 app.use(express.static(__dirname));
-const compression = require('compression');
 app.use(compression());
 
 // set up allowance characteristics for cross-origin resource sharing (CORS)
