@@ -46,7 +46,7 @@ $(document).ready(function () {
     activateTab(currPage, "tab-m");
   } else {
     // auto scroll to the email in the middle div
-    if (/^[\w-]+$/.test(openedIndex[1])) {
+    if (/^[\w-]+$/.test(openedIndex[1])&& openedIndex!="undefined") {
       $("#middle").scrollDivToElement(selector);
     } else {
       console.error('Invalid selector:', selector);
