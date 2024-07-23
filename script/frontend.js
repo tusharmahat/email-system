@@ -11,15 +11,15 @@ var currPage = window.location.href;
  * @author Tushar
  *  */
 $(document).ready(function () {
-  // Plugin to auto-scroll to the opened email in the middle column
+  // Plugin to autoscroll to the opened email in the middle column
   $.fn.scrollDivToElement = function (childSel) {
     if (!this.length) return this;
 
     return this.each(function () {
       // parent element
       let parentEl = $(this);
-      // escape special characters in the selector
-      let escapedChildSel = escapeSelector(childSel);
+      // escape special characters in childSel
+      let escapedChildSel = childSel.replace(/([.#$[\]{}()*+?^\\|])/g, "\\$1");
       // child element to which to be scrolled
       let childEl = parentEl.find(escapedChildSel);
 
@@ -36,26 +36,23 @@ $(document).ready(function () {
     });
   };
 
-  // Function to escape special characters for jQuery selectors
-  function escapeSelector(selector) {
-    // Escape only the special characters needed for jQuery selectors
-    return selector.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
-  }
-
   // Get the index of opened email from the link
   var openedIndex = currPage.split("-");
-  // Sanitize the selector to escape special characters
-  var sanitizedSelector = `#view-${escapeSelector(openedIndex[1])}`;
-  
-  // Show active tab for desktop and small devices
+  var selector = `#view-${openedIndex[1]}`;
+  console.log('Selector:', selector); // Debug log
+
+  // Show active tab for desktop and small device
   if (isScreenSmall().matches) {
     activateTab(currPage, "tab-m");
   } else {
-    // Auto-scroll to the email in the middle div
-    $("#middle").scrollDivToElement(sanitizedSelector);
+    // auto scroll to the email in the middle div
+    if (/^[\w-]+$/.test(openedIndex[1])) {
+      $("#middle").scrollDivToElement(selector);
+    } else {
+      console.error('Invalid selector:', selector);
+    }
     activateTab(currPage, "tab");
   }
-
 
   /**
    * Show Alert if there are unread emails
