@@ -19,7 +19,7 @@ $(document).ready(function () {
       // parent element
       let parentEl = $(this);
       // escape special characters in the selector
-      let escapedChildSel = childSel.replace(/([.#])/g, '\\$1');
+      let escapedChildSel = escapeSelector(childSel);
       // child element to which to be scrolled
       let childEl = parentEl.find(escapedChildSel);
 
@@ -36,10 +36,15 @@ $(document).ready(function () {
     });
   };
 
+  // Function to escape special characters for jQuery selectors
+  function escapeSelector(selector) {
+    return selector.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
+  }
+
   // Get the index of opened email from the link
   var openedIndex = currPage.split("-");
   // Sanitize the selector to escape special characters
-  var sanitizedSelector = `#view-${openedIndex[1].replace(/([.#])/g, '\\$1')}`;
+  var sanitizedSelector = `#view-${escapeSelector(openedIndex[1])}`;
   
   // Show active tab for desktop and small devices
   if (isScreenSmall().matches) {
