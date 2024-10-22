@@ -18,8 +18,10 @@ $(document).ready(function () {
     return this.each(function () {
       // parent element
       let parentEl = $(this);
+      // escape special characters in childSel
+      let escapedChildSel = childSel.replace(/([.#$[\]{}()*+?^\\|])/g, "\\$1");
       // child element to which to be scrolled
-      let childEl = parentEl.find(childSel);
+      let childEl = parentEl.find(escapedChildSel);
 
       // if there is child scroll top
       if (childEl.length > 0) {
@@ -35,13 +37,20 @@ $(document).ready(function () {
   };
 
   // Get the index of opened email from the link
-  var openedIndex = currPage.split("-");
-  //Show active tab for desktop and small device
+  var openedIndex = currPage.split("/-");
+  var selector = `#view-${openedIndex[1]}`;
+  console.log('Selector:', selector); // Debug log
+
+  // Show active tab for desktop and small device
   if (isScreenSmall().matches) {
     activateTab(currPage, "tab-m");
   } else {
     // auto scroll to the email in the middle div
-    $("#middle").scrollDivToElement(`#view-${openedIndex[1]}`);
+    if (/^[\w-]+$/.test(openedIndex[1])&& openedIndex[1]!="undefined") {
+      $("#middle").scrollDivToElement(selector);
+    } else {
+      console.error('Invalid selector:', selector);
+    }
     activateTab(currPage, "tab");
   }
 
