@@ -42,9 +42,8 @@ app.use(cors({
 
 
 //DB config
-const mongoUri = process.env.MONGO_URI;
-console.log("Mongo URI:" +  mongoUri);
-console.log("URI chars:", Array.from(mongoUri).map(c => c.charCodeAt(0)));
+const mongoUri = process.env.MONGO_URI?.trim();
+console.log("Mongo URI:" +  mongoUri.length()+" == "+ rocess.env.MONGO_URI.length());
 
 //connect to mongo
 mongoose.connect(mongoUri, {
